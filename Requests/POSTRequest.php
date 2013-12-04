@@ -70,14 +70,20 @@ namespace Crackle\Requests {
 		/**
 		 * Create the array of POST fields and files.
 		 * FIXME N.B. PHP cURL doesn't support sending fields with duplicate names alongside files.
-		 * @return array			An array that can be passed to cURL as CURLOPT_POSTFIELDS.
+		 * @return string|array			A value that can be passed to cURL as CURLOPT_POSTFIELDS.
 		 */
 		private final function buildPOSTFields() {
+			if(empty($this->getFiles())) {
+				// if there are no file uploads, we can use a query string to permit multiple fields with the same name
+				return $this->buildQueryString();
+			}
+
+			// return an array of field names => values/files - duplicate names are not supported
 			$fields = array();
 			foreach($this->getFields() as $field) {
 				$fields[$field->getKey()] = $field->getValue();
 			}
-			foreach($this->getfiles() as $name => $path) {
+			foreach($this->getFiles() as $name => $path) {
 				$fields[$name] = '@' . $path;
 			}
 			return $fields;

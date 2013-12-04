@@ -21,6 +21,20 @@ namespace Crackle\Collections {
 		private $value;
 
 		/**
+		 * Initialise a new key/value pair.
+		 * @param mixed $key		The key.
+		 * @param mixed $value		The value.
+		 */
+		public function __construct($key = null, $value = null) {
+			if($key !== null) {
+				$this->setKey($key);
+			}
+			if($value !== null) {
+				$this->setValue($value);
+			}
+		}
+
+		/**
 		 * Get the key in the key/value pair.
 		 * @return mixed		The key in the key/value pair.
 		 */

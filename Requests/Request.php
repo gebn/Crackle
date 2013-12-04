@@ -216,7 +216,7 @@ namespace Crackle\Requests {
 		 * @param mixed $value		The value to send under the field name.
 		 */
 		public final function addField($name, $value) {
-			$this->addField(new KeyValuePair($name, $value));
+			$this->fields[] = new KeyValuePair($name, $value);
 		}
 
 		/**
@@ -225,6 +225,19 @@ namespace Crackle\Requests {
 		 */
 		public final function isFired() {
 			return $this->getResponse() !== null;
+		}
+
+		/**
+		 * Creates a query string from the fields.
+		 * @return string			The build query string ready to append to the URL.
+		 */
+		protected final function buildQueryString() {
+			// Crackle permits duplicate keys, so we cannot use PHP's http_build_query()
+			$pieces = array();
+			foreach($this->getFields() as $field) {
+				$pieces[] = urlencode($field->getKey()) . '=' . urlencode($field->getValue());
+			}
+			return implode('&', $pieces);
 		}
 
 		/**
