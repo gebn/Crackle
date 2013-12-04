@@ -8,6 +8,8 @@ namespace Crackle\Requests {
 
 	use \Crackle\Exceptions\ValidationException;
 
+	use \CURLFile;
+
 	/**
 	 * Represents an HTTP request sent using the POST method.
 	 * @author George Brighton
@@ -84,7 +86,7 @@ namespace Crackle\Requests {
 				$fields[$field->getKey()] = $field->getValue();
 			}
 			foreach($this->getFiles() as $name => $path) {
-				$fields[$name] = '@' . $path;
+				$fields[$name] = new CURLFile($path);
 			}
 			return $fields;
 		}
