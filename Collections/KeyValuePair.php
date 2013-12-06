@@ -47,7 +47,7 @@ namespace Crackle\Collections {
 		 * @param mixed $key		The key in the key/value pair.
 		 */
 		public final function setKey($key) {
-			$this->key = (string)$key;
+			$this->key = $key;
 		}
 
 		/**
