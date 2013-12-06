@@ -18,13 +18,13 @@ namespace Crackle\Requests {
 
 		/**
 		 * Files to send with this request.
-		 * @var array
+		 * @var array[string]
 		 */
 		private $files;
 
 		/**
 		 * Get the files to send with this request.
-		 * @return array		The files to send with this request.
+		 * @return array[string]		The files to send with this request.
 		 */
 		private final function getFiles() {
 			return $this->files;
@@ -32,7 +32,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the files to send with this request.
-		 * @param array $files		The files to send with this request.
+		 * @param array[string] $files		The files to send with this request.
 		 */
 		private final function setFiles(array $files) {
 			$this->files = $files;

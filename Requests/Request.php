@@ -109,7 +109,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the parameters to send with this request.
-		 * @return multitype:\Crackle\Collections\KeyValuePair		The parameters to send with this request.
+		 * @return array[\Crackle\Collections\KeyValuePair]		The parameters to send with this request.
 		 */
 		protected final function getFields() {
 			return $this->fields;
@@ -117,7 +117,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the parameters to send with this request.
-		 * @param multitype:\Crackle\Collections\KeyValuePair $fields		The parameters to send with this request.
+		 * @param array[\Crackle\Collections\KeyValuePair] $fields		The parameters to send with this request.
 		 */
 		private final function setFields(array $fields) {
 			$this->fields = $fields;

@@ -133,7 +133,7 @@ namespace Crackle\Examples {
 		/**
 		 * Find the thread and board from the thread URL.
 		 * @param string $url		The URL of the thread to download.
-		 * @throws Exception		If $url is invalid.
+		 * @throws \Exception		If $url is invalid.
 		 */
 		public function parseUrl($url) {
 			$matches = null;
@@ -167,7 +167,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Retrieves the JSON representation of the thread to download.
-		 * @throws Exception		If the request to the 4Chan API fails.
+		 * @throws \Exception		If the request to the 4Chan API fails.
 		 * @return string			The JSON.
 		 */
 		private function downloadThread() {
@@ -223,7 +223,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Executes an array of requests.
-		 * @param array $requests		The requests to run.
+		 * @param array[\Crackle\Requests\GETRequest] $requests		The requests to run.
 		 */
 		private function download(array $requests) {
 			$requester = new Requester();
