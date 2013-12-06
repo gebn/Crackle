@@ -193,19 +193,11 @@ namespace Crackle {
 		 * @param int $number		Optional: the number of requests to remove. Default: 1.
 		 */
 		private function add($number = 1) {
-			if($number == 1) { // optimisation - avoid loop overhead
+			for($i = 0; $i < $number; $i++) {
 				$request = $this->getQueue()->dequeue();
 				$request->finalise();
 				$this->executing[(int)$request->getHandle()] = $request;
 				curl_multi_add_handle($this->getMultiHandle(), $request->getHandle());
-			}
-			else {
-				for($i = 0; $i < $number; $i++) {
-					$request = $this->getQueue()->dequeue();
-					$request->finalise();
-					$this->executing[(int)$request->getHandle()] = $request;
-					curl_multi_add_handle($this->getMultiHandle(), $request->getHandle());
-				}
 			}
 		}
 
