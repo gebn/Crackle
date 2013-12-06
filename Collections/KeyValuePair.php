@@ -65,5 +65,13 @@ namespace Crackle\Collections {
 		public final function setValue($value) {
 			$this->value = $value;
 		}
+
+		/**
+		 * Get an array representing this key/value pair.
+		 * @return array[mixed]			A pair of the form (key, value).
+		 */
+		public final function toArray() {
+			return array($this->getKey(), $this->getValue());
+		}
 	}
 }

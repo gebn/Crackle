@@ -62,49 +62,106 @@ namespace Crackle\Requests {
 		 */
 		public function finalise() {
 			$this->validate();
-			curl_setopt_array($this->getHandle(), array(
-					CURLOPT_POST => true,
-					CURLOPT_HTTPHEADER => array('Content-type: multipart/form-data'),
-					CURLOPT_POSTFIELDS => $this->buildPOSTFields()));
+			$this->buildRequest();
 			parent::finalise();
 		}
 
 		/**
-		 * Create the array of POST fields and files.
-		 * FIXME N.B. PHP cURL doesn't support sending fields with duplicate names alongside files.
-		 * @return string|array			A value that can be passed to cURL as CURLOPT_POSTFIELDS.
+		 * Checks this request for consistency.
+		 * @throws ValidationException a problem is discovered.
 		 */
-		private final function buildPOSTFields() {
-			if(empty($this->getFiles())) {
-				// if there are no file uploads, we can use a query string to permit multiple fields with the same name
-				return $this->buildQueryString();
-			}
+		private function validate() {
+			$fields = array_map(function ($pair) {
+				return $pair->getKey();
+			}, $this->getFields());
+			$files = array_keys($this->getFiles());
+			$duplicates = array_intersect($fields, $files);
 
-			// return an array of field names => values/files - duplicate names are not supported
-			$fields = array();
-			foreach($this->getFields() as $field) {
-				$fields[$field->getKey()] = $field->getValue();
+			if (!empty($duplicates)) {
+				throw new ValidationException('The following field(s) have been set as both POST fields and file uploads: ' . implode(', ', $duplicates));
 			}
-			foreach($this->getFiles() as $name => $path) {
-				$fields[$name] = new CURLFile($path);
+		}
+
+		/**
+		 * Creates the content of this POST request.
+		 * Adapted from Beau Simensen's function on GitHub: https://gist.github.com/simensen/288242
+		 */
+		private function buildRequest() {
+			$boundary = self::generateBoundary();
+			$content = $this->buildContent($boundary);
+
+			curl_setopt_array($this->getHandle(), array(
+					CURLOPT_POST => true,
+					CURLOPT_HTTPHEADER => array(
+							'Content-Length: ' . strlen($content),
+							'Expect: 100-continue',
+							'Content-Type: multipart/form-data; boundary=' . $boundary),
+					CURLOPT_POSTFIELDS => $content));
+		}
+
+		/**
+		 * Builds an array containing all key/value pairs and files that need to be sent in this request.
+		 * @return array[array[mixed]]
+		 */
+		private function collapse() {
+			$fields = array();
+			foreach ($this->getFields() as $pair) {
+				$fields[] = $pair->toArray();
+			}
+			foreach ($this->getFiles() as $name => $path) {
+				$fields[] = array(
+						$name,
+						'@' . $path); // file paths are identified with a '@' prefix to the value
 			}
 			return $fields;
 		}
 
 		/**
-		 * Checks this request for consistency.
-		 * @throws ValidationException			If a problem is discovered.
+		 * Creates a boundary to divide parts of the request.
+		 * @return string			The generated boundary.
 		 */
-		protected function validate() {
-			$fields = array_map(function($pair) {
-						return $pair->getKey();
-					}, $this->getFields());
-			$files = array_keys($this->getFiles());
-			$duplicates = array_intersect($fields, $files);
-
-			if(!empty($duplicates)) {
-				throw new ValidationException('The following field(s) have been set as both POST fields and file uploads: ' . implode(', ', $duplicates));
+		private static function generateBoundary() {
+			$algorithms = hash_algos();
+			$preferences = array('sha1', 'md5');
+			foreach($preferences as $algorithm) {
+				if(in_array($algorithm, $algorithms)) {
+					return '----------------------------' . substr(hash('sha1', 'crackle' . microtime()), 0, 12);
+				}
 			}
+			return '----------------------------' . substr(hash($algorithms[0], 'crackle' . microtime()), 0, 12);
+		}
+
+		/**
+		 * Builds the lines of the request content.
+		 * @param string $boundary			The boundary to use to divide parts.
+		 * @return string					The created body.
+		 */
+		private function buildContent($boundary) {
+			$lines = array();
+			foreach ($this->collapse() as $field) {
+				list($name, $value) = $field;
+				if (strpos($value, '@') === 0) {
+					$matches = array();
+					if (preg_match('/^@(.*?)$/', $value, $matches)) {
+						$lines[] = '--' . $boundary;
+						$lines[] = 'Content-Disposition: form-data; name="' . $name . '"; filename="' . basename($matches[1]) . '"';
+						$lines[] = 'Content-Type: application/octet-stream';
+						$lines[] = '';
+						$lines[] = file_get_contents($matches[1]);
+					}
+				}
+				else {
+					$lines[] = '--' . $boundary;
+					$lines[] = 'Content-Disposition: form-data; name="' . $name . '"';
+					$lines[] = '';
+					$lines[] = $value;
+				}
+			}
+
+			$lines[] = '--' . $boundary . '--';
+			$lines[] = '';
+
+			return implode("\r\n", $lines);
 		}
 	}
 }
