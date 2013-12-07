@@ -79,7 +79,7 @@ namespace Crackle\Requests {
 		 * Get the URL this request will be sent to.
 		 * @return string		The URL this request will be sent to.
 		 */
-		private final function getUrl() {
+		protected final function getUrl() {
 			return $this->url;
 		}
 
@@ -87,7 +87,7 @@ namespace Crackle\Requests {
 		 * Set the URL this request will be sent to.
 		 * @param string $url		The URL this request will be sent to.
 		 */
-		private final function setUrl($url) {
+		protected final function setUrl($url) {
 			$this->url = (string)$url;
 		}
 
