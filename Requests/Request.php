@@ -3,14 +3,18 @@
 namespace Crackle\Requests {
 
 	require_once('../Collections/KeyValuePair.php');
+	require_once('../Utilities/Curl.php');
 	require_once('../Authentication/Credentials.php');
 	require_once('../Headers.php');
 	require_once('../Response.php');
 
 	use \Crackle\Collections\KeyValuePair;
+	use \Crackle\Utilites\Curl;
 	use \Crackle\Authentication\Credentials;
 	use \Crackle\Headers;
 	use \Crackle\Response;
+
+	use \InvalidArgumentException;
 
 	/**
 	 * Represents an HTTP request.
@@ -198,9 +202,13 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the function to run upon completion of this request.
-		 * @param callable $callback		The function to run upon completion of this request.
+		 * @param callable $callback			The function to run upon completion of this request.
+		 * @throws \InvalidArgumentException	If the callback is not a callable function.
 		 */
-		public final function setCallback(callable $callback) {
+		public final function setCallback($callback) {
+			if(!is_callable($callback)) {
+				throw new InvalidArgumentException('The request callback must be callable.');
+			}
 			$this->callback = $callback;
 		}
 
@@ -294,7 +302,7 @@ namespace Crackle\Requests {
 		public function recover($result) {
 
 			// if an error occurred, set it
-			$this->setError($result === CURLE_OK ? false : curl_strerror($result));
+			$this->setError($result === CURLE_OK ? false : Curl::getStringError($result));
 
 			if(!$this->isError()) {
 				// build the response

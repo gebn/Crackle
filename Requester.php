@@ -3,9 +3,11 @@
 namespace Crackle {
 
 	require_once('Exceptions/CurlException.php');
+	require_once('Utilities/Curl.php');
 	require_once('Requests/Request.php');
 
 	use \Crackle\Exceptions\CurlException;
+	use \Crackle\Utilites\Curl;
 	use \Crackle\Requests\Request;
 
 	use \SplQueue;
@@ -173,7 +175,7 @@ namespace Crackle {
 
 				// if the multi handle is in an error state, stop
 				if ($status !== CURLM_OK) {
-					throw new CurlException(curl_strerror($status));
+					throw new CurlException(Curl::getStringError($status));
 				}
 
 				// deal with finished requests
