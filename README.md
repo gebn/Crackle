@@ -37,7 +37,7 @@ if(!$request->isError()) {
 
 ### A POST request with callback
 
-A callback can be set on each request that is run immediately after the request finishes. This function is given the original request object executed:
+Crackle allows you to attach a callback to each request, which is executed immediately after that request completes:
 
 ````php
 use \Crackle\Requests\POSTRequest;
@@ -46,12 +46,12 @@ use \Crackle\Requester;
 $request = new POSTRequest('https://example.com');
 $request->getHeaders()->set('custom-header', 'value');
 $request->addField('name[]', 'value1');
-$request->addField('name[]', 'value2');
+$request->addField('name[]', 'value2'); // duplicate field names are supported
 $request->addFile('upload', 'photo.jpg');
 $request->addFile('another', 'document.docx');
-$request->setCallback(function($request) {
+$request->setCallback(function(POSTRequest $request) { // callback is passed the original request object
 	if(!$request->isError()) {
-		$request->getResponse()->writeTo('/home/gebn');
+		$request->getResponse()->writeTo('/home/gebn'); // write the response to a file
 	}
 });
 
