@@ -275,6 +275,16 @@ namespace Crackle\Requests {
 		}
 
 		/**
+		 * Execute this request.
+		 * To fire multiple requests simultaneously, have a look at \Crackle\Requester.
+		 */
+		public function fire() {
+			$this->finalise();
+			curl_exec($this->getHandle());
+			$this->recover(curl_errno($this->getHandle()));
+		}
+
+		/**
 		 * Push all data contained in this object to the handle.
 		 * Should be used to specify options that users shouldn't be changing.
 		 */

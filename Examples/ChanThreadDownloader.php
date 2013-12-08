@@ -85,7 +85,7 @@ namespace Crackle\Examples {
 		 * Get the save directory.
 		 * @return string		The save directory.
 		 */
-		private final function getOutputDirectory() {
+		public final function getOutputDirectory() {
 			return $this->outputDirectory;
 		}
 
@@ -126,7 +126,7 @@ namespace Crackle\Examples {
 		/**
 		 * Add 1 to the number of errors that occurred while downloading images.
 		 */
-		private final function incrementErrors() {
+		public final function incrementErrors() {
 			$this->setErrors($this->getErrors() + 1);
 		}
 
@@ -172,7 +172,7 @@ namespace Crackle\Examples {
 		 */
 		private function downloadThread() {
 			$request = new GETRequest($this->getJsonUrl());
-			Requester::fire($request);
+			$request->fire();
 			if($request->isError() || $request->getResponse()->getResponseCode() != 200) {
 				throw new Exception('Error retrieving JSON: ' . $request->getError());
 			}
@@ -207,12 +207,13 @@ namespace Crackle\Examples {
 			$requests = array();
 			foreach($urls as $url) {
 				$request = new GETRequest($url);
-				$request->setCallback(function($request) {
+				$ref = $this; // cannot use $this in closures in 5.3; methods called on $ref must also be public
+				$request->setCallback(function($request) use ($ref) {
 					if($request->isError()) {
-						$this->incrementErrors();
+						$ref->incrementErrors();
 					}
 					else {
-						$request->getResponse()->writeTo($this->getOutputDirectory());
+						$request->getResponse()->writeTo($ref->getOutputDirectory());
 						$request->getResponse()->clearContent();
 					}
 				});

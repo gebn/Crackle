@@ -26,10 +26,9 @@ For additional examples, see the contents of `/Examples`.
 
 ````php
 use \Crackle\Requests\GETRequest;
-use \Crackle\Requester;
 
 $request = new GETRequest('http://icanhazip.com');
-Requester::fire($request);
+$request->fire();
 if(!$request->isError()) {
 	echo $request->getResponse()->getContent();
 }
@@ -41,7 +40,6 @@ Crackle allows you to attach a callback to each request, which is executed immed
 
 ````php
 use \Crackle\Requests\POSTRequest;
-use \Crackle\Requester;
 
 $request = new POSTRequest('https://example.com');
 $request->getHeaders()->set('custom-header', 'value');
@@ -55,7 +53,7 @@ $request->setCallback(function(POSTRequest $request) { // callback is passed the
 	}
 });
 
-Requester::fire($request);
+$request->fire();
 ````
 
 ### Parallel requests

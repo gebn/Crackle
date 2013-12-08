@@ -146,16 +146,6 @@ namespace Crackle {
 		}
 
 		/**
-		 * Execute a single request immediately.
-		 * @param \Crackle\Requests\Request $request		The request to send.
-		 */
-		public static function fire(Request $request) {
-			$request->finalise();
-			curl_exec($request->getHandle());
-			$request->recover(curl_errno($request->getHandle()));
-		}
-
-		/**
 		 * Execute the current queue simultaneously.
 		 * @throws \CurlException			If the multi handle returns an error at any stage.
 		 */
