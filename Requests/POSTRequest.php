@@ -92,11 +92,12 @@ namespace Crackle\Requests {
 
 			curl_setopt_array($this->getHandle(), array(
 					CURLOPT_POST => true,
-					CURLOPT_HTTPHEADER => array(
-							'Content-Length: ' . strlen($content),
-							'Expect: 100-continue',
-							'Content-Type: multipart/form-data; boundary=' . $boundary),
 					CURLOPT_POSTFIELDS => $content));
+
+			$headers = $this->getHeaders();
+			$headers->set('Expect', '100-continue');
+			$headers->set('Content-Length', strlen($content));
+			$headers->set('Content-Type', 'multipart/form-data; boundary=' . $boundary);
 		}
 
 		/**
