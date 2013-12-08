@@ -4,9 +4,11 @@ namespace Crackle {
 
 	require_once('Exceptions/IOException.php');
 	require_once('Utilities/Path.php');
+	require_once('Headers.php');
 
 	use \Crackle\Exceptions\IOException;
 	use \Crackle\Utilities\Path;
+	use \Crackle\Headers;
 
 	/**
 	 * Represents the data returned by a request.
@@ -25,6 +27,12 @@ namespace Crackle {
 		 * @var int
 		 */
 		private $responseCode;
+
+		/**
+		 * Response headers, indexed by name.
+		 * @var \Crackle\Response
+		 */
+		private $headers;
 
 		/**
 		 * The response body.
@@ -65,6 +73,22 @@ namespace Crackle {
 		}
 
 		/**
+		 * Retrieve the list of response headers.
+		 * @return \Crackle\Headers		The list of headers.
+		 */
+		public final function getHeaders() {
+			return $this->headers;
+		}
+
+		/**
+		 * Set the list of headers received in the response.
+		 * @param \Crackle\Headers $headers		The new list of headers.
+		 */
+		private final function setHeaders(Headers $headers) {
+			$this->headers = $headers;
+		}
+
+		/**
 		 * Get the raw body of this response.
 		 * @return string		The body.
 		 */
@@ -89,6 +113,13 @@ namespace Crackle {
 		}
 
 		/**
+		 * Initialises a new response object.
+		 */
+		public function __construct() {
+			$this->setHeaders(new Headers());
+		}
+
+		/**
 		 * Get an instance of this class representing the response of an executed cURL handle.
 		 * @param resource $handle				The executed handle to import.
 		 * @return \Crackle\Response			The created Response instance.
@@ -106,7 +137,11 @@ namespace Crackle {
 		private function import($handle) {
 			$this->setUrl(curl_getinfo($handle, CURLINFO_EFFECTIVE_URL));
 			$this->setResponseCode(curl_getinfo($handle, CURLINFO_HTTP_CODE));
-			$this->setContent(curl_multi_getcontent($handle));
+
+			$body = curl_multi_getcontent($handle);
+			$separation = strpos($body, "\r\n\r\n");
+			$this->getHeaders()->parse(substr($body, 0, $separation));
+			$this->setContent(substr($body, $separation + 4));
 		}
 
 		/**

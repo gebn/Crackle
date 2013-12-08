@@ -4,10 +4,12 @@ namespace Crackle\Requests {
 
 	require_once('../Collections/KeyValuePair.php');
 	require_once('../Authentication/Credentials.php');
+	require_once('../Headers.php');
 	require_once('../Response.php');
 
 	use \Crackle\Collections\KeyValuePair;
 	use \Crackle\Authentication\Credentials;
+	use \Crackle\Headers;
 	use \Crackle\Response;
 
 	/**
@@ -27,6 +29,12 @@ namespace Crackle\Requests {
 		 * @var string
 		 */
 		private $url;
+
+		/**
+		 * Additional that will be sent with this request.
+		 * @var \Crackle\Headers
+		 */
+		private $headers;
 
 		/**
 		 * The credentials to use to authenticate this request.
@@ -89,6 +97,22 @@ namespace Crackle\Requests {
 		 */
 		protected final function setUrl($url) {
 			$this->url = (string)$url;
+		}
+
+		/**
+		 * Retrieve the list of extra request headers.
+		 * @return \Crackle\Headers		The list of headers.
+		 */
+		public final function getHeaders() {
+			return $this->headers;
+		}
+
+		/**
+		 * Set the list of headers to send in this request.
+		 * @param \Crackle\Headers $headers		The new list of headers.
+		 */
+		private final function setHeaders(Headers $headers) {
+			$this->headers = $headers;
 		}
 
 		/**
@@ -190,6 +214,7 @@ namespace Crackle\Requests {
 			}
 
 			$this->setHandle(curl_init());
+			$this->setHeaders(new Headers());
 			$this->setFields(array());
 			$this->setDefaultOptions();
 		}
@@ -203,6 +228,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Sets default options for the cURL session used by this request.
+		 * Should be used to specify options that users may want to change.
 		 */
 		private function setDefaultOptions() {
 			curl_setopt_array($this->getHandle(), array(
@@ -242,13 +268,19 @@ namespace Crackle\Requests {
 
 		/**
 		 * Push all data contained in this object to the handle.
-		 * Called just prior to sending the request.
+		 * Should be used to specify options that users shouldn't be changing.
 		 */
 		public function finalise() {
+			// set options that Crackle requires to operate
 			curl_setopt_array($this->getHandle(), array(
+					CURLOPT_HEADER => true,
 					CURLOPT_URL => $this->getUrl(),
 					CURLOPT_RETURNTRANSFER => true));
 
+			// add any additional headers to the session
+			$this->getHeaders()->addTo($this->getHandle());
+
+			// add authentication if specified
 			if($this->getCredentials() !== null) {
 				$this->getCredentials()->addTo($this->getHandle());
 			}
