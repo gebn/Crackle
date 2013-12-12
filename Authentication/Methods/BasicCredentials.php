@@ -1,14 +1,16 @@
 <?php
 
-namespace Crackle\Authentication {
+namespace Crackle\Authentication\Methods {
 
-	require_once('Credentials.php');
+	use \Crackle\Authentication\Credentials;
+	use \Crackle\Authentication\Applicators\RequestCredentials;
+	use \Crackle\Authentication\Applicators\ProxyCredentials;
 
 	/**
 	 * Represents a set of HTTP basic authentication credentials.
 	 * @author George Brighton
 	 */
-	class BasicCredentials extends Credentials {
+	class BasicCredentials extends Credentials implements RequestCredentials, ProxyCredentials {
 
 		/**
 		 * Initialise a new set of basic credentials.
@@ -20,12 +22,23 @@ namespace Crackle\Authentication {
 		}
 
 		/**
-		 * Add parameters defined by this object to a cURL handle.
-		 * @param resource $handle			The cURL handle to set options on.
+		 * Add request credentials defined by this object to a cURL handle.
+		 * @param resource $handle			The cURL handle to configure.
+		 * @see \Crackle\Authentication\Applicators\RequestCredentials::addRequestCredentialsTo()
 		 */
-		public function addTo($handle) {
-			parent::addTo($handle);
+		public function addRequestCredentialsTo($handle) {
+			curl_setopt($handle, CURLOPT_USERPWD, $this->__toString());
 			curl_setopt($handle, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		}
+
+		/**
+		 * Add proxy credentials defined by this object to a cURL handle.
+		 * @param resource $handle			The cURL handle to configure.
+		 * @see \Crackle\Authentication\Applicators\ProxyCredentials::addProxyCredentialsTo()
+		 */
+		public function addProxyCredentialsTo($handle) {
+			curl_setopt($handle, CURLOPT_PROXYUSERPWD, $this->__toString());
+			curl_setopt($handle, CURLOPT_PROXYAUTH, CURLAUTH_BASIC);
 		}
 	}
 }

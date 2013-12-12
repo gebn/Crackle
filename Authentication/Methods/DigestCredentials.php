@@ -1,14 +1,15 @@
 <?php
 
-namespace Crackle\Authentication {
+namespace Crackle\Authentication\Methods {
 
-	require_once('Credentials.php');
+	use \Crackle\Authentication\Credentials;
+	use \Crackle\Authentication\Applicators\RequestCredentials;
 
 	/**
 	 * Represents a set of HTTP digest authentication credentials.
 	 * @author George Brighton
 	 */
-	class DigestCredentials extends Credentials {
+	class DigestCredentials extends Credentials implements RequestCredentials {
 
 		/**
 		 * Initialise a new set of digest credentials.
@@ -20,11 +21,12 @@ namespace Crackle\Authentication {
 		}
 
 		/**
-		 * Add parameters defined by this object to a cURL handle.
-		 * @param resource $handle			The cURL handle to set options on.
+		 * Add request credentials defined by this object to a cURL handle.
+		 * @param resource $handle			The cURL handle to configure.
+		 * @see \Crackle\Authentication\Applicators\RequestCredentials::addRequestCredentialsTo()
 		 */
-		public function addTo($handle) {
-			parent::addTo($handle);
+		public function addRequestCredentialsTo($handle) {
+			curl_setopt($handle, CURLOPT_USERPWD, $this->__toString());
 			curl_setopt($handle, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
 		}
 	}
