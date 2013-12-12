@@ -6,6 +6,7 @@ Crackle is an easy to use, object-oriented HTTP client.
 
  - GET, POST
  - Authentication (basic, digest, NTLM)
+ - Proxy support (basic and NTLM authentication supported)
  - File uploading
  - Request callbacks
  - Easy header management for both requests and responses.
@@ -25,6 +26,7 @@ For additional examples, see the contents of `/Examples`.
 ### A simple GET request
 
 ````php
+require_once 'Crackle.php';
 use \Crackle\Requests\GETRequest;
 
 $request = new GETRequest('http://icanhazip.com');
@@ -39,6 +41,7 @@ if(!$request->isError()) {
 Crackle allows you to attach a callback to each request, which is executed immediately after that request completes:
 
 ````php
+require_once 'Crackle.php';
 use \Crackle\Requests\POSTRequest;
 
 $request = new POSTRequest('https://example.com');
@@ -61,6 +64,7 @@ $request->fire();
 This sample will fire off requests to BBC News and Twitter, and announce when each request has finished:
 
 ````php
+require_once 'Crackle.php';
 use \Crackle\Requests\GETRequest;
 use \Crackle\Requester;
 
@@ -80,7 +84,7 @@ $requester->queue($req2);
 $requester->fireAll();
 ````
 
-N.B. All types of requests can be done simultaneously - you can mix verbs.
+N.B. All types of request can be done simultaneously - you can mix `GETRequest`, `POSTRequest` etc.
 	
 ### Setting custom options using the handle
 
