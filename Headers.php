@@ -2,8 +2,6 @@
 
 namespace Crackle {
 
-	require_once('Exceptions/HeaderNotFoundException.php');
-
 	use \Crackle\Exceptions\HeaderNotFoundException;
 
 	/**

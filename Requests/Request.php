@@ -2,17 +2,13 @@
 
 namespace Crackle\Requests {
 
-	require_once('../Collections/KeyValuePair.php');
-	require_once('../Utilities/Curl.php');
-	require_once('../Authentication/Credentials.php');
-	require_once('../Headers.php');
-	require_once('../Response.php');
-
 	use \Crackle\Collections\KeyValuePair;
 	use \Crackle\Utilites\Curl;
-	use \Crackle\Authentication\Credentials;
 	use \Crackle\Headers;
 	use \Crackle\Response;
+
+	use \Crackle\Authentication\Applicators\RequestCredentials;
+	use \Crackle\Proxies\Proxy;
 
 	use \InvalidArgumentException;
 
@@ -42,9 +38,15 @@ namespace Crackle\Requests {
 
 		/**
 		 * The credentials to use to authenticate this request.
-		 * @var \Crackle\Authentication\Credentials
+		 * @var \Crackle\Authentication\Applicators\RequestCredentials
 		 */
 		private $credentials;
+
+		/**
+		 * An optional proxy to use for this request.
+		 * @var \Crackle\Proxies\Proxy
+		 */
+		private $proxy;
 
 		/**
 		 * Parameters to send with this request.
@@ -121,7 +123,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the credentials to use to authenticate this request.
-		 * @return \Crackle\Authentication\Credentials		The credentials to use to authenticate this request.
+		 * @return \Crackle\Authentication\Applicators\RequestCredentials		The credentials to use to authenticate this request.
 		 */
 		private final function getCredentials() {
 			return $this->credentials;
@@ -129,10 +131,26 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the credentials to use to authenticate this request.
-		 * @param \Crackle\Authentication\Credentials $credentials		The credentials to use to authenticate this request.
+		 * @param \Crackle\Authentication\Applicators\RequestCredentials $credentials		The credentials to use to authenticate this request.
 		 */
-		public final function setCredentials(Credentials $credentials) {
+		public final function setCredentials(RequestCredentials $credentials) {
 			$this->credentials = $credentials;
+		}
+
+		/**
+		 * Get the proxy to use for this request.
+		 * @return \Crackle\Proxies\Proxy		The proxy to use for this request.
+		 */
+		private final function getProxy() {
+			return $this->proxy;
+		}
+
+		/**
+		 * Set the proxy to use for this request.
+		 * @param \Crackle\Proxies\Proxy $proxy		The proxy to use for this request.
+		 */
+		public final function setProxy(Proxy $proxy) {
+			$this->proxy = $proxy;
 		}
 
 		/**
@@ -300,7 +318,12 @@ namespace Crackle\Requests {
 
 			// add authentication if specified
 			if($this->getCredentials() !== null) {
-				$this->getCredentials()->addTo($this->getHandle());
+				$this->getCredentials()->addRequestCredentialsTo($this->getHandle());
+			}
+
+			// add proxy if configured
+			if($this->getProxy() !== null) {
+				$this->getProxy()->addTo($this->getHandle());
 			}
 		}
 

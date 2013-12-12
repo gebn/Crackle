@@ -2,10 +2,6 @@
 
 namespace Crackle\Requests {
 
-	require_once('Request.php');
-
-	require_once('../Exceptions/ValidationException.php');
-
 	use \Crackle\Exceptions\ValidationException;
 
 	use \CURLFile;

@@ -2,10 +2,6 @@
 
 namespace Crackle {
 
-	require_once('Exceptions/CurlException.php');
-	require_once('Utilities/Curl.php');
-	require_once('Requests/Request.php');
-
 	use \Crackle\Exceptions\CurlException;
 	use \Crackle\Utilites\Curl;
 	use \Crackle\Requests\Request;

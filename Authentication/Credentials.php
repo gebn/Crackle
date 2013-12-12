@@ -3,7 +3,7 @@
 namespace Crackle\Authentication {
 
 	/**
-	 * Represents authentication data tied to a request.
+	 * Represents authentication data.
 	 * @author George Brighton
 	 */
 	abstract class Credentials {
@@ -67,13 +67,13 @@ namespace Crackle\Authentication {
 		}
 
 		/**
-		 * Add parameters defined by this object to a cURL handle.
-		 * @param resource $handle			The cURL handle to set options on.
+		 * Retrieve the credentials represented by this object as a string.
+		 * @return string		The credentials in the form '[username]:[password]'.
 		 */
-		public function addTo($handle) {
+		public function __toString() {
 			$username = $this->getUsername() == '' ? 'X' : $this->getUsername();
 			$password = $this->getPassword() == '' ? 'X' : $this->getPassword();
-			curl_setopt($handle, CURLOPT_USERPWD, $username . ':' . $password);
+			return $username . ':' . $password;
 		}
 	}
 }

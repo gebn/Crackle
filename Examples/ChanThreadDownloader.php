@@ -2,10 +2,6 @@
 
 namespace Crackle\Examples {
 
-	require_once('../Utilities/Path.php');
-	require_once('../Requests/GETRequest.php');
-	require_once('../Requester.php');
-
 	use \Crackle\Utilities\Path;
 	use \Crackle\Requests\GETRequest;
 	use \Crackle\Requester;
@@ -13,13 +9,14 @@ namespace Crackle\Examples {
 	use \stdClass;
 	use \Exception;
 
+	require_once('../Crackle.php');
 	$dl = new ChanThreadDownloader();
 	$dl->parseUrl(''); // enter thread URL, e.g. http://boards.4chan.org/wg/res/1234567
 	$dl->setOutputDirectory('');
 	echo $dl->go() ? 'Success!' : $dl->getErrors() . ' error(s) occurred.';
 
 	/**
- 	 * Demonstrates Crackle's ability to run parallel GET requests by downloading all images in a 4Chan thread.
+	 * Demonstrates Crackle's ability to run parallel GET requests by downloading all images in a 4Chan thread.
 	 * @author George Brighton
 	 */
 	class ChanThreadDownloader {

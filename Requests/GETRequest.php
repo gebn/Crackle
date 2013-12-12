@@ -2,8 +2,6 @@
 
 namespace Crackle\Requests {
 
-	require_once('Request.php');
-
 	/**
 	 * Represents an HTTP request sent using the GET method.
 	 * @author George Brighton

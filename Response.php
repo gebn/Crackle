@@ -2,10 +2,6 @@
 
 namespace Crackle {
 
-	require_once('Exceptions/IOException.php');
-	require_once('Utilities/Path.php');
-	require_once('Headers.php');
-
 	use \Crackle\Exceptions\IOException;
 	use \Crackle\Utilities\Path;
 	use \Crackle\Headers;
