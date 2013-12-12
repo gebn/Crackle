@@ -4,7 +4,7 @@ Crackle is an easy to use, object-oriented HTTP client.
 
 ## Features
 
- - GET, POST
+ - GET, POST, HEAD
  - Authentication (basic, digest, NTLM)
  - Proxy support (basic and NTLM authentication supported)
  - File uploading
