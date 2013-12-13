@@ -2,11 +2,35 @@
 
 namespace Crackle\Requests {
 
+	use \InvalidArgumentException;
+
 	/**
 	 * Represents an HTTP request sent using the GET method.
 	 * @author George Brighton
 	 */
 	class GETRequest extends Request {
+
+		/**
+		 * Set the URL this request will be sent to.
+		 * @param string $url					The URL this request will be sent to.
+		 * @throws \InvalidArgumentException	If the given URL is invalid.
+		 */
+		public function setUrl($url) {
+			$parts = parse_url($url);
+			if($parts === false) {
+				throw new InvalidArgumentException('The supplied URL is invalid.');
+			}
+
+			// extract GET parameters and add them as fields
+			$params = array();
+			parse_str($parts['query'], $params);
+			foreach($params as $name => $value) {
+				$this->addField($name, $value);
+			}
+
+			// set the original URL without the parameters as the request URL
+			parent::setUrl(sprintf('%s://%s%s', $parts['scheme'], $parts['host'], $parts['path']));
+		}
 
 		/**
 		 * Initialise a new HTTP GET request.
@@ -23,24 +47,10 @@ namespace Crackle\Requests {
 		public function finalise() {
 			$queryString = $this->buildQueryString();
 			if($queryString !== '') {
-				$this->appendQueryString($queryString);
+				// append the query string; we removed and imported any existing one in the setter
+				parent::setUrl($this->getUrl() . '?' . $queryString); // want to use parent as our override would re-parse the query string
 			}
 			parent::finalise();
-		}
-
-		/**
-		 * Adds a query string to the existing URL, merging if necessary.
-		 * @param string $queryString			The query string to append.
-		 */
-		private final function appendQueryString($queryString) {
-			if(strpos($this->getUrl(), '?') === false) {
-				// no existing query string; add one onto the end of the URL
-				$this->setUrl($this->getUrl() . '?' . $queryString);
-				return;
-			}
-
-			// need to merge with the existing query string
-			$this->setUrl(rtrim($this->getUrl(), '?&') . '?' . $queryString);
 		}
 
 		/**

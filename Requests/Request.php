@@ -101,7 +101,7 @@ namespace Crackle\Requests {
 		 * Set the URL this request will be sent to.
 		 * @param string $url		The URL this request will be sent to.
 		 */
-		protected final function setUrl($url) {
+		public function setUrl($url) {
 			$this->url = (string)$url;
 		}
 
@@ -235,14 +235,14 @@ namespace Crackle\Requests {
 		 * @param string $url			An optional URL to initialise with.
 		 */
 		public function __construct($url = null) {
-			if($url !== null) {
-				$this->setUrl($url);
-			}
-
 			$this->setHandle(curl_init());
 			$this->setHeaders(new Headers());
 			$this->setFields(array());
 			$this->setDefaultOptions();
+
+			if($url !== null) {
+				$this->setUrl($url);
+			}
 		}
 
 		/**
