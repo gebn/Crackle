@@ -26,8 +26,9 @@ namespace Crackle\Authentication\Methods {
 		 * @see \Crackle\Authentication\Applicators\RequestCredentials::addRequestCredentialsTo()
 		 */
 		public function addRequestCredentialsTo($handle) {
-			curl_setopt($handle, CURLOPT_USERPWD, $this->__toString());
-			curl_setopt($handle, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+			curl_setopt_array($handle, array(
+					CURLOPT_USERPWD => $this->__toString(),
+					CURLOPT_HTTPAUTH => CURLAUTH_DIGEST));
 		}
 	}
 }

@@ -45,8 +45,9 @@ namespace Crackle\Proxies {
 		 */
 		public function addTo($handle) {
 			parent::addTo($handle);
-			curl_setopt($handle, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
-			curl_setopt($handle, CURLOPT_HTTPPROXYTUNNEL, $this->isTunnel());
+			curl_setopt_array($handle, array(
+				CURLOPT_PROXYTYPE => CURLPROXY_HTTP,
+				CURLOPT_HTTPPROXYTUNNEL => $this->isTunnel()));
 		}
 	}
 }

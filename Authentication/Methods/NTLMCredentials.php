@@ -27,8 +27,9 @@ namespace Crackle\Authentication\Methods {
 		 * @see \Crackle\Authentication\Applicators\RequestCredentials::addRequestCredentialsTo()
 		 */
 		public function addRequestCredentialsTo($handle) {
-			curl_setopt($handle, CURLOPT_USERPWD, $this->__toString());
-			curl_setopt($handle, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
+			curl_setopt_array($handle, array(
+					CURLOPT_USERPWD => $this->__toString(),
+					CURLOPT_HTTPAUTH => CURLAUTH_NTLM));
 		}
 
 		/**
@@ -37,8 +38,9 @@ namespace Crackle\Authentication\Methods {
 		 * @see \Crackle\Authentication\Applicators\ProxyCredentials::addProxyCredentialsTo()
 		 */
 		public function addProxyCredentialsTo($handle) {
-			curl_setopt($handle, CURLOPT_PROXYUSERPWD, $this->__toString());
-			curl_setopt($handle, CURLOPT_PROXYAUTH, CURLAUTH_NTLM);
+			curl_setopt_array($handle, array(
+					CURLOPT_PROXYUSERPWD => $this->__toString(),
+					CURLOPT_PROXYAUTH => CURLAUTH_NTLM));
 		}
 	}
 }
