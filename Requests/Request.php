@@ -280,19 +280,6 @@ namespace Crackle\Requests {
 		}
 
 		/**
-		 * Creates a query string from the fields.
-		 * @return string			The build query string ready to append to the URL.
-		 */
-		protected final function buildQueryString() {
-			// Crackle permits duplicate keys, so we cannot use PHP's http_build_query()
-			$pieces = array();
-			foreach($this->getFields() as $field) {
-				$pieces[] = urlencode($field->getKey()) . '=' . urlencode($field->getValue());
-			}
-			return implode('&', $pieces);
-		}
-
-		/**
 		 * Execute this request.
 		 * To fire multiple requests simultaneously, have a look at \Crackle\Requester.
 		 */
