@@ -2,6 +2,7 @@
 
 namespace Crackle\Requests {
 
+	use \Crackle\Requests\Parts\File;
 	use \Crackle\Exceptions\ValidationException;
 
 	use \CURLFile;
@@ -14,13 +15,13 @@ namespace Crackle\Requests {
 
 		/**
 		 * Files to send with this request.
-		 * @var array[string]
+		 * @var array[\Crackle\Requests\Parts\File]
 		 */
 		private $files;
 
 		/**
 		 * Get the files to send with this request.
-		 * @return array[string]		The files to send with this request.
+		 * @return array[\Crackle\Requests\Parts\File]		The files to send with this request.
 		 */
 		private final function getFiles() {
 			return $this->files;
@@ -28,7 +29,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the files to send with this request.
-		 * @param array[string] $files		The files to send with this request.
+		 * @param array[\Crackle\Requests\Parts\File] $files		The files to send with this request.
 		 */
 		private final function setFiles(array $files) {
 			$this->files = $files;
@@ -36,11 +37,11 @@ namespace Crackle\Requests {
 
 		/**
 		 * Add a new file to this request.
-		 * @param string $name			The name of this file. Cannot conflict with other files or fields.
-		 * @param string $path			The absolute path of the file.
+		 * @param string $name						The name of this file. Any file previously assigned to this name will be overwritten.
+		 * @param \Cracke\Requests\Parts\File		The file to add.
 		 */
-		public final function addFile($name, $path) {
-			$this->files[$name] = $path;
+		public final function addFile($name, File $file) {
+			$this->files[$name] = $file;
 		}
 
 		/**
@@ -97,23 +98,6 @@ namespace Crackle\Requests {
 		}
 
 		/**
-		 * Builds an array containing all key/value pairs and files that need to be sent in this request.
-		 * @return array[array[mixed]]
-		 */
-		private function collapse() {
-			$fields = array();
-			foreach ($this->getFields() as $pair) {
-				$fields[] = $pair->toArray();
-			}
-			foreach ($this->getFiles() as $name => $path) {
-				$fields[] = array(
-						$name,
-						'@' . $path); // file paths are identified with a '@' prefix to the value
-			}
-			return $fields;
-		}
-
-		/**
 		 * Creates a boundary to divide parts of the request.
 		 * @return string			The generated boundary.
 		 */
@@ -135,24 +119,19 @@ namespace Crackle\Requests {
 		 */
 		private function buildContent($boundary) {
 			$lines = array();
-			foreach ($this->collapse() as $field) {
-				list($name, $value) = $field;
-				if (strpos($value, '@') === 0) {
-					$matches = array();
-					if (preg_match('/^@(.*?)$/', $value, $matches)) {
-						$lines[] = '--' . $boundary;
-						$lines[] = 'Content-Disposition: form-data; name="' . $name . '"; filename="' . basename($matches[1]) . '"';
-						$lines[] = 'Content-Type: application/octet-stream';
-						$lines[] = '';
-						$lines[] = file_get_contents($matches[1]);
-					}
-				}
-				else {
-					$lines[] = '--' . $boundary;
-					$lines[] = 'Content-Disposition: form-data; name="' . $name . '"';
-					$lines[] = '';
-					$lines[] = $value;
-				}
+
+			// add fields
+			foreach($this->getFields() as $kvp) {
+				$lines[] = '--' . $boundary;
+				$lines[] = 'Content-Disposition: form-data; name="' . $kvp->getKey() . '"';
+				$lines[] = '';
+				$lines[] = $kvp->getValue();
+			}
+
+			// add files
+			foreach($this->getFiles() as $name => $file) {
+				$lines[] = '--' . $boundary;
+				$file->appendPart($lines, $name);
 			}
 
 			$lines[] = '--' . $boundary . '--';
