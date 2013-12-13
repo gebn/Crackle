@@ -9,6 +9,15 @@ namespace Crackle\Proxies {
 	class SOCKS5Proxy extends Proxy {
 
 		/**
+		 * Initialise a new SOCKS proxy object with an optional address and port number.
+		 * @param string $address		The hostname or IP address of the proxy.
+		 * @param int $port				The port number used by the proxy.
+		 */
+		public function __construct($address = null, $port = null) {
+			parent::__construct($address, $port);
+		}
+
+		/**
 		 * Configure a cURL session to use the proxy defined by this object.
 		 * @param resource $handle		The cURL handle to modify.
 		 * @see \Crackle\Proxies\Proxy::addTo()

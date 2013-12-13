@@ -77,6 +77,20 @@ namespace Crackle\Proxies {
 		}
 
 		/**
+		 * Initialise a new proxy object with an optional address and port number.
+		 * @param string $address		The hostname or IP address of the proxy.
+		 * @param int $port				The port number used by the proxy.
+		 */
+		public function __construct($address = null, $port = null) {
+			if($address !== null) {
+				$this->setAddress($address);
+			}
+			if($port !== null) {
+				$this->setPort($port);
+			}
+		}
+
+		/**
 		 * Configure a cURL session to use the proxy defined by this object.
 		 * @param resource $handle		The cURL handle to modify.
 		 */

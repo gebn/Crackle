@@ -16,9 +16,12 @@ namespace Crackle\Proxies {
 		private $isTunnel;
 
 		/**
-		 * Initialise a new HTTPProxy object.
+		 * Initialise a new HTTP proxy object with an optional address and port number.
+		 * @param string $address		The hostname or IP address of the proxy.
+		 * @param int $port				The port number used by the proxy.
 		 */
-		public function __construct() {
+		public function __construct($address = null, $port = null) {
+			parent::__construct($address, $port);
 			$this->setTunnel(false);
 		}
 
