@@ -21,11 +21,13 @@ namespace Crackle\Requests {
 				throw new InvalidArgumentException('The supplied URL is invalid.');
 			}
 
-			// extract GET parameters and add them as fields
-			$params = array();
-			parse_str($parts['query'], $params);
-			foreach($params as $name => $value) {
-				$this->addField($name, $value);
+			if(isset($parts['query'])) {
+				// extract GET parameters and add them as fields
+				$params = array();
+				parse_str($parts['query'], $params);
+				foreach($params as $name => $value) {
+					$this->addField($name, $value);
+				}
 			}
 
 			// set the original URL without the parameters as the request URL
