@@ -23,6 +23,7 @@ namespace Crackle\Proxies {
 		 * @see \Crackle\Proxies\Proxy::addTo()
 		 */
 		public function addTo($handle) {
+			parent::addTo($handle);
 			curl_setopt($handle, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
 		}
 	}
