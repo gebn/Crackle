@@ -46,7 +46,7 @@ namespace Crackle\Authentication {
 		 * Set the username to send.
 		 * @param string $username		The username to send.
 		 */
-		private final function setUsername($username) {
+		public final function setUsername($username) {
 			$this->username = (string)$username;
 		}
 
@@ -62,7 +62,7 @@ namespace Crackle\Authentication {
 		 * Set the password to send.
 		 * @param string $password		The password to send.
 		 */
-		private final function setPassword($password) {
+		public final function setPassword($password) {
 			$this->password = (string)$password;
 		}
 
