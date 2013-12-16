@@ -30,6 +30,11 @@ namespace Crackle\Requests {
 				}
 			}
 
+			// if the URL contains a host with no trailing slash, this key will not exist
+			if(!isset($parts['path'])) {
+				$parts['path'] = '';
+			}
+
 			// set the original URL without the parameters as the request URL
 			parent::setUrl(sprintf('%s://%s%s', $parts['scheme'], $parts['host'], $parts['path']));
 		}
