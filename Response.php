@@ -135,9 +135,9 @@ namespace Crackle {
 			$this->setResponseCode(curl_getinfo($handle, CURLINFO_HTTP_CODE));
 
 			$body = curl_multi_getcontent($handle);
-			$separation = strpos($body, "\r\n\r\n");
+			$separation = curl_getinfo($handle, CURLINFO_HEADER_SIZE);
 			$this->getHeaders()->parse(substr($body, 0, $separation));
-			$this->setContent(substr($body, $separation + 4));
+			$this->setContent(substr($body, $separation));
 		}
 
 		/**
