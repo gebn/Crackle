@@ -167,5 +167,14 @@ namespace Crackle {
 				throw new IOException('Failed to write file.');
 			}
 		}
+
+		/**
+		 * Output this response as the response to the current request.
+		 * Headers and the response body will be duplicated.
+		 */
+		public function passthrough() {
+			$this->getHeaders()->sendAll();
+			echo $this->getContent();
+		}
 	}
 }

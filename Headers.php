@@ -140,6 +140,15 @@ namespace Crackle {
 		}
 
 		/**
+		 * Send all of the headers contained in this object.
+		 */
+		public function sendAll() {
+			foreach($this->getHeaders() as $name => $value) {
+				header(self::format($name) . ': ' . $value);
+			}
+		}
+
+		/**
 		 * Adds the headers contained in this object to a cURL session.
 		 * @param resource $handle		A cURL session handle returned by curl_init().
 		 */
