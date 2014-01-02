@@ -146,14 +146,14 @@ namespace Crackle {
 		 * @throws \CurlException			If the multi handle returns an error at any stage.
 		 */
 		public function fireAll() {
-			// reduce the parallel limit if it is greater than the size of the queue
-			$length = $this->getQueue()->count();
-			if($length < $this->getParallelLimit()) {
-				$this->setParallelLimit($length);
-			}
 
-			$this->add($this->getParallelLimit()); // fill the handle with initial requests to run
-			$multiHandle = $this->getMultiHandle(); // optimisation: avoids many calls to $this->getMultiHandle()
+			// fill the handle with initial requests to run, up to the parallel limit
+			$this->add(min($this->getQueue()->count(), $this->getParallelLimit()));
+
+			// optimisation: avoids many calls to $this->getMultiHandle()
+			$multiHandle = $this->getMultiHandle();
+
+			// keep going whie not false
 			$running = null;
 
 			do {
