@@ -3,7 +3,7 @@
 namespace Crackle {
 
 	use \Crackle\Exceptions\CurlException;
-	use \Crackle\Utilites\Curl;
+	use \Crackle\Utilities\Curl;
 	use \Crackle\Requests\Request;
 
 	use \SplQueue;

@@ -3,7 +3,7 @@
 namespace Crackle\Requests {
 
 	use \Crackle\Collections\KeyValuePair;
-	use \Crackle\Utilites\Curl;
+	use \Crackle\Utilities\Curl;
 	use \Crackle\Headers;
 	use \Crackle\Response;
 

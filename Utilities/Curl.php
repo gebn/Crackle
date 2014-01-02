@@ -1,6 +1,6 @@
 <?php
 
-namespace Crackle\Utilites {
+namespace Crackle\Utilities {
 
 	/**
 	 * Extra functionality to aid using the cURL extension.
