@@ -2,7 +2,7 @@
 
 namespace Crackle\Requests {
 
-	use \Crackle\Requests\Parts\File;
+	use \Crackle\Requests\Parts\Files\POSTFile;
 	use \Crackle\Exceptions\ValidationException;
 
 	use \CURLFile;
@@ -15,13 +15,13 @@ namespace Crackle\Requests {
 
 		/**
 		 * Files to send with this request.
-		 * @var array[\Crackle\Requests\Parts\File]
+		 * @var array[\Crackle\Requests\Parts\Files\POSTFile]
 		 */
 		private $files;
 
 		/**
 		 * Get the files to send with this request.
-		 * @return array[\Crackle\Requests\Parts\File]		The files to send with this request.
+		 * @return array[\Crackle\Requests\Parts\Files\POSTFile]		The files to send with this request.
 		 */
 		private final function getFiles() {
 			return $this->files;
@@ -29,7 +29,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the files to send with this request.
-		 * @param array[\Crackle\Requests\Parts\File] $files		The files to send with this request.
+		 * @param array[\Crackle\Requests\Parts\Files\POSTFile] $files		The files to send with this request.
 		 */
 		private final function setFiles(array $files) {
 			$this->files = $files;
@@ -37,10 +37,10 @@ namespace Crackle\Requests {
 
 		/**
 		 * Add a new file to this request.
-		 * @param string $name						The name of this file. Any file previously assigned to this name will be overwritten.
-		 * @param \Cracke\Requests\Parts\File		The file to add.
+		 * @param string $name								The name of this file. Any file previously assigned to this name will be overwritten.
+		 * @param \Cracke\Requests\Parts\Files\POSTFile		The file to add.
 		 */
-		public final function addFile($name, File $file) {
+		public final function addFile($name, POSTFile $file) {
 			$this->files[$name] = $file;
 		}
 
@@ -68,7 +68,7 @@ namespace Crackle\Requests {
 		 * @throws ValidationException a problem is discovered.
 		 */
 		private function validate() {
-			$fields = array_map(function ($pair) {
+			$fields = array_map(function($pair) {
 				return $pair->getKey();
 			}, $this->getFields());
 			$files = array_keys($this->getFiles());

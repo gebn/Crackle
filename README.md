@@ -4,16 +4,18 @@ Crackle is an easy to use, object-oriented HTTP client.
 
 ## Features
 
- - GET, POST, HEAD
+ - GET, POST, HEAD, PUT, DELETE
  - Request authentication (basic, digest, NTLM)
  - Proxy support (optional basic and NTLM authentication)
- - Easy header management for both requests and responses.
- - Send parameters with duplicate names and files in a single request.
+ - Easy header management for both requests and responses
+ - Send parameters with duplicate names and files in a single request
  - Simultaneous processing of multiple requests
  - Request callbacks
  - Many more...
 
-## Requirements
+## Dependencies
+
+### Required
 
  - PHP >= 5.3.0
  - cURL extension
