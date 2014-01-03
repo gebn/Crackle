@@ -22,7 +22,7 @@ namespace Crackle {
 		 * The HTTP status code returned by the server.
 		 * @var int
 		 */
-		private $responseCode;
+		private $statusCode;
 
 		/**
 		 * Response headers, indexed by name.
@@ -56,16 +56,16 @@ namespace Crackle {
 		 * Get the HTTP status code returned by the destination server.
 		 * @return int			The status code.
 		 */
-		public final function getResponseCode() {
-			return $this->responseCode;
+		public final function getStatusCode() {
+			return $this->statusCode;
 		}
 
 		/**
 		 * Set the HTTP status code returned by the destination server.
-		 * @param int $responseCode			The status code.
+		 * @param int $statusCode			The status code.
 		 */
-		private final function setResponseCode($responseCode) {
-			$this->responseCode = (int)$responseCode;
+		private final function setStatusCode($statusCode) {
+			$this->statusCode = (int)$statusCode;
 		}
 
 		/**
@@ -132,7 +132,7 @@ namespace Crackle {
 		 */
 		private function import($handle) {
 			$this->setUrl(curl_getinfo($handle, CURLINFO_EFFECTIVE_URL));
-			$this->setResponseCode(curl_getinfo($handle, CURLINFO_HTTP_CODE));
+			$this->setStatusCode(curl_getinfo($handle, CURLINFO_HTTP_CODE));
 
 			$body = curl_multi_getcontent($handle);
 			$separation = curl_getinfo($handle, CURLINFO_HEADER_SIZE);

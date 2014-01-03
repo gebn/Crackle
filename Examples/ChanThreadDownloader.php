@@ -9,7 +9,8 @@ namespace Crackle\Examples {
 	use \stdClass;
 	use \Exception;
 
-	require_once('../Crackle.php');
+	require '../Crackle.php';
+	set_time_limit(0);
 	$dl = new ChanThreadDownloader();
 	$dl->parseUrl(''); // enter thread URL, e.g. http://boards.4chan.org/wg/res/1234567
 	$dl->setOutputDirectory('');
@@ -170,7 +171,7 @@ namespace Crackle\Examples {
 		private function downloadThread() {
 			$request = new GETRequest($this->getJsonUrl());
 			$request->fire();
-			if($request->isError() || $request->getResponse()->getResponseCode() != 200) {
+			if($request->isError() || $request->getResponse()->getStatusCode() != 200) {
 				throw new Exception('Error retrieving JSON: ' . $request->getError());
 			}
 			return $request->getResponse()->getContent();
@@ -224,7 +225,7 @@ namespace Crackle\Examples {
 		 * @param array[\Crackle\Requests\GETRequest] $requests		The requests to run.
 		 */
 		private function download(array $requests) {
-			$requester = new Requester();
+			$requester = new Requester(10);
 			$requester->queueAll($requests);
 			$requester->fireAll();
 		}
