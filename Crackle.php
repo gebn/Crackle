@@ -67,7 +67,7 @@ namespace Crackle {
 		private static function registerAutoloader() {
 			spl_autoload_register(function($qualified) {
 				if(substr($qualified, 0, 8) == 'Crackle\\') {
-					require substr($qualified, 8) . '.php';
+					require str_replace('\\', DIRECTORY_SEPARATOR, substr($qualified, 8)) . '.php';
 				}
 			}, true);
 		}
