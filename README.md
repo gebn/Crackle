@@ -48,19 +48,49 @@ Crackle allows you to attach a callback to each request, which is executed immed
 ````php
 require_once 'Crackle.php';
 use \Crackle\Requests\POSTRequest;
-use \Crackle\Requests\Parts\File;
+use \Crackle\Requests\Parts\Files\POSTFile;
 
 $request = new POSTRequest('https://example.com');
 $request->getHeaders()->set('custom-header', 'value');
 $request->addField('name[]', 'value1');
 $request->addField('name[]', 'value2'); // duplicate field names are supported
-$request->addFile('upload', File::factory('photo.jpg'));
-$request->addFile('another', File::factory('document.docx'));
+$request->addFile('upload', POSTFile::factory('photo.jpg'));
+$request->addFile('another', POSTFile::factory('document.docx'));
 $request->setCallback(function(POSTRequest $request) { // callback is passed the original request object
 	if(!$request->isError()) {
 		$request->getResponse()->writeTo('/home/gebn'); // write the response to a file
 	}
 });
+
+$request->fire();
+````
+
+### PUT request with NTLM authentication and proxy
+
+All types of request can be authenticated and proxied:
+
+````php
+require_once 'Crackle.php';
+use \Crackle\Requests\PUTRequest;
+use \Crackle\Requests\Parts\Files\PUTFile;
+use \Crackle\Proxies\SOCKS5Proxy;
+use \Crackle\Authentication\Methods\BasicCredentials;
+use \Crackle\Authentication\Methods\NTLMCredentials;
+
+$request = new PUTRequest('https://example.com/file.txt');
+
+// Basic, Digest and NTLM are supported
+$request->setCredentials(new BasicCredentials('username', 'password'));
+
+// can also use PUTFile::factory($path) to create a PUTFile object from a real file
+$file = new PUTFile();
+$file->setContent('virtual file content');
+$file->setMimeType('text/plain'); // optional
+$request->setFile($file);
+
+$proxy = new SOCKS5Proxy('10.11.12.13'); // HTTP proxies are also supported
+$proxy->setCredentials(new NTLMCredentials('username', 'password')); // BASIC and NTLM supported
+$request->setProxy($proxy);
 
 $request->fire();
 ````
@@ -109,10 +139,24 @@ N.B. The following options are set by Crackle immediately before execution, so s
  - `CURLOPT_URL` (use `setUrl()`)
  - `CURLOPT_RETURNTRANSFER`
 
+#### HEAD requests
+
+ - `CURLOPT_NOBODY`
+
 #### POST requests
 
  - `CURLOPT_POST`
  - `CURLOPT_POSTFIELDS` (this is constructed automatically from added fields and files)
+
+#### PUT requests
+
+ - `CURLOPT_PUT`
+ - `CURLOPT_INFILE` (use `setFile()`)
+ - `CURLOPT_INFILESIZE` (set automatically)
+
+#### DELETE requests
+
+ - `CURLOPT_CUSTOMREQUEST`
 
 #### Authenticated requests
 
@@ -125,4 +169,4 @@ N.B. The following options are set by Crackle immediately before execution, so s
 
 ## Licence
 
-Crackle is released under the MIT Licence. For more information, see the [Wikipedia article](http://en.wikipedia.org/wiki/MIT_License).
+Crackle is released under the MIT Licence. For more information about how this allows you to use the library, see the [Wikipedia article](http://en.wikipedia.org/wiki/MIT_License).
