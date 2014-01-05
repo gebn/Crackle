@@ -178,11 +178,19 @@ namespace Crackle\Requests {
 		}
 
 		/**
-		 * Find whether this cURL generated an error when asked to execute this request.
+		 * Find whether cURL returned an error when asked to execute this request.
 		 * @return boolean			True if it failed; false if it didn't.
 		 */
 		public final function isError() {
 			return is_string($this->getError());
+		}
+
+		/**
+		 * Find whether this request was successful.
+		 * @return boolean			True if it succeeded; false if it wasn't.
+		 */
+		public final function succeeded() {
+			return $this->error === false;
 		}
 
 		/**
