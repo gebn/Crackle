@@ -2,8 +2,6 @@
 
 namespace Crackle\Requests\Parts\Files {
 
-	use \Exception;
-
 	/**
 	 * Represents a file that can be sent as part of a POST request.
 	 * @author George Brighton
@@ -75,27 +73,12 @@ namespace Crackle\Requests\Parts\Files {
 		/**
 		 * Get a file object representing a file at a location.
 		 * @param string $path									The absolute or relative (to this script) path to the file.
-		 * @throws \Exception									If the path does not point to a valid, readable file.
 		 * @return \Crackle\Requests\Parts\Files\POSTFile		The created object.
 		 */
 		public static function factory($path) {
-			$path = realpath($path);
-
-			if(!is_file($path)) {
-				throw new Exception('The path must be the path of a file.');
-			}
-
-			if(!is_readable($path)) {
-				throw new Exception('The supplied file path cannot be read.');
-			}
-
-			$file = new static();
+			$file = parent::factory($path);
 			$file->setName(basename($path));
 			$file->setContent(file_get_contents($path));
-			if(extension_loaded('fileinfo')) {
-				$file->setMimeType(finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path));
-			}
-
 			return $file;
 		}
 	}

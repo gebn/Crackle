@@ -2,6 +2,8 @@
 
 namespace Crackle\Requests\Parts\Files {
 
+	use \Exception;
+
 	/**
 	 * Represents a file that can be attached to a request.
 	 * @author George Brighton
@@ -40,9 +42,18 @@ namespace Crackle\Requests\Parts\Files {
 		/**
 		 * Create a new file object representing a path.
 		 * @param string $path								The path to read from.
+		 * @throws \Exception								If the path does not point to a valid, readable file.
 		 * @return \Crackle\Requests\Parts\Files\File		The created file.
 		 */
 		public static function factory($path) {
+			if(!is_file($path)) {
+				throw new Exception('The path must be the path of a file.');
+			}
+
+			if(!is_readable($path)) {
+				throw new Exception('The supplied file path cannot be read.');
+			}
+
 			$file = new static();
 			if(extension_loaded('fileinfo')) {
 				$file->setMimeType(finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path));

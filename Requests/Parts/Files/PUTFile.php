@@ -93,19 +93,11 @@ namespace Crackle\Requests\Parts\Files {
 		/**
 		 * Get a file object representing a file at a location.
 		 * @param string $path									The absolute or relative (to this script) path to the file.
-		 * @throws \Exception									If the path does not point to a valid, readable file.
 		 * @return \Crackle\Requests\Parts\Files\POSTFile		The created file sobject.
 		 */
 		public static function factory($path) {
 			$file = parent::factory($path);
-
-			$stream = fopen($path, 'r');
-			if(!$stream) {
-				throw new Exception('Failed to open the file.');
-			}
-
-			$file = new static();
-			$file->setStream($stream);
+			$file->setStream(fopen($path, 'r')); // readability check done in parent
 			$file->setSize(filesize($path));
 			return $file;
 		}
