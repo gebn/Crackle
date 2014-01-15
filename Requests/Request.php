@@ -284,7 +284,7 @@ namespace Crackle\Requests {
 		 * @return boolean		True if it has, false if it hasn't.
 		 */
 		public final function isFired() {
-			return $this->getResponse() !== null;
+			return $this->error !== null;
 		}
 
 		/**
