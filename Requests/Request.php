@@ -10,6 +10,7 @@ namespace Crackle\Requests {
 	use \Crackle\Authentication\Applicators\RequestCredentials;
 	use \Crackle\Proxies\Proxy;
 
+	use \Exception;
 	use \InvalidArgumentException;
 
 	/**
@@ -302,6 +303,9 @@ namespace Crackle\Requests {
 		 * Should be used to specify options that users shouldn't be changing.
 		 */
 		public function finalise() {
+			// make sure everything is in order
+			$this->validate();
+
 			// set options that Crackle requires to operate
 			curl_setopt_array($this->getHandle(), array(
 					CURLOPT_HEADER => true,
@@ -319,6 +323,17 @@ namespace Crackle\Requests {
 			// add proxy if configured
 			if($this->getProxy() !== null) {
 				$this->getProxy()->addTo($this->getHandle());
+			}
+		}
+
+		/**
+		 * Checks this request for errors before it is sent.
+		 * @throws \Exception		If an issue is found.
+		 */
+		protected function validate() {
+			// check that a URL has been set
+			if($this->getUrl() == null) { // null or empty
+				throw new Exception('A request URL must be specified.');
 			}
 		}
 

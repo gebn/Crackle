@@ -50,13 +50,16 @@ namespace Crackle\Requests {
 		/**
 		 * Push all data contained in this object to the handle.
 		 * Called just prior to sending the request.
+		 * @see \Crackle\Requests\Request::finalise()
 		 */
 		public function finalise() {
+			// URL must be built before calling parent::finalise(), because that sets the URL on the handle
 			$queryString = $this->buildQueryString();
 			if($queryString !== '') {
 				// append the query string; we removed and imported any existing one in the setter
 				parent::setUrl($this->getUrl() . '?' . $queryString); // want to use parent as our override would re-parse the query string
 			}
+
 			parent::finalise();
 		}
 

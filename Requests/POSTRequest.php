@@ -56,18 +56,18 @@ namespace Crackle\Requests {
 		/**
 		 * Push all data contained in this object to the handle.
 		 * Called just prior to sending the request.
+		 * @see \Crackle\Requests\Request::finalise()
 		 */
 		public function finalise() {
-			$this->validate();
-			$this->buildRequest();
 			parent::finalise();
+			$this->buildRequest();
 		}
 
 		/**
 		 * Checks this request for consistency.
 		 * @throws ValidationException a problem is discovered.
 		 */
-		private function validate() {
+		protected function validate() {
 			$fields = array_map(function($pair) {
 				return $pair->getKey();
 			}, $this->getFields());

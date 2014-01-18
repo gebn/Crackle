@@ -19,6 +19,7 @@ namespace Crackle\Requests {
 		/**
 		 * Push all data contained in this object to the handle.
 		 * Called just prior to sending the request.
+		 * @see \Crackle\Requests\Request::finalise()
 		 */
 		public function finalise() {
 			parent::finalise();

@@ -4,6 +4,8 @@ namespace Crackle\Requests {
 
 	use \Crackle\Requests\Parts\Files\PUTFile;
 
+	use \Exception;
+
 	/**
 	 * Represents an HTTP request sent using the PUT method.
 	 * @author George Brighton
@@ -43,11 +45,24 @@ namespace Crackle\Requests {
 		/**
 		 * Push all data contained in this object to the handle.
 		 * Called just prior to sending the request.
+		 * @see \Crackle\Requests\Request::finalise()
 		 */
 		public function finalise() {
 			parent::finalise();
 			curl_setopt($this->getHandle(), CURLOPT_PUT, true);
 			$this->getFile()->addTo($this->getHandle());
+		}
+
+		/**
+		 * Checks this request for errors before it is sent.
+		 * @throws \Exception		If an issue is found.
+		 * @see \Crackle\Requests\Request::validate()
+		 */
+		protected function validate() {
+			parent::validate();
+			if($this->getFile() === null) {
+				throw new Exception('A PUT file must be specified for PUT requests.');
+			}
 		}
 	}
 }
