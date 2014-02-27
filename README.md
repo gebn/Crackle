@@ -1,6 +1,6 @@
 # Crackle
 
-Crackle is an easy to use, object-oriented HTTP client.
+Crackle is a powerful yet easy to use object-oriented HTTP client for PHP.
 
 ## Features
 
@@ -36,7 +36,7 @@ use \Crackle\Requests\GETRequest;
 
 $request = new GETRequest('http://icanhazip.com');
 $request->fire();
-if(!$request->isError()) {
+if($request->succeeded()) {
 	echo $request->getResponse()->getContent();
 }
 ````
@@ -57,7 +57,7 @@ $request->addField('name[]', 'value2'); // duplicate field names are supported
 $request->addFile('upload', POSTFile::factory('photo.jpg'));
 $request->addFile('another', POSTFile::factory('document.docx'));
 $request->setCallback(function(POSTRequest $request) { // callback is passed the original request object
-	if(!$request->isError()) {
+	if($request->succeeded()) {
 		$request->getResponse()->writeTo('/home/gebn'); // write the response to a file
 	}
 });
@@ -65,7 +65,7 @@ $request->setCallback(function(POSTRequest $request) { // callback is passed the
 $request->fire();
 ````
 
-### PUT request with NTLM authentication and proxy
+### A PUT request with NTLM authentication and proxy
 
 All types of request can be authenticated and proxied:
 
@@ -89,7 +89,7 @@ $file->setMimeType('text/plain'); // optional
 $request->setFile($file);
 
 $proxy = new SOCKS5Proxy('10.11.12.13'); // HTTP proxies are also supported
-$proxy->setCredentials(new NTLMCredentials('username', 'password')); // BASIC and NTLM supported
+$proxy->setCredentials(new NTLMCredentials('username', 'password')); // Basic and NTLM supported
 $request->setProxy($proxy);
 
 $request->fire();
