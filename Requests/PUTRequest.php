@@ -13,7 +13,7 @@ namespace Crackle\Requests {
 	class PUTRequest extends GETRequest {
 
 		/**
-		 * The file to send in this request.
+		 * The file to send in this request (optional).
 		 * @var \Crackle\Requests\Parts\Files\PUTFile
 		 */
 		private $file;
@@ -50,18 +50,10 @@ namespace Crackle\Requests {
 		public function finalise() {
 			parent::finalise();
 			curl_setopt($this->getHandle(), CURLOPT_PUT, true);
-			$this->getFile()->addTo($this->getHandle());
-		}
 
-		/**
-		 * Checks this request for errors before it is sent.
-		 * @throws \Exception		If an issue is found.
-		 * @see \Crackle\Requests\Request::validate()
-		 */
-		protected function validate() {
-			parent::validate();
-			if($this->getFile() === null) {
-				throw new Exception('A PUT file must be specified for PUT requests.');
+			// the PUT file is optional
+			if($this->getFile() !== null) {
+				$this->getFile()->addTo($this->getHandle());
 			}
 		}
 	}
