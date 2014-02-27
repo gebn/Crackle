@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Crackle is a powerful yet easy to use object-oriented HTTP client.
+ * @author George Brighton
+ * @link https://github.com/gebn/Crackle
+ */
 namespace Crackle {
 
 	use \Exception;
