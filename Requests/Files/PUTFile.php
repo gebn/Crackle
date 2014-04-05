@@ -35,6 +35,11 @@ namespace Crackle\Requests\Files {
 		 * @param resource $stream			The stream resource pointing to this file.
 		 */
 		private final function setStream($stream) {
+			// close any existing stream
+			if($this->getStream() !== null) {
+				fclose($this->getStream());
+			}
+
 			$this->stream = $stream;
 		}
 
