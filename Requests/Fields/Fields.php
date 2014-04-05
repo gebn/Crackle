@@ -2,7 +2,7 @@
 
 namespace Crackle\Requests\Fields {
 
-	use \Crackle\Collections\KeyValuePair;
+	use \Crackle\Structures\KeyValuePair;
 
 	use \InvalidArgumentException;
 
@@ -96,7 +96,7 @@ namespace Crackle\Requests\Fields {
 
 		/**
 		 * Retrieve the field pairs.
-		 * @return array[KeyValuePair]		KVPs of fields in this container
+		 * @return array[\Crackle\Structures\KeyValuePair]		KVPs of fields in this container
 		 */
 		public final function getPairs() {
 			$pairs = array();

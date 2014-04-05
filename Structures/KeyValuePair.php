@@ -1,6 +1,6 @@
 <?php
 
-namespace Crackle\Collections {
+namespace Crackle\Structures {
 
 	/**
 	 * Defines a key/value pair that can be set or retrieved.
