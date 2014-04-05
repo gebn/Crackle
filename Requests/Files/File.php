@@ -1,6 +1,6 @@
 <?php
 
-namespace Crackle\Requests\Parts\Files {
+namespace Crackle\Requests\Files {
 
 	use \Exception;
 

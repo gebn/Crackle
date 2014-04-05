@@ -1,12 +1,14 @@
 <?php
 
-namespace Crackle\Requests\Parts\Files {
+namespace Crackle\Requests\Files {
+
+	use \Crackle\Requests\Parts\POSTRequestPart;
 
 	/**
 	 * Represents a file that can be sent as part of a POST request.
 	 * @author George Brighton
 	 */
-	class POSTFile extends File {
+	class POSTFile extends File implements POSTRequestPart {
 
 		/**
 		 * The name of this file, including extension.

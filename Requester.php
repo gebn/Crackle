@@ -3,7 +3,7 @@
 namespace Crackle {
 
 	use \Crackle\Utilities\Curl;
-	use \Crackle\Requests\Request;
+	use \Crackle\Requests\GETRequest;
 
 	use \Exception;
 	use \SplQueue;
@@ -73,7 +73,7 @@ namespace Crackle {
 		/**
 		 * Retrieve a request object from the executing array.
 		 * @param resource $handle					The handle of the request to retrieve.
-		 * @return \Crackle\Requests\Request		The corresponding request.
+		 * @return \Crackle\Requests\GETRequest		The corresponding request.
 		 */
 		private final function getExecutingRequest($handle) {
 			return $this->executing[(int)$handle];
@@ -81,7 +81,7 @@ namespace Crackle {
 
 		/**
 		 * Set the lookup array of currently executing requests.
-		 * @param array[\Crackle\Requests\Request] $executing		The lookup array of currently executing requests.
+		 * @param array[\Crackle\Requests\GETRequest] $executing		The lookup array of currently executing requests.
 		 */
 		private final function setExecuting(array $executing) {
 			$this->executing = $executing;
@@ -125,15 +125,15 @@ namespace Crackle {
 
 		/**
 		 * Schedule a request for execution.
-		 * @param \Crackle\Requests\Request $request		The request to queue.
+		 * @param \Crackle\Requests\GETRequest $request		The request to queue.
 		 */
-		public function queue(Request $request) {
+		public function queue(GETRequest $request) {
 			$this->getQueue()->enqueue($request);
 		}
 
 		/**
 		 * Schedule multiple requests for execution.
-		 * @param array[\Crackle\Requests\Request] $requests		The requests to queue.
+		 * @param array[\Crackle\Requests\GETRequest] $requests		The requests to queue.
 		 */
 		public final function queueAll(array $requests) {
 			foreach($requests as $request) {
@@ -191,9 +191,9 @@ namespace Crackle {
 
 		/**
 		 * Removes a finished request from the multi handle.
-		 * @param \Crackle\Requests\Request $request		The request to remove.
+		 * @param \Crackle\Requests\GETRequest $request		The request to remove.
 		 */
-		private function remove(Request $request) {
+		private function remove(GETRequest $request) {
 			unset($this->executing[(int)$request->getHandle()]);
 			curl_multi_remove_handle($this->getMultiHandle(), $request->getHandle());
 		}
