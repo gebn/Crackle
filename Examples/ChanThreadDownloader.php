@@ -171,7 +171,7 @@ namespace Crackle\Examples {
 		private function downloadThread() {
 			$request = new GETRequest($this->getJsonUrl());
 			$request->fire();
-			if($request->isError() || $request->getResponse()->getStatusCode() != 200) {
+			if($request->failed() || $request->getResponse()->getStatusCode() != 200) {
 				throw new Exception('Error retrieving JSON: ' . $request->getError());
 			}
 			return $request->getResponse()->getContent();
@@ -207,7 +207,7 @@ namespace Crackle\Examples {
 				$request = new GETRequest($url);
 				$ref = $this; // cannot use $this in closures in 5.3; methods called on $ref must also be public
 				$request->setCallback(function($request) use ($ref) {
-					if($request->isError()) {
+					if($request->failed()) {
 						$ref->incrementErrors();
 					}
 					else {

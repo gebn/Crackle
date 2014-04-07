@@ -185,7 +185,7 @@ namespace Crackle\Requests {
 		 * Find whether cURL returned an error when asked to execute this request.
 		 * @return boolean			True if it failed; false if it didn't.
 		 */
-		public final function isError() {
+		public final function failed() {
 			return is_string($this->getError());
 		}
 
@@ -207,7 +207,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the response representing data returned from this request.
-		 * N.B. this will be null if $this->isError() returns true - always check that no error occurred first.
+		 * N.B. this will be null if $this->failed() returns true - always check that no error occurred first.
 		 * @return \Crackle\Response		The response representing data returned from this request.
 		 */
 		public final function getResponse() {
@@ -341,7 +341,7 @@ namespace Crackle\Requests {
 			// if an error occurred, set it
 			$this->setError($result === CURLE_OK ? false : Curl::getStringError($result));
 
-			if(!$this->isError()) {
+			if(!$this->failed()) {
 				// build the response
 				$this->setResponse(Response::factory($this->getHandle()));
 			}
