@@ -45,7 +45,7 @@ There are several things to note:
 
  - You only ever need to require `Crackle.php`; Crackle has an autoloader, which will take care of other includes for you.
  - All types of request (`GET`, `POST` etc.) are stored in the `\Crackle\Requests` namespace. They have names of the form `<VERB>Request.php` to make them easy to find.
- - Crackle's `fire()` method does not throw any exceptions on failure; instead you can check `succeeded()` or `failed()` afterwards. This may seem perverse, however I chose to do it this way for several reasons:
+ - Crackle's `fire()` method does not throw any exceptions on failure; instead you can check `succeeded()` or `failed()` afterwards. This method may seem perverse, however it was chosen for several reasons:
 	- It reduces cases of uncaught exceptions. If it's not thrown, it doesn't need to be caught.
 	- There's nothing to stop you from throwing your own exception that integrates with your application.
 	- It makes working with callbacks (which will be introduced later) a snap.
@@ -73,7 +73,7 @@ $request->getFiles()->set('api_file', POSTFile::factory('leaked-credentials.txt'
 $request->fire();
 ```
 
-Crackle allows you to arbitrarily nest all three types of field depending on your needs using PHP's versatile array syntax:
+Crackle allows you to arbitrarily nest all three types of field depending on your needs using PHP's array syntax:
 
 ``` php
 $variables = $request->getVariables();
@@ -123,7 +123,7 @@ Hopefully you're now getting an idea of how the various different components of 
 
 ### Parallel requests with callbacks
 
-Crackle includes a `Requester` class in the default namespace which has a single purpose: to fire off requests simultaneously. Its use is highly recommended if you're dealing with multiple requests - performance gains can be significant. So significant in face, that I started Crackle because I wanted an easier way to manage parallel requests. The name *Crackle* comes from a fire crackling, in the same way you could imagine Crackle firing off multiple requests.
+Crackle includes a `Requester` class in the default namespace which has a single purpose: to fire off requests simultaneously. Its use is highly recommended if you're dealing with multiple requests - performance gains can be significant. So significant in fact, that Crackle was started because I wanted an easier way to manage parallel requests. The name *Crackle* comes from a fire crackling, in the same way you could imagine Crackle firing off multiple requests.
 
 A callback is a function that can be attached to a Crackle request. As soon as the request finishes, regardless of success or failure, the callback is executed. It is passed the original request object as its only argument.
 
