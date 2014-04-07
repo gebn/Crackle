@@ -168,12 +168,14 @@ N.B. Some options are set by Crackle immediately before execution, so setting th
 
 ## Development
 
-Crackle is on Trello! [Click here](https://trello.com/crackle) to visit the organisation's homepage.
+Crackle is on Trello! [Click here](https://trello.com/crackle) to visit the organisation's homepage. To see what's in the pipeline, have a peek at the [Development](https://trello.com/b/91q94waP/development) board!
 
-To see what's in the pipeline for Crackle, have a peek at the [Development](https://trello.com/b/91q94waP/development) board!
+If you discover a bug, first check Trello to make sure I'm not already aware of it. If you can't see a match, please open a [new issue](https://github.com/gebn/Crackle/issues/new) on GitHub.
 
-If you discover a bug, please open a new issue on GitHub.
+## Contributing
+
+Please feel free to fork Crackle, create a feature branch, and send me a pull request!
 
 ## Licence
 
-Crackle is released under the MIT Licence. For more information about how this allows you to use the library, see the [Wikipedia article](http://en.wikipedia.org/wiki/MIT_License).
+Crackle is released under the MIT Licence - see the LICENSE file for details. For more information about how this allows you to use the library, see the [Wikipedia article](http://en.wikipedia.org/wiki/MIT_License).
