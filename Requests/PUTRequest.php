@@ -2,7 +2,7 @@
 
 namespace Crackle\Requests {
 
-	use \Crackle\Requests\Parts\Files\PUTFile;
+	use \Crackle\Requests\Files\PUTFile;
 
 	use \Exception;
 
@@ -14,13 +14,13 @@ namespace Crackle\Requests {
 
 		/**
 		 * The file to send in this request (optional).
-		 * @var \Crackle\Requests\Parts\Files\PUTFile
+		 * @var \Crackle\Requests\Files\PUTFile
 		 */
 		private $file;
 
 		/**
 		 * Get the file to send in this request.
-		 * @return \Crackle\Requests\Parts\Files\PUTFile		The file to send in this request.
+		 * @return \Crackle\Requests\Files\PUTFile		The file to send in this request.
 		 */
 		private final function getFile() {
 			return $this->file;
@@ -28,7 +28,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the file to send in this request.
-		 * @param \Crackle\Requests\Parts\Files\PUTFile $file		The file to send in this request.
+		 * @param \Crackle\Requests\Files\PUTFile $file		The file to send in this request.
 		 */
 		public final function setFile(PUTFile $file) {
 			$this->file = $file;
