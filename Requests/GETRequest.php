@@ -207,10 +207,18 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the response representing data returned from this request.
-		 * N.B. this will be null if $this->failed() returns true - always check that no error occurred first.
 		 * @return \Crackle\Response		The response representing data returned from this request.
+		 * @throws \Exception				If the response is unavailable.
 		 */
 		public final function getResponse() {
+			if(!$this->isFired()) {
+				throw new Exception('This request must be fired before attempting to access the response.');
+			}
+
+			if($this->failed()) {
+				throw new Exception('No response is available because the request failed.');
+			}
+
 			return $this->response;
 		}
 
