@@ -4,6 +4,7 @@ namespace Crackle\Requests {
 
 	use \Crackle\Requests\Fields\Fields;
 	use \Crackle\Requests\Parts\POSTVariable;
+	use \Crackle\Requests\Files\POSTFile;
 
 	/**
 	 * Represents an HTTP request sent using the POST method.
@@ -126,7 +127,8 @@ namespace Crackle\Requests {
 			// add files
 			foreach($this->getFiles()->getPairs() as $pair) {
 				$lines[] = '--' . $boundary;
-				$pair->getValue()->appendPart($lines, $pair->getKey());
+				$file = $pair->getValue() instanceof POSTFile ? $pair->getValue() : POSTFile::factory($pair->getValue());
+				$file->appendPart($lines, $pair->getKey());
 			}
 
 			$lines[] = '--' . $boundary . '--';
