@@ -171,10 +171,18 @@ namespace Crackle\Examples {
 		private function downloadThread() {
 			$request = new GETRequest($this->getJsonUrl());
 			$request->fire();
-			if($request->failed() || $request->getResponse()->getStatusCode() != 200) {
-				throw new Exception('Error retrieving JSON: ' . $request->getError());
+
+			if($request->failed()) {
+				throw new Exception('Request failed: ' . $request->getError());
 			}
-			return $request->getResponse()->getContent();
+
+			$response = $request->getResponse();
+
+			if($response->getStatusCode() != 200) {
+				throw new Exception('Error retrieving JSON: HTTP ' . $response->getStatusCode());
+			}
+
+			return $response->getContent();
 		}
 
 		/**
