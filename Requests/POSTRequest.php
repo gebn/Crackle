@@ -3,8 +3,7 @@
 namespace Crackle\Requests {
 
 	use \Crackle\Requests\Fields\Fields;
-	use \Crackle\Requests\Fields\Files;
-	use \Crackle\Requests\Fields\Variables;
+	use \Crackle\Requests\Parts\POSTVariable;
 
 	/**
 	 * Represents an HTTP request sent using the POST method.
@@ -14,19 +13,19 @@ namespace Crackle\Requests {
 
 		/**
 		 * The POST variables to send with this request.
-		 * @var \Crackle\Requests\Fields\Variables
+		 * @var \Crackle\Requests\Fields\Fields
 		 */
 		private $variables;
 
 		/**
 		 * POST files to send with this request.
-		 * @var \Crackle\Requests\Fields\Files
+		 * @var \Crackle\Requests\Fields\Fields
 		 */
 		private $files;
 
 		/**
 		 * Retrieve the POST variables to send with this request.
-		 * @return \Crackle\Requests\Fields\Variables		The POST variables to send with this request.
+		 * @return \Crackle\Requests\Fields\Fields		The POST variables to send with this request.
 		 */
 		public final function getVariables() {
 			return $this->variables;
@@ -34,15 +33,15 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the POST variables to send with this request.
-		 * @param \Crackle\Requests\Fields\Variables $variables The new POST variables to send with this request.
+		 * @param \Crackle\Requests\Fields\Fields $variables The new POST variables to send with this request.
 		 */
-		private final function setVariables($variables) {
+		private final function setVariables(Fields $variables) {
 			$this->variables = $variables;
 		}
 
 		/**
 		 * Get the files to send with this request.
-		 * @return \Crackle\Requests\Fields\Files files to send with this request.
+		 * @return \Crackle\Requests\Fields\Fields files to send with this request.
 		 */
 		public final function getFiles() {
 			return $this->files;
@@ -50,9 +49,9 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the files to send with this request.
-		 * @param \Crackle\Requests\Fields\Files $files files to send with this request.
+		 * @param \Crackle\Requests\Fields\Fields $files files to send with this request.
 		 */
-		private final function setFiles(Files $files) {
+		private final function setFiles(Fields $files) {
 			$this->files = $files;
 		}
 
@@ -62,8 +61,8 @@ namespace Crackle\Requests {
 		 */
 		public function __construct($url = null) {
 			parent::__construct($url);
-			$this->setVariables(new Variables());
-			$this->setFiles(new Files());
+			$this->setVariables(new Fields());
+			$this->setFiles(new Fields());
 		}
 
 		/**
@@ -89,7 +88,6 @@ namespace Crackle\Requests {
 					CURLOPT_POSTFIELDS => $content));
 
 			$headers = $this->getHeaders();
-			//$headers->set('Expect', '100-continue');
 			$headers->set('Content-Length', strlen($content));
 			$headers->set('Content-Type', 'multipart/form-data; boundary=' . $boundary);
 		}
@@ -100,9 +98,7 @@ namespace Crackle\Requests {
 		 */
 		private static function generateBoundary() {
 			$algorithms = hash_algos();
-			$preferences = array(
-					'sha1',
-					'md5');
+			$preferences = array('sha1', 'md5');
 			foreach ($preferences as $algorithm) {
 				if (in_array($algorithm, $algorithms)) {
 					return '----------------------------' . substr(hash('sha1', 'crackle' . microtime()), 0, 12);
@@ -121,28 +117,22 @@ namespace Crackle\Requests {
 			$lines = array();
 
 			// add variables
-			self::appendParts($lines, $boundary, $this->getVariables());
+			foreach($this->getVariables()->getPairs() as $pair) {
+				$lines[] = '--' . $boundary;
+				$variable = new POSTVariable($pair->getValue());
+				$variable->appendPart($lines, $pair->getKey());
+			}
 
 			// add files
-			self::appendParts($lines, $boundary, $this->getFiles());
+			foreach($this->getFiles()->getPairs() as $pair) {
+				$lines[] = '--' . $boundary;
+				$pair->getValue()->appendPart($lines, $pair->getKey());
+			}
 
 			$lines[] = '--' . $boundary . '--';
 			$lines[] = '';
 
 			return implode("\r\n", $lines);
-		}
-
-		/**
-		 * Append all fields in a container to this request.
-		 * @param array[string] $lines		The array of lines representing this request's body.
-		 * @param string $boundary			The request boundary.
-		 * @param Fields $fields			The fields container whose contents to append.
-		 */
-		private final function appendParts(array &$lines, $boundary, Fields $fields) {
-			foreach($fields->getPairs() as $pair) {
-				$lines[] = '--' . $boundary;
-				$pair->getValue()->appendPart($lines, $pair->getKey());
-			}
 		}
 	}
 }
