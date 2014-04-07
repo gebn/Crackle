@@ -30,7 +30,7 @@ Crackle is a powerful yet easy to use object-oriented HTTP client for PHP.
 
 Below is a minimal example showing how to issue a GET request to GitHub's API.
 
-````php
+``` php
 require_once 'Crackle.php';
 use \Crackle\Requests\GETRequest;
 
@@ -39,21 +39,21 @@ $request->fire();
 if($request->succeeded()) {
 	echo $request->getResponse()->getContent();
 }
-````
+```
 
 There are several things to note:
 
- - You only ever need to require `Crackle.php`; Crackle has autoloader, which will take care of all other includes for you.
+ - You only ever need to require `Crackle.php`; Crackle has an autoloader, which will take care of other includes for you.
  - All types of request (`GET`, `POST` etc.) are stored in the `\Crackle\Requests` namespace. They have names of the form `<VERB>Request.php` to make them easy to find.
- - Crackle's `fire()` method does not throw any exceptions on failure; instead you can check `succeeded()` or `failed()` afterwards. This may seem perverse, however I chose this for several reasons:
+ - Crackle's `fire()` method does not throw any exceptions on failure; instead you can check `succeeded()` or `failed()` afterwards. This may seem perverse, however I chose to do it this way for several reasons:
 	- It reduces cases of uncaught exceptions. If it's not thrown, it doesn't need to be caught.
-	- It reduces includes. There's nothing to stop you from throwing your own exception that integrates with your application.
+	- There's nothing to stop you from throwing your own exception that integrates with your application.
 	- It makes working with callbacks (which will be introduced later) a snap.
  - If a request succeeds, its response can be accessed by calling `getResponse()`. This returns an object containing the final URL, response headers, HTTP status code, and of course body.
 
 ### A POST request
 
-This example introduces fields. Crackle uses the following terminology consistently:
+This example introduces fields. Crackle uses the following terminology:
 
  - **GET fields** are referred to as **_parameters_**
  - **POST fields** are referred to as **_variables_**
@@ -61,7 +61,7 @@ This example introduces fields. Crackle uses the following terminology consisten
 
 For example, by calling `getParameters()`, you are retrieving the object containing fields that will be appended to the request's URL.
 
-````php
+``` php
 require_once 'Crackle.php';
 use \Crackle\Requests\POSTRequest;
 use \Crackle\Requests\Parts\Files\POSTFile;
@@ -71,11 +71,11 @@ $request->getParameters()->set('api_request', 'beer');
 $request->getVariables()->set('api_option', 'paste');
 $request->getFiles()->set('api_file', POSTFile::factory('leaked-credentials.txt'));
 $request->fire();
-````
+```
 
 Crackle allows you to arbitrarily nest all three types of field depending on your needs using PHP's versatile array syntax:
 
-````php
+``` php
 $variables = $request->getVariables();
 $variables->set('details', array(
 		'name' => array(
@@ -85,13 +85,13 @@ $variables->set('details', array(
 
 // you can also add to the hierarchy later, or build it up manually:
 $variables->set('details[name][nickname]', 'brighty');
-````
+```
 
 ### Adding authentication and proxies
 
 All types of request can be authenticated and proxied:
 
-````php
+``` php
 require_once 'Crackle.php';
 use \Crackle\Requests\PUTRequest;
 use \Crackle\Requests\Parts\Files\PUTFile;
@@ -115,7 +115,7 @@ $proxy->setCredentials( // N.B. proxy (not request) credentials
 $request->setProxy($proxy);
 
 $request->fire();
-````
+```
 
 Hopefully you're now getting an idea of how the various different components of Crackle fit together. For additional examples, see the contents of `/Examples`.
 
@@ -123,13 +123,13 @@ Hopefully you're now getting an idea of how the various different components of 
 
 ### Parallel requests with callbacks
 
-Crackle includes a `Requester` class in the default namespace which has a single purpose: to fire off requests simultaneously. Its use is highly recommended if you're dealing with multiple requests - performance gains can be significant.
+Crackle includes a `Requester` class in the default namespace which has a single purpose: to fire off requests simultaneously. Its use is highly recommended if you're dealing with multiple requests - performance gains can be significant. So significant in face, that I started Crackle because I wanted an easier way to manage parallel requests. The name *Crackle* comes from a fire crackling, in the same way you could imagine Crackle firing off multiple requests.
 
-Callbacks are a function that is attached to a Crackle request. As soon as the request finishes, regardless of success or failure, the callback is executed. It is passed the original request object as its only argument.
+A callback is a function that can be attached to a Crackle request. As soon as the request finishes, regardless of success or failure, the callback is executed. It is passed the original request object as its only argument.
 
-This sample will fire off requests to BBC News and Twitter, and announce when each has finished:
+This sample will fire off requests to BBC News and Twitter, and announce when each has finished (it won't always be in the same order):
 
-````php
+``` php
 require_once 'Crackle.php';
 use \Crackle\Requests\GETRequest;
 use \Crackle\Requests\POSTRequest;
@@ -149,7 +149,7 @@ $requester = new Requester();
 $requester->queue($bbc);
 $requester->queue($twitter);
 $requester->fireAll();
-````
+```
 
 Callbacks can be deployed elsewhere, but they come into their own when used with simultaneous requests. They allow you to do processing while Crackle is still sending other requests in the queue. You can even add new requests to the queue from within callbacks while it is still being processed!
 
@@ -159,12 +159,12 @@ Crackle can fire all types of request simultaneously - `PUTRequest` and `DELETER
 
 Crackle allows direct manipulation of a request's underlying cURL handle. This can be retrieved by calling `getHandle()` on its object:
 
-````php
+``` php
 $request = new GETRequest('https://example.com');
 curl_setopt($request->getHandle(), CURLOPT_SSL_VERIFYPEER, false);
-````
+```
 
-N.B. Some options are set by Crackle immediately before execution, so setting them manually will have no effect.
+N.B. Some options are set by Crackle immediately before sending the request, so overriding them manually will have no effect.
 
 ## Development
 
