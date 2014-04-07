@@ -34,7 +34,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the POST variables to send with this request.
-		 * @param \Crackle\Requests\Fields\Fields $variables The new POST variables to send with this request.
+		 * @param \Crackle\Requests\Fields\Fields $variables		The new POST variables to send with this request.
 		 */
 		private final function setVariables(Fields $variables) {
 			$this->variables = $variables;
@@ -42,7 +42,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the files to send with this request.
-		 * @return \Crackle\Requests\Fields\Fields files to send with this request.
+		 * @return \Crackle\Requests\Fields\Fields		The files to send with this request.
 		 */
 		public final function getFiles() {
 			return $this->files;
@@ -50,7 +50,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the files to send with this request.
-		 * @param \Crackle\Requests\Fields\Fields $files files to send with this request.
+		 * @param \Crackle\Requests\Fields\Fields		The $files files to send with this request.
 		 */
 		private final function setFiles(Fields $files) {
 			$this->files = $files;
