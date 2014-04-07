@@ -10,7 +10,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Initialise a new HTTP HEAD request.
-		 * @param string $url			An optional URL to initialise with.
+		 * @param string $url An optional URL to initialise with.
 		 */
 		public function __construct($url = null) {
 			parent::__construct($url);

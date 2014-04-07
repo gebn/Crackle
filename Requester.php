@@ -40,7 +40,7 @@ namespace Crackle {
 
 		/**
 		 * Get the maximum number of requests allowed to be executing simultaneously.
-		 * @return int		The maximum number of requests allowed to be executing simultaneously.
+		 * @return int The maximum number of requests allowed to be executing simultaneously.
 		 */
 		private final function getParallelLimit() {
 			return $this->parallelLimit;
@@ -48,7 +48,7 @@ namespace Crackle {
 
 		/**
 		 * Set the maximum number of requests allowed to be executing simultaneously.
-		 * @param int $parallelLimit		The maximum number of requests allowed to be executing simultaneously.
+		 * @param int $parallelLimit The maximum number of requests allowed to be executing simultaneously.
 		 */
 		private final function setParallelLimit($parallelLimit) {
 			$this->parallelLimit = (int)$parallelLimit;
@@ -56,7 +56,7 @@ namespace Crackle {
 
 		/**
 		 * Get the queue of requests still to execute.
-		 * @return \SplQueue			The queue of requests still to execute.
+		 * @return \SplQueue The queue of requests still to execute.
 		 */
 		private final function getQueue() {
 			return $this->queue;
@@ -64,7 +64,7 @@ namespace Crackle {
 
 		/**
 		 * Set the queue of requests still to execute.
-		 * @param \SplQueue $queue		The queue of requests still to execute.
+		 * @param \SplQueue $queue The queue of requests still to execute.
 		 */
 		private final function setQueue(SplQueue $queue) {
 			$this->queue = $queue;
@@ -72,8 +72,8 @@ namespace Crackle {
 
 		/**
 		 * Retrieve a request object from the executing array.
-		 * @param resource $handle					The handle of the request to retrieve.
-		 * @return \Crackle\Requests\GETRequest		The corresponding request.
+		 * @param resource $handle The handle of the request to retrieve.
+		 * @return \Crackle\Requests\GETRequest The corresponding request.
 		 */
 		private final function getExecutingRequest($handle) {
 			return $this->executing[(int)$handle];
@@ -81,7 +81,7 @@ namespace Crackle {
 
 		/**
 		 * Set the lookup array of currently executing requests.
-		 * @param array[\Crackle\Requests\GETRequest] $executing		The lookup array of currently executing requests.
+		 * @param array[\Crackle\Requests\GETRequest] $executing The lookup array of currently executing requests.
 		 */
 		private final function setExecuting(array $executing) {
 			$this->executing = $executing;
@@ -89,7 +89,7 @@ namespace Crackle {
 
 		/**
 		 * Get the cURL multi handle used to execute requests queued to this object.
-		 * @return resource		The cURL multi handle.
+		 * @return resource The cURL multi handle.
 		 */
 		private final function getMultiHandle() {
 			return $this->multiHandle;
@@ -97,7 +97,7 @@ namespace Crackle {
 
 		/**
 		 * Set the cURL multi handle used to execute requests queued to this object.
-		 * @param resource $multiHandle		The cURL multi handle.
+		 * @param resource $multiHandle The cURL multi handle.
 		 */
 		private final function setMultiHandle($multiHandle) {
 			$this->multiHandle = $multiHandle;
@@ -105,7 +105,7 @@ namespace Crackle {
 
 		/**
 		 * Initialise a new requester instance.
-		 * @param int $parallelLimit		The maximum number of requests to allow to run simultaneously. Default: 40.
+		 * @param int $parallelLimit The maximum number of requests to allow to run simultaneously. Default: 40.
 		 */
 		public function __construct($parallelLimit = null) {
 			if($parallelLimit !== null) {
@@ -125,7 +125,7 @@ namespace Crackle {
 
 		/**
 		 * Schedule a request for execution.
-		 * @param \Crackle\Requests\GETRequest $request		The request to queue.
+		 * @param \Crackle\Requests\GETRequest $request The request to queue.
 		 */
 		public function queue(GETRequest $request) {
 			$this->getQueue()->enqueue($request);
@@ -133,7 +133,7 @@ namespace Crackle {
 
 		/**
 		 * Schedule multiple requests for execution.
-		 * @param array[\Crackle\Requests\GETRequest] $requests		The requests to queue.
+		 * @param array[\Crackle\Requests\GETRequest] $requests The requests to queue.
 		 */
 		public final function queueAll(array $requests) {
 			foreach($requests as $request) {
@@ -143,7 +143,7 @@ namespace Crackle {
 
 		/**
 		 * Execute the current queue simultaneously.
-		 * @throws \CurlException			If the multi handle returns an error at any stage.
+		 * @throws \CurlException If the multi handle returns an error at any stage.
 		 */
 		public function fireAll() {
 
@@ -178,7 +178,7 @@ namespace Crackle {
 
 		/**
 		 * Moves requests from the queue to the multi handle.
-		 * @param int $number		Optional: the number of requests to remove. Default: 1.
+		 * @param int $number Optional: the number of requests to remove. Default: 1.
 		 */
 		private function add($number = 1) {
 			for($i = 0; $i < $number; $i++) {
@@ -191,7 +191,7 @@ namespace Crackle {
 
 		/**
 		 * Removes a finished request from the multi handle.
-		 * @param \Crackle\Requests\GETRequest $request		The request to remove.
+		 * @param \Crackle\Requests\GETRequest $request The request to remove.
 		 */
 		private function remove(GETRequest $request) {
 			unset($this->executing[(int)$request->getHandle()]);
@@ -200,7 +200,7 @@ namespace Crackle {
 
 		/**
 		 * Deals with a finished request, and adds a new one if the queue isn't empty.
-		 * @param array[string] $message			The message array returned by curl_multi_info_read().
+		 * @param array[string] $message The message array returned by curl_multi_info_read().
 		 */
 		private function finished(array $message) {
 			$request = $this->getExecutingRequest($message['handle']);

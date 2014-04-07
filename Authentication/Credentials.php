@@ -22,8 +22,8 @@ namespace Crackle\Authentication {
 
 		/**
 		 * Initialise this class with an optional username and password.
-		 * @param string $username		The username to send.
-		 * @param string $password		The password to send.
+		 * @param string $username The username to send.
+		 * @param string $password The password to send.
 		 */
 		public function __construct($username = null, $password = null) {
 			if($username !== null) {
@@ -36,7 +36,7 @@ namespace Crackle\Authentication {
 
 		/**
 		 * Get the username to send.
-		 * @return string		The username to send.
+		 * @return string The username to send.
 		 */
 		private final function getUsername() {
 			return $this->username;
@@ -44,7 +44,7 @@ namespace Crackle\Authentication {
 
 		/**
 		 * Set the username to send.
-		 * @param string $username		The username to send.
+		 * @param string $username The username to send.
 		 */
 		public final function setUsername($username) {
 			$this->username = (string)$username;
@@ -52,7 +52,7 @@ namespace Crackle\Authentication {
 
 		/**
 		 * Get the password to send.
-		 * @return string			The password to send.
+		 * @return string The password to send.
 		 */
 		private final function getPassword() {
 			return $this->password;
@@ -60,7 +60,7 @@ namespace Crackle\Authentication {
 
 		/**
 		 * Set the password to send.
-		 * @param string $password		The password to send.
+		 * @param string $password The password to send.
 		 */
 		public final function setPassword($password) {
 			$this->password = (string)$password;
@@ -68,7 +68,7 @@ namespace Crackle\Authentication {
 
 		/**
 		 * Retrieve the credentials represented by this object as a string.
-		 * @return string		The credentials in the form '[username]:[password]'.
+		 * @return string The credentials in the form '[username]:[password]'.
 		 */
 		public function __toString() {
 			$username = $this->getUsername() == '' ? 'X' : $this->getUsername();

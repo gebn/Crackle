@@ -10,8 +10,8 @@ namespace Crackle\Requests\Parts {
 
 		/**
 		 * Add this part to a request.
-		 * @param array[string] $lines		The lines array to append to.
-		 * @param string $name				The name of this request part.
+		 * @param array[string] $lines The lines array to append to.
+		 * @param string $name The name of this request part.
 		 */
 		public function appendPart(array &$lines, $name);
 	}

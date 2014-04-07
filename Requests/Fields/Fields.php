@@ -20,7 +20,7 @@ namespace Crackle\Requests\Fields {
 
 		/**
 		 * Retrieve the fields to be included in the request.
-		 * @return array			The fields to be included in the request.
+		 * @return array The fields to be included in the request.
 		 */
 		private final function getFields() {
 			return $this->fields;
@@ -28,7 +28,7 @@ namespace Crackle\Requests\Fields {
 
 		/**
 		 * Set the fields to be included in the request.
-		 * @param array $fields		The new fields to be included in the request.
+		 * @param array $fields The new fields to be included in the request.
 		 */
 		private final function setFields(array $fields) {
 			$this->fields = $fields;
@@ -43,7 +43,7 @@ namespace Crackle\Requests\Fields {
 
 		/**
 		 * Set the value of a field.
-		 * @param string $name				The name of the field.
+		 * @param string $name The name of the field.
 		 * @param string|array $value		The value of the field.
 		 */
 		public function set($name, $value) {
@@ -52,7 +52,7 @@ namespace Crackle\Requests\Fields {
 
 		/**
 		 * Retrieve the field pairs.
-		 * @return array[\Crackle\Structures\KeyValuePair]		KVPs of fields in this container.
+		 * @return array[\Crackle\Structures\KeyValuePair] KVPs of fields in this container.
 		 */
 		public final function getPairs() {
 			$pairs = array();
@@ -69,9 +69,9 @@ namespace Crackle\Requests\Fields {
 
 		/**
 		 * The recursive cousin of getPairs(), used to extract pairs from nested arrays of fields.
-		 * @param array[\Crackle\Structures\KeyValuePair] $pairs	The array of KVPs to append to.
-		 * @param array $fields										The array of fields to process.
-		 * @param string $prefix									The string to prepend to all field names.
+		 * @param array[\Crackle\Structures\KeyValuePair] $pairs The array of KVPs to append to.
+		 * @param array $fields The array of fields to process.
+		 * @param string $prefix The string to prepend to all field names.
 		 */
 		private static function addPairs(array &$pairs, array $fields, $prefix) {
 			foreach ($fields as $key => $value) {

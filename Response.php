@@ -38,7 +38,7 @@ namespace Crackle {
 
 		/**
 		 * Get the effective URL of this resource.
-		 * @return string		The final URL.
+		 * @return string The final URL.
 		 */
 		public final function getUrl() {
 			return $this->url;
@@ -46,7 +46,7 @@ namespace Crackle {
 
 		/**
 		 * Set the effective URL of this resource.
-		 * @param string $url		The final URL.
+		 * @param string $url The final URL.
 		 */
 		private final function setUrl($url) {
 			$this->url = (string)$url;
@@ -54,7 +54,7 @@ namespace Crackle {
 
 		/**
 		 * Get the HTTP status code returned by the destination server.
-		 * @return int			The status code.
+		 * @return int The status code.
 		 */
 		public final function getStatusCode() {
 			return $this->statusCode;
@@ -62,7 +62,7 @@ namespace Crackle {
 
 		/**
 		 * Set the HTTP status code returned by the destination server.
-		 * @param int $statusCode			The status code.
+		 * @param int $statusCode The status code.
 		 */
 		private final function setStatusCode($statusCode) {
 			$this->statusCode = (int)$statusCode;
@@ -70,7 +70,7 @@ namespace Crackle {
 
 		/**
 		 * Retrieve the list of response headers.
-		 * @return \Crackle\Headers		The list of headers.
+		 * @return \Crackle\Headers The list of headers.
 		 */
 		public final function getHeaders() {
 			return $this->headers;
@@ -78,7 +78,7 @@ namespace Crackle {
 
 		/**
 		 * Set the list of headers received in the response.
-		 * @param \Crackle\Headers $headers		The new list of headers.
+		 * @param \Crackle\Headers $headers The new list of headers.
 		 */
 		private final function setHeaders(Headers $headers) {
 			$this->headers = $headers;
@@ -86,7 +86,7 @@ namespace Crackle {
 
 		/**
 		 * Get the raw body of this response.
-		 * @return string		The body.
+		 * @return string The body.
 		 */
 		public final function getContent() {
 			return $this->content;
@@ -94,7 +94,7 @@ namespace Crackle {
 
 		/**
 		 * Set the raw body of this response.
-		 * @param string $content		The body.
+		 * @param string $content The body.
 		 */
 		private final function setContent($content) {
 			$this->content = (string)$content;
@@ -117,8 +117,8 @@ namespace Crackle {
 
 		/**
 		 * Get an instance of this class representing the response of an executed cURL handle.
-		 * @param resource $handle				The executed handle to import.
-		 * @return \Crackle\Response			The created Response instance.
+		 * @param resource $handle The executed handle to import.
+		 * @return \Crackle\Response The created Response instance.
 		 */
 		public static function factory($handle) {
 			$response = new Response();
@@ -128,7 +128,7 @@ namespace Crackle {
 
 		/**
 		 * Make this response represent an executed cURL handle.
-		 * @param resource $handle			An executed cURL handle.
+		 * @param resource $handle An executed cURL handle.
 		 */
 		private function import($handle) {
 			$this->setUrl(curl_getinfo($handle, CURLINFO_EFFECTIVE_URL));
@@ -142,7 +142,7 @@ namespace Crackle {
 
 		/**
 		 * Retrieve the name of this resource from its URL.
-		 * @return string			The name of the resource returned by the request.
+		 * @return string The name of the resource returned by the request.
 		 */
 		public function getFilename() {
 			return basename(parse_url($this->getUrl(), PHP_URL_PATH));
@@ -150,9 +150,9 @@ namespace Crackle {
 
 		/**
 		 * Write this resource to a file.
-		 * @param string $directory			The directory to write to.
-		 * @param string $name				The name of the file to write. If omitted, the original name will be used.
-		 * @throws IOException				If the file cannot be written.
+		 * @param string $directory The directory to write to.
+		 * @param string $name The name of the file to write. If omitted, the original name will be used.
+		 * @throws IOException If the file cannot be written.
 		 */
 		public function writeTo($directory, $name = null) {
 			if ($name === null) {

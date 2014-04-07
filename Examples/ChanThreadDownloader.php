@@ -49,7 +49,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Retrieve the board name.
-		 * @return string		The board name.
+		 * @return string The board name.
 		 */
 		private final function getBoard() {
 			return $this->board;
@@ -57,7 +57,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Set the board name.
-		 * @param string $board		The board name.
+		 * @param string $board The board name.
 		 */
 		public final function setBoard($board) {
 			$this->board = (string)$board;
@@ -65,7 +65,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Get the thread number.
-		 * @return int			The thread number.
+		 * @return int The thread number.
 		 */
 		private final function getThread() {
 			return $this->thread;
@@ -73,7 +73,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Set the thread number.
-		 * @param int $thread		The thread number.
+		 * @param int $thread The thread number.
 		 */
 		public final function setThread($thread) {
 			$this->thread = (int)$thread;
@@ -81,7 +81,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Get the save directory.
-		 * @return string		The save directory.
+		 * @return string The save directory.
 		 */
 		public final function getOutputDirectory() {
 			return $this->outputDirectory;
@@ -89,8 +89,8 @@ namespace Crackle\Examples {
 
 		/**
 		 * Set the save directory.
-		 * @param string $outputDirectory		The directory to save to. If this doesn't exist, an attempt will be made to create it.
-		 * @throws Exception					If the specified output directory doesn't exist and cannot be created or is otherwise invalid.
+		 * @param string $outputDirectory The directory to save to. If this doesn't exist, an attempt will be made to create it.
+		 * @throws Exception If the specified output directory doesn't exist and cannot be created or is otherwise invalid.
 		 */
 		public final function setOutputDirectory($outputDirectory) {
 			if(!is_dir($outputDirectory)) {
@@ -107,7 +107,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Get the number of errors that occurred while downloading images.
-		 * @return int		The number of errors that occurred while downloading images.
+		 * @return int The number of errors that occurred while downloading images.
 		 */
 		public final function getErrors() {
 			return $this->errors;
@@ -115,7 +115,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Set the number of errors that occurred while downloading images.
-		 * @param int $errors		The number of errors that occurred while downloading images.
+		 * @param int $errors The number of errors that occurred while downloading images.
 		 */
 		private final function setErrors($errors) {
 			$this->errors = $errors;
@@ -130,8 +130,8 @@ namespace Crackle\Examples {
 
 		/**
 		 * Find the thread and board from the thread URL.
-		 * @param string $url		The URL of the thread to download.
-		 * @throws \Exception		If $url is invalid.
+		 * @param string $url The URL of the thread to download.
+		 * @throws \Exception If $url is invalid.
 		 */
 		public function parseUrl($url) {
 			$matches = null;
@@ -144,7 +144,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Download images within the configured thread.
-		 * @return boolean			True if no errors occurred, false otherwise.
+		 * @return boolean True if no errors occurred, false otherwise.
 		 */
 		public function go() {
 			$this->setErrors(0); // reset the error count
@@ -157,7 +157,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Get the URL that the API call to retrieve the JSON representation of the thread should be sent to.
-		 * @return string		The API thread URL.
+		 * @return string The API thread URL.
 		 */
 		private function getJsonUrl() {
 			return 'http://a.4cdn.org/' . $this->getBoard() . '/res/' . $this->getThread() . '.json';
@@ -165,8 +165,8 @@ namespace Crackle\Examples {
 
 		/**
 		 * Retrieves the JSON representation of the thread to download.
-		 * @throws \Exception		If the request to the 4Chan API fails.
-		 * @return string			The JSON.
+		 * @throws \Exception If the request to the 4Chan API fails.
+		 * @return string The JSON.
 		 */
 		private function downloadThread() {
 			$request = new GETRequest($this->getJsonUrl());
@@ -179,8 +179,8 @@ namespace Crackle\Examples {
 
 		/**
 		 * Extract the URLs of images in the thread that have not yet been downloaded.
-		 * @param array $thread			The json_decode()d thread.
-		 * @return array[string]		The image URLs.
+		 * @param array $thread The json_decode()d thread.
+		 * @return array[string] The image URLs.
 		 */
 		private function getImageUrls(stdClass $thread) {
 			$urls = array();
@@ -198,8 +198,8 @@ namespace Crackle\Examples {
 
 		/**
 		 * Turns an array of URLs into an array of GETRequest objects.
-		 * @param array $urls								The image URLs to download.
-		 * @return array[\Crackle\Requests\GETRequest]		The corresponding request objects for each URL.
+		 * @param array $urls The image URLs to download.
+		 * @return array[\Crackle\Requests\GETRequest] The corresponding request objects for each URL.
 		 */
 		private function getRequests(array $urls) {
 			$requests = array();
@@ -222,7 +222,7 @@ namespace Crackle\Examples {
 
 		/**
 		 * Executes an array of requests.
-		 * @param array[\Crackle\Requests\GETRequest] $requests		The requests to run.
+		 * @param array[\Crackle\Requests\GETRequest] $requests The requests to run.
 		 */
 		private function download(array $requests) {
 			$requester = new Requester(10);

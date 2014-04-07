@@ -10,7 +10,7 @@ namespace Crackle\Authentication\Applicators {
 
 		/**
 		 * Configures a cURL session to use the proxy authentication mechanism represented by the object.
-		 * @param resource $handle			The handle to modify.
+		 * @param resource $handle The handle to modify.
 		 */
 		public function addProxyCredentialsTo($handle);
 	}

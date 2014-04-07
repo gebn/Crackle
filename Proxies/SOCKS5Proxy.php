@@ -10,8 +10,8 @@ namespace Crackle\Proxies {
 
 		/**
 		 * Initialise a new SOCKS proxy object with an optional address and port number.
-		 * @param string $address		The hostname or IP address of the proxy.
-		 * @param int $port				The port number used by the proxy.
+		 * @param string $address The hostname or IP address of the proxy.
+		 * @param int $port The port number used by the proxy.
 		 */
 		public function __construct($address = null, $port = null) {
 			parent::__construct($address, $port);
@@ -24,7 +24,7 @@ namespace Crackle\Proxies {
 
 		/**
 		 * Configure a cURL session to use the proxy defined by this object.
-		 * @param resource $handle		The cURL handle to modify.
+		 * @param resource $handle The cURL handle to modify.
 		 * @see \Crackle\Proxies\Proxy::addTo()
 		 */
 		public function addTo($handle) {

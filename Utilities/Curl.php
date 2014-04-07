@@ -11,9 +11,9 @@ namespace Crackle\Utilities {
 		/**
 		 * Retrieve the error message corresponding to a CURLE code. These need to be updated every now and again.
 		 * Intended to emulate curl_strerror() on PHP <= 5.5.0.
-		 * @param int $code		The CURLcode whose message to find.
-		 * @return string		The human-friendly error message corresponding to that code.
-		 * @link				http://curl.haxx.se/libcurl/c/libcurl-errors.html
+		 * @param int $code The CURLcode whose message to find.
+		 * @return string The human-friendly error message corresponding to that code.
+		 * @link http://curl.haxx.se/libcurl/c/libcurl-errors.html
 		 */
 		public static final function getStringError($code) {
 			static $definitions = array(

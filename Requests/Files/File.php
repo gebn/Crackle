@@ -18,7 +18,7 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Get the MIME type of this file.
-		 * @return string		The MIME type of this file.
+		 * @return string The MIME type of this file.
 		 */
 		protected final function getMimeType() {
 			return $this->mimeType;
@@ -26,7 +26,7 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Set the MIME type of this file.
-		 * @param string $mimeType		The MIME type of this file.
+		 * @param string $mimeType The MIME type of this file.
 		 */
 		public final function setMimeType($mimeType) {
 			$this->mimeType = (string)$mimeType;
@@ -41,9 +41,9 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Create a new file object representing a path.
-		 * @param string $path								The path to read from.
-		 * @throws \Exception								If the path does not point to a valid, readable file.
-		 * @return \Crackle\Requests\Parts\Files\File		The created file.
+		 * @param string $path The path to read from.
+		 * @throws \Exception If the path does not point to a valid, readable file.
+		 * @return \Crackle\Requests\Parts\Files\File The created file.
 		 */
 		public static function factory($path) {
 			if(!is_file($path)) {
@@ -63,7 +63,7 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Set the content of this file.
-		 * @param string $content		The new content to set.
+		 * @param string $content The new content to set.
 		 */
 		public abstract function setContent($content);
 	}

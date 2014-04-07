@@ -20,7 +20,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the file to send in this request.
-		 * @return \Crackle\Requests\Files\PUTFile		The file to send in this request.
+		 * @return \Crackle\Requests\Files\PUTFile The file to send in this request.
 		 */
 		private final function getFile() {
 			return $this->file;
@@ -28,7 +28,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the file to send in this request.
-		 * @param \Crackle\Requests\Files\PUTFile $file		The file to send in this request.
+		 * @param \Crackle\Requests\Files\PUTFile $file The file to send in this request.
 		 */
 		public final function setFile(PUTFile $file) {
 			$this->file = $file;
@@ -36,7 +36,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Initialise a new HTTP PUT request.
-		 * @param string $url			An optional URL to initialise with.
+		 * @param string $url An optional URL to initialise with.
 		 */
 		public function __construct($url = null) {
 			parent::__construct($url);

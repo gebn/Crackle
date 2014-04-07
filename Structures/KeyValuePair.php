@@ -22,8 +22,8 @@ namespace Crackle\Structures {
 
 		/**
 		 * Initialise a new key/value pair.
-		 * @param mixed $key		The key.
-		 * @param mixed $value		The value.
+		 * @param mixed $key The key.
+		 * @param mixed $value The value.
 		 */
 		public function __construct($key = null, $value = null) {
 			if($key !== null) {
@@ -36,7 +36,7 @@ namespace Crackle\Structures {
 
 		/**
 		 * Get the key in the key/value pair.
-		 * @return mixed		The key in the key/value pair.
+		 * @return mixed The key in the key/value pair.
 		 */
 		public final function getKey() {
 			return $this->key;
@@ -44,7 +44,7 @@ namespace Crackle\Structures {
 
 		/**
 		 * Set the key in the key/value pair.
-		 * @param mixed $key		The key in the key/value pair.
+		 * @param mixed $key The key in the key/value pair.
 		 */
 		public final function setKey($key) {
 			$this->key = $key;
@@ -52,7 +52,7 @@ namespace Crackle\Structures {
 
 		/**
 		 * Get the value in the key/value pair.
-		 * @return mixed		The value in the key/value pair.
+		 * @return mixed The value in the key/value pair.
 		 */
 		public final function getValue() {
 			return $this->value;
@@ -60,7 +60,7 @@ namespace Crackle\Structures {
 
 		/**
 		 * Set the value in the key/value pair.
-		 * @param mixed $value		The value in the key/value pair.
+		 * @param mixed $value The value in the key/value pair.
 		 */
 		public final function setValue($value) {
 			$this->value = $value;

@@ -75,7 +75,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the cURL handle representing this request.
-		 * @return resource		The cURL handle representing this request.
+		 * @return resource The cURL handle representing this request.
 		 */
 		public final function getHandle() {
 			return $this->handle;
@@ -83,7 +83,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the cURL handle representing this request.
-		 * @param resource $handle		The cURL handle representing this request.
+		 * @param resource $handle The cURL handle representing this request.
 		 */
 		private final function setHandle($handle) {
 			$this->handle = $handle;
@@ -91,7 +91,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the URL this request will be sent to.
-		 * @return string		The URL this request will be sent to.
+		 * @return string The URL this request will be sent to.
 		 */
 		private final function getUrl() {
 			$queryString = $this->getParameters()->getQueryString();
@@ -103,7 +103,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the URL this request will be sent to.
-		 * @param string $url		The URL this request will be sent to.
+		 * @param string $url The URL this request will be sent to.
 		 */
 		public final function setUrl($url) {
 			$this->url = $this->getParameters()->parse($url);
@@ -111,7 +111,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Retrieve the GET parameters to send with this request.
-		 * @return \Crackle\Requests\Fields\Parameters		The GET parameters to send with this request.
+		 * @return \Crackle\Requests\Fields\Parameters The GET parameters to send with this request.
 		 */
 		public final function getParameters() {
 			return $this->parameters;
@@ -119,7 +119,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the GET parameters to send with this request.
-		 * @param \Crackle\Requests\Fields\Parameters $parameters		The new GET parameters to send with this request.
+		 * @param \Crackle\Requests\Fields\Parameters $parameters The new GET parameters to send with this request.
 		 */
 		private final function setParameters(Parameters $parameters) {
 			$this->parameters = $parameters;
@@ -127,7 +127,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Retrieve the list of extra request headers.
-		 * @return \Crackle\Headers		The list of headers.
+		 * @return \Crackle\Headers The list of headers.
 		 */
 		public final function getHeaders() {
 			return $this->headers;
@@ -135,7 +135,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the list of headers to send in this request.
-		 * @param \Crackle\Headers $headers		The new list of headers.
+		 * @param \Crackle\Headers $headers The new list of headers.
 		 */
 		private final function setHeaders(Headers $headers) {
 			$this->headers = $headers;
@@ -143,7 +143,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the credentials to use to authenticate this request.
-		 * @return \Crackle\Authentication\Applicators\RequestCredentials		The credentials to use to authenticate this request.
+		 * @return \Crackle\Authentication\Applicators\RequestCredentials The credentials to use to authenticate this request.
 		 */
 		private final function getCredentials() {
 			return $this->credentials;
@@ -151,7 +151,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the credentials to use to authenticate this request.
-		 * @param \Crackle\Authentication\Applicators\RequestCredentials $credentials		The credentials to use to authenticate this request.
+		 * @param \Crackle\Authentication\Applicators\RequestCredentials $credentials The credentials to use to authenticate this request.
 		 */
 		public final function setCredentials(RequestCredentials $credentials) {
 			$this->credentials = $credentials;
@@ -159,7 +159,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the proxy to use for this request.
-		 * @return \Crackle\Proxies\Proxy		The proxy to use for this request.
+		 * @return \Crackle\Proxies\Proxy The proxy to use for this request.
 		 */
 		private final function getProxy() {
 			return $this->proxy;
@@ -167,7 +167,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the proxy to use for this request.
-		 * @param \Crackle\Proxies\Proxy $proxy		The proxy to use for this request.
+		 * @param \Crackle\Proxies\Proxy $proxy The proxy to use for this request.
 		 */
 		public final function setProxy(Proxy $proxy) {
 			$this->proxy = $proxy;
@@ -175,7 +175,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get any error message returned by cURL when this request was sent.
-		 * @return string		Any error message returned by cURL when this request was sent.
+		 * @return string Any error message returned by cURL when this request was sent.
 		 */
 		public final function getError() {
 			return $this->error;
@@ -183,7 +183,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Find whether cURL returned an error when asked to execute this request.
-		 * @return boolean			True if it failed; false if it didn't.
+		 * @return boolean True if it failed; false if it didn't.
 		 */
 		public final function failed() {
 			return is_string($this->getError());
@@ -191,7 +191,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Find whether this request was successful.
-		 * @return boolean			True if it succeeded; false if it wasn't.
+		 * @return boolean True if it succeeded; false if it wasn't.
 		 */
 		public final function succeeded() {
 			return $this->error === false;
@@ -207,8 +207,8 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the response representing data returned from this request.
-		 * @return \Crackle\Response		The response representing data returned from this request.
-		 * @throws \Exception				If the response is unavailable.
+		 * @return \Crackle\Response The response representing data returned from this request.
+		 * @throws \Exception If the response is unavailable.
 		 */
 		public final function getResponse() {
 			if(!$this->isFired()) {
@@ -224,7 +224,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the response representing data returned from this request.
-		 * @param \Crackle\Response $response		The response representing data returned from this request.
+		 * @param \Crackle\Response $response The response representing data returned from this request.
 		 */
 		private final function setResponse(Response $response) {
 			$this->response = $response;
@@ -232,7 +232,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the function to run upon completion of this request.
-		 * @return callable			The function to run upon completion of this request.
+		 * @return callable The function to run upon completion of this request.
 		 */
 		private final function getCallback() {
 			return $this->callback;
@@ -240,8 +240,8 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the function to run upon completion of this request.
-		 * @param callable $callback			The function to run upon completion of this request.
-		 * @throws \InvalidArgumentException	If the callback is not a callable function.
+		 * @param callable $callback The function to run upon completion of this request.
+		 * @throws \InvalidArgumentException If the callback is not a callable function.
 		 */
 		public final function setCallback($callback) {
 			if(!is_callable($callback)) {
@@ -252,7 +252,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Initialise a new HTTP request.
-		 * @param string $url			Optional: the URL to send this request to.
+		 * @param string $url Optional: the URL to send this request to.
 		 */
 		public function __construct($url = null) {
 			$this->setHandle(curl_init());
@@ -284,7 +284,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Find whether this request has been sent.
-		 * @return boolean		True if it has, false if it hasn't.
+		 * @return boolean True if it has, false if it hasn't.
 		 */
 		public final function isFired() {
 			return $this->error !== null;
@@ -330,7 +330,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Checks this request for errors before it is sent.
-		 * @throws \Exception		If an issue is found.
+		 * @throws \Exception If an issue is found.
 		 */
 		protected function validate() {
 			// check that a URL has been set
@@ -342,7 +342,7 @@ namespace Crackle\Requests {
 		/**
 		 * Builds the response object and executes the callback for this request.
 		 * Called immediately after the request has finished.
-		 * @param int $result			One of the CURLE_* constants, indicating the status.
+		 * @param int $result One of the CURLE_* constants, indicating the status.
 		 */
 		public function recover($result) {
 

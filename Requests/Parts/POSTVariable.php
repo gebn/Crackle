@@ -16,7 +16,7 @@ namespace Crackle\Requests\Parts {
 
 		/**
 		 * Retrieve the value of this POST variable.
-		 * @return string			The value of this POST variable.
+		 * @return string The value of this POST variable.
 		 */
 		private final function getValue() {
 			return $this->value;
@@ -24,7 +24,7 @@ namespace Crackle\Requests\Parts {
 
 		/**
 		 * Set the value of this POST variable.
-		 * @param string $value		The new value of this POST variable.
+		 * @param string $value The new value of this POST variable.
 		 */
 		private final function setValue($value) {
 			$this->value = (string)$value;
@@ -32,7 +32,7 @@ namespace Crackle\Requests\Parts {
 
 		/**
 		 * Initialise a new POST variable.
-		 * @param string $value		The value of this POST variable.
+		 * @param string $value The value of this POST variable.
 		 */
 		public function __construct($value) {
 			$this->setValue($value);

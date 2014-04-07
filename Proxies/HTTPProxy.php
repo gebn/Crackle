@@ -17,8 +17,8 @@ namespace Crackle\Proxies {
 
 		/**
 		 * Initialise a new HTTP proxy object with an optional address and port number.
-		 * @param string $address		The hostname or IP address of the proxy.
-		 * @param int $port				The port number used by the proxy.
+		 * @param string $address The hostname or IP address of the proxy.
+		 * @param int $port The port number used by the proxy.
 		 */
 		public function __construct($address = null, $port = null) {
 			parent::__construct($address, $port);
@@ -32,7 +32,7 @@ namespace Crackle\Proxies {
 
 		/**
 		 * Get whether to tunnel through this proxy.
-		 * @return boolean		Whether to tunnel through this proxy.
+		 * @return boolean Whether to tunnel through this proxy.
 		 */
 		private final function isTunnel() {
 			return $this->isTunnel;
@@ -40,7 +40,7 @@ namespace Crackle\Proxies {
 
 		/**
 		 * Set whether to tunnel through this proxy. Defaults to false.
-		 * @param boolean $isTunnel		Whether to tunnel through this proxy.
+		 * @param boolean $isTunnel Whether to tunnel through this proxy.
 		 */
 		public final function setTunnel($isTunnel) {
 			$this->isTunnel = (bool)$isTunnel;
@@ -48,7 +48,7 @@ namespace Crackle\Proxies {
 
 		/**
 		 * Configure a cURL session to use the proxy defined by this object.
-		 * @param resource $handle		The cURL handle to modify.
+		 * @param resource $handle The cURL handle to modify.
 		 * @see \Crackle\Proxies\Proxy::addTo()
 		 */
 		public function addTo($handle) {

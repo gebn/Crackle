@@ -26,7 +26,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Retrieve the POST variables to send with this request.
-		 * @return \Crackle\Requests\Fields\Fields		The POST variables to send with this request.
+		 * @return \Crackle\Requests\Fields\Fields The POST variables to send with this request.
 		 */
 		public final function getVariables() {
 			return $this->variables;
@@ -34,7 +34,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the POST variables to send with this request.
-		 * @param \Crackle\Requests\Fields\Fields $variables		The new POST variables to send with this request.
+		 * @param \Crackle\Requests\Fields\Fields $variables The new POST variables to send with this request.
 		 */
 		private final function setVariables(Fields $variables) {
 			$this->variables = $variables;
@@ -42,7 +42,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Get the files to send with this request.
-		 * @return \Crackle\Requests\Fields\Fields		The files to send with this request.
+		 * @return \Crackle\Requests\Fields\Fields The files to send with this request.
 		 */
 		public final function getFiles() {
 			return $this->files;
@@ -50,7 +50,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the files to send with this request.
-		 * @param \Crackle\Requests\Fields\Fields		The $files files to send with this request.
+		 * @param \Crackle\Requests\Fields\Fields The $files files to send with this request.
 		 */
 		private final function setFiles(Fields $files) {
 			$this->files = $files;
@@ -58,7 +58,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Initialise a new HTTP POST request.
-		 * @param string $url		Optional: the URL to send this request to.
+		 * @param string $url Optional: the URL to send this request to.
 		 */
 		public function __construct($url = null) {
 			parent::__construct($url);
@@ -95,7 +95,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Creates a boundary to divide parts of the request.
-		 * @return string		The generated boundary.
+		 * @return string The generated boundary.
 		 */
 		private static function generateBoundary() {
 			$algorithms = hash_algos();
@@ -110,8 +110,8 @@ namespace Crackle\Requests {
 
 		/**
 		 * Builds the lines of the request content.
-		 * @param string $boundary		The boundary to use to divide parts.
-		 * @return string				The created body.
+		 * @param string $boundary The boundary to use to divide parts.
+		 * @return string The created body.
 		 */
 		private function buildContent($boundary) {
 			// will contain lines that make up this request

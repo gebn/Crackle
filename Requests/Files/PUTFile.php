@@ -24,7 +24,7 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Get a stream resource pointing to this file.
-		 * @return resource		A stream resource pointing to this file.
+		 * @return resource A stream resource pointing to this file.
 		 */
 		private final function getStream() {
 			return $this->stream;
@@ -32,7 +32,7 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Set the stream resource pointing to this file.
-		 * @param resource $stream			The stream resource pointing to this file.
+		 * @param resource $stream The stream resource pointing to this file.
 		 */
 		private final function setStream($stream) {
 			$this->clear(); // close any existing stream
@@ -41,7 +41,7 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Get the size of this file (bytes).
-		 * @return int		The size of this file (bytes).
+		 * @return int The size of this file (bytes).
 		 */
 		private final function getSize() {
 			return $this->size;
@@ -49,7 +49,7 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Set the size of this file (bytes).
-		 * @param int $size			The size of this file (bytes).
+		 * @param int $size The size of this file (bytes).
 		 */
 		private final function setSize($size) {
 			$this->size = (int)$size;
@@ -71,8 +71,8 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Set the content of this file.
-		 * @param string $content		The new content to set.
-		 * @throws \Exception			If a new memory stream couldn't be opened.
+		 * @param string $content The new content to set.
+		 * @throws \Exception If a new memory stream couldn't be opened.
 		 * @see \Crackle\Requests\Parts\Files\File::setContent()
 		 */
 		public function setContent($content) {
@@ -90,7 +90,7 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Add this file to a request.
-		 * @param resource $handle		The handle to add this file to.
+		 * @param resource $handle The handle to add this file to.
 		 */
 		public function addTo($handle) {
 			curl_setopt_array($handle, array(
@@ -100,8 +100,8 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Get a file object representing a file at a location.
-		 * @param string $path									The absolute or relative (to this script) path to the file.
-		 * @return \Crackle\Requests\Parts\Files\POSTFile		The created file sobject.
+		 * @param string $path The absolute or relative (to this script) path to the file.
+		 * @return \Crackle\Requests\Parts\Files\POSTFile The created file sobject.
 		 */
 		public static function factory($path) {
 			$file = parent::factory($path);

@@ -24,7 +24,7 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Get the name of this file.
-		 * @return string		The name of this file, including extension.
+		 * @return string The name of this file, including extension.
 		 */
 		private final function getName() {
 			return $this->name;
@@ -32,14 +32,14 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Set the name of this file.
-		 * @param string $name		The name of this file, including extension.
+		 * @param string $name The name of this file, including extension.
 		 */
 		public final function setName($name) {
 			$this->name = (string)$name;
 		}
 		/**
 		 * Get the raw content of this file.
-		 * @return string		The raw content of this file.
+		 * @return string The raw content of this file.
 		 */
 		private final function getContent() {
 			return $this->content;
@@ -47,7 +47,7 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Set the raw content of this file.
-		 * @param string $content		The raw content of this file.
+		 * @param string $content The raw content of this file.
 		 */
 		public final function setContent($content) {
 			$this->content = (string)$content;
@@ -62,8 +62,8 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Add this file to a multipart request.
-		 * @param array $lines			The lines array to append to.
-		 * @param string $name			The field name of this file within the request.
+		 * @param array $lines The lines array to append to.
+		 * @param string $name The field name of this file within the request.
 		 */
 		public function appendPart(array &$lines, $name) {
 			$lines[] = 'Content-Disposition: form-data; name="' . $name . '"; filename="' . $this->getName() . '"';
@@ -74,8 +74,8 @@ namespace Crackle\Requests\Files {
 
 		/**
 		 * Get a file object representing a file at a location.
-		 * @param string $path									The absolute or relative (to this script) path to the file.
-		 * @return \Crackle\Requests\Parts\Files\POSTFile		The created object.
+		 * @param string $path The absolute or relative (to this script) path to the file.
+		 * @return \Crackle\Requests\Parts\Files\POSTFile The created object.
 		 */
 		public static function factory($path) {
 			$file = parent::factory($path);

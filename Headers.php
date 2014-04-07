@@ -18,7 +18,7 @@ namespace Crackle {
 
 		/**
 		 * Get the lookup array of headers.
-		 * @return array[string]		The lookup array of headers.
+		 * @return array[string] The lookup array of headers.
 		 */
 		private final function getHeaders() {
 			return $this->headers;
@@ -26,7 +26,7 @@ namespace Crackle {
 
 		/**
 		 * Set the lookup array of headers.
-		 * @param array[string] $headers		The lookup array of headers.
+		 * @param array[string] $headers The lookup array of headers.
 		 */
 		private final function setHeaders(array $headers) {
 			$this->headers = $headers;
@@ -41,8 +41,8 @@ namespace Crackle {
 
 		/**
 		 * Find whether a header has been set.
-		 * @param string $name		The name of the header to check.
-		 * @return boolean			True if the a header exists with that name, false otherwise.
+		 * @param string $name The name of the header to check.
+		 * @return boolean True if the a header exists with that name, false otherwise.
 		 */
 		public final function exists($name) {
 			return isset($this->headers[strtolower($name)]);
@@ -50,8 +50,8 @@ namespace Crackle {
 
 		/**
 		 * Retrieve the value of a header.
-		 * @param string $name										The name of the header whose value to retrieve.
-		 * @throws \Crackle\Exceptions\HeaderNotFoundException		If the header does not exist.
+		 * @param string $name The name of the header whose value to retrieve.
+		 * @throws \Crackle\Exceptions\HeaderNotFoundException If the header does not exist.
 		 */
 		public final function get($name) {
 			if(!$this->exists($name)) {
@@ -62,8 +62,8 @@ namespace Crackle {
 
 		/**
 		 * Set a header's value. Any existing value will be overwritten.
-		 * @param string $name		The name of the header.
-		 * @param string $value		The value to store under that header.
+		 * @param string $name The name of the header.
+		 * @param string $value The value to store under that header.
 		 */
 		public function set($name, $value) {
 			$this->headers[strtolower($name)] = (string)$value;
@@ -71,8 +71,8 @@ namespace Crackle {
 
 		/**
 		 * Format a header name. Not technically necessary as HTTP headers are case insensitive (RFC 2616), but arguably more expected.
-		 * @param string $name		The header name to format.
-		 * @return string			The formatted name.
+		 * @param string $name The header name to format.
+		 * @return string The formatted name.
 		 */
 		private static function format($name) {
 			return implode('-',
@@ -86,9 +86,9 @@ namespace Crackle {
 		/**
 		 * Parses a string of headers. The current headers will be replaced.
 		 * Intended to emulate http_parse_headers() in the pecl_http package.
-		 * @param string $head		A string containing a set of headers.
-		 * @return array[string]	The parsed headers.
-		 * @link					http://www.php.net/manual/en/function.http-parse-headers.php#112986
+		 * @param string $head A string containing a set of headers.
+		 * @return array[string] The parsed headers.
+		 * @link http://www.php.net/manual/en/function.http-parse-headers.php#112986
 		 */
 		public function parse($head) {
 			$headers = array();
@@ -130,8 +130,8 @@ namespace Crackle {
 
 		/**
 		 * Get a new instance representing a set of headers.
-		 * @param string $head			The headers to import.
-		 * @return \Crackle\Headers		The created object.
+		 * @param string $head The headers to import.
+		 * @return \Crackle\Headers The created object.
 		 */
 		public static function factory($head) {
 			$headers = new Headers();
@@ -150,7 +150,7 @@ namespace Crackle {
 
 		/**
 		 * Adds the headers contained in this object to a cURL session.
-		 * @param resource $handle		A cURL session handle returned by curl_init().
+		 * @param resource $handle A cURL session handle returned by curl_init().
 		 */
 		public function addTo($handle) {
 			// format the header names
