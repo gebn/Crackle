@@ -35,11 +35,7 @@ namespace Crackle\Requests\Files {
 		 * @param resource $stream			The stream resource pointing to this file.
 		 */
 		private final function setStream($stream) {
-			// close any existing stream
-			if($this->getStream() !== null) {
-				fclose($this->getStream());
-			}
-
+			$this->clear(); // close any existing stream
 			$this->stream = $stream;
 		}
 
@@ -64,6 +60,13 @@ namespace Crackle\Requests\Files {
 		 */
 		public function __construct() {
 			parent::__construct();
+		}
+
+		/**
+		 * Disposes of this PUTFile object.
+		 */
+		public function __destruct() {
+			$this->clear();
 		}
 
 		/**
@@ -105,6 +108,16 @@ namespace Crackle\Requests\Files {
 			$file->setStream(fopen($path, 'r')); // readability check done in parent
 			$file->setSize(filesize($path));
 			return $file;
+		}
+
+		/**
+		 * Closes the content stream of this file.
+		 * Called when replacing the stream or disposing of this object.
+		 */
+		private function clear() {
+			if($this->getStream() !== null) {
+				fclose($this->getStream());
+			}
 		}
 	}
 }
