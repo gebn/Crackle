@@ -141,10 +141,20 @@ namespace Crackle {
 		}
 
 		/**
-		 * Retrieve the name of this resource from its URL.
+		 * Retrieve the name of the returned resource.
 		 * @return string The name of the resource returned by the request.
 		 */
-		public function getFilename() {
+		public final function getFilename() {
+			// the name may be passed in a header
+			if($this->getHeaders()->exists('Content-Disposition')) {
+				$disposition = $this->getHeaders()->get('Content-Disposition');
+				$pos = strpos($disposition, 'filename=');
+				if($pos !== false) {
+					return substr($disposition, $pos + 9);
+				}
+			}
+
+			// default to the last chunk of the URL
 			return basename(parse_url($this->getUrl(), PHP_URL_PATH));
 		}
 
