@@ -2,7 +2,7 @@
 
 namespace Crackle\Requests\Files {
 
-	use \Exception;
+	use \Crackle\Exceptions\IOException;
 
 	/**
 	 * Represents a file that can be attached to a PUT request.
@@ -72,17 +72,22 @@ namespace Crackle\Requests\Files {
 		/**
 		 * Set the content of this file.
 		 * @param string $content The new content to set.
-		 * @throws \Exception If a new memory stream couldn't be opened.
+		 * @throws \IOException If a memory stream error occurred.
 		 * @see \Crackle\Requests\Parts\Files\File::setContent()
 		 */
 		public function setContent($content) {
-			$stream = fopen('php://temp/maxmemory:1048576', 'w'); // 1 MiB
+			$stream = @fopen('php://temp/maxmemory:1048576', 'w'); // 1 MiB
 			if(!$stream) {
-				throw new Exception('Failed to open temporary memory data.');
+				throw new IOException('Failed to open temporary memory data.');
 			}
 
-			fwrite($stream, $content);
-			fseek($stream, 0);
+			if(@fwrite($stream, $content) === false) {
+				throw new IOException('Failed to write content to memory stream.');
+			}
+
+			if(@fseek($stream, 0) === -1) {
+				throw new IOException('Failed to seek to beginning of memory stream.');
+			}
 
 			$this->setStream($stream);
 			$this->setSize(strlen($content));
