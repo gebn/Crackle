@@ -143,7 +143,7 @@ namespace Crackle {
 
 		/**
 		 * Execute the current queue simultaneously.
-		 * @throws \CurlException If the multi handle returns an error at any stage.
+		 * @throws \Exception If the multi handle returns an error at any stage.
 		 */
 		public function fireAll() {
 

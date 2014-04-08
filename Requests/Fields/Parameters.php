@@ -26,8 +26,8 @@ namespace Crackle\Requests\Fields {
 		/**
 		 * Import any GET parameters in a URL.
 		 * @param string $url The URL to parse.
-		 * @throws InvalidArgumentException If the URL provided couldn't be parsed.
 		 * @return string The inputted URL, without query string (if it had one).
+		 * @throws \InvalidArgumentException If the URL provided couldn't be parsed.
 		 */
 		public function parse($url) {
 			$parts = parse_url($url);

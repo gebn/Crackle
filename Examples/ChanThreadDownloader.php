@@ -90,7 +90,7 @@ namespace Crackle\Examples {
 		/**
 		 * Set the save directory.
 		 * @param string $outputDirectory The directory to save to. If this doesn't exist, an attempt will be made to create it.
-		 * @throws Exception If the specified output directory doesn't exist and cannot be created or is otherwise invalid.
+		 * @throws \Exception If the specified output directory doesn't exist and cannot be created or is otherwise invalid.
 		 */
 		public final function setOutputDirectory($outputDirectory) {
 			if(!is_dir($outputDirectory)) {
@@ -165,8 +165,8 @@ namespace Crackle\Examples {
 
 		/**
 		 * Retrieves the JSON representation of the thread to download.
-		 * @throws \Exception If the request to the 4Chan API fails.
 		 * @return string The JSON.
+		 * @throws \Exception If the request to the 4Chan API fails.
 		 */
 		private function downloadThread() {
 			$request = new GETRequest($this->getJsonUrl());
