@@ -13,7 +13,7 @@
 	],
 	"support": {
         "issues": "https://github.com/gebn/Crackle/issues",
-        "source": "https://github.com/gebn/Crackle/issues"
+        "source": "https://github.com/gebn/Crackle"
     },
 	"require": {
 		"php": ">=5.3.0",
