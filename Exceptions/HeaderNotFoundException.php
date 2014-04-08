@@ -2,17 +2,15 @@
 
 namespace Crackle\Exceptions {
 
-	use \Exception;
-
 	/**
-	 * Thrown when a header that wasn't sent is requested.
+	 * Thrown when we are asked to provide a header that does not exist.
 	 * @author George Brighton
 	 */
-	class HeaderNotFoundException extends Exception {
+	class HeaderNotFoundException extends CrackleException {
 
 		/**
-		 * Initialises a new instance with its message set to $message.
-		 * @param string $message A string that describes the error.
+		 * Initialises a new header not found exception with a message.
+		 * @param string $message A description of why this exception is being created.
 		 */
 		public function __construct($message) {
 			parent::__construct($message);

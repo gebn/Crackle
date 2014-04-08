@@ -2,17 +2,15 @@
 
 namespace Crackle\Exceptions {
 
-	use \Exception;
-
 	/**
-	 * The exception that is thrown when an I/O error occurs.
+	 * Represents an I/O error, for example network or stream related.
 	 * @author George Brighton
 	 */
-	class IOException extends Exception {
+	class IOException extends CrackleException {
 
 		/**
-		 * Initialises a new instance with its message set to $message.
-		 * @param string $message A string that describes the error.
+		 * Initialises a new I/O exception with a message.
+		 * @param string $message A description of why this exception is being created.
 		 */
 		public function __construct($message) {
 			parent::__construct($message);
