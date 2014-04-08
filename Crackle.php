@@ -7,7 +7,7 @@
  */
 namespace Crackle {
 
-	use \Exception;
+	use \Crackle\Exceptions\DependencyException;
 
 	/*
 	 * This file is self-running - it just needs to be `include`d on the page before Crackle is used.
@@ -54,15 +54,15 @@ namespace Crackle {
 
 		/**
 		 * Ensures this installation of PHP meets Crackle's minimum requirements.
-		 * @throws \Exception If any requirement is not met.
+		 * @throws \StartupException If any requirement is not met.
 		 */
 		private static function checkRequirements() {
 			if(version_compare(PHP_VERSION, '5.3.0', '<')) {
-				throw new Exception('Crackle requires PHP 5.3.0 or later.');
+				throw new DependencyException('Crackle requires PHP 5.3.0 or later.');
 			}
 
 			if(!extension_loaded('curl')) {
-				throw new Exception('The cURL module must be available for Crackle to operate.');
+				throw new DependencyException('The cURL module must be available for Crackle to operate.');
 			}
 		}
 
