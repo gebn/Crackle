@@ -2,10 +2,10 @@
 
 namespace Crackle {
 
-	use \Crackle\Utilities\Curl;
 	use \Crackle\Requests\GETRequest;
+	use \Crackle\Utilities\Curl;
+	use \Crackle\Exceptions\RequestException;
 
-	use \Exception;
 	use \SplQueue;
 
 	/**
@@ -143,7 +143,7 @@ namespace Crackle {
 
 		/**
 		 * Execute the current queue simultaneously.
-		 * @throws \Exception If the multi handle returns an error at any stage.
+		 * @throws \RequestException If the multi handle returns an error at any stage.
 		 */
 		public function fireAll() {
 
@@ -161,7 +161,7 @@ namespace Crackle {
 
 				// if the multi handle is in an error state, stop
 				if ($status !== CURLM_OK) {
-					throw new Exception(Curl::getStringError($status));
+					throw new RequestException(Curl::getStringError($status));
 				}
 
 				// deal with finished requests
