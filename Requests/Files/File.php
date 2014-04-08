@@ -2,6 +2,8 @@
 
 namespace Crackle\Requests\Files {
 
+	use \Crackle\Exceptions\IOException;
+
 	use \Exception;
 
 	/**
@@ -43,15 +45,15 @@ namespace Crackle\Requests\Files {
 		 * Create a new file object representing a path.
 		 * @param string $path The path to read from.
 		 * @return \Crackle\Requests\Parts\Files\File The created file.
-		 * @throws \Exception If the path does not point to a valid, readable file.
+		 * @throws \IOException If the path does not point to a regular, readable file.
 		 */
 		public static function factory($path) {
 			if(!is_file($path)) {
-				throw new Exception('The path must be the path of a file.');
+				throw new IOException('The path must be the path of a file.');
 			}
 
 			if(!is_readable($path)) {
-				throw new Exception('The supplied file path cannot be read.');
+				throw new IOException('The supplied file path cannot be read.');
 			}
 
 			$file = new static();
