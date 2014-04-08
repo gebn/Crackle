@@ -21,6 +21,5 @@
 	},
 	"suggest" : {
 		"ext-fileinfo": "Enables automatic detection of file MIME types."
-	},
-	"prefer-stable": true
+	}
 }
