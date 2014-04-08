@@ -78,15 +78,15 @@ namespace Crackle\Requests\Files {
 		public function setContent($content) {
 			$stream = @fopen('php://temp/maxmemory:1048576', 'w'); // 1 MiB
 			if(!$stream) {
-				throw new IOException('Failed to open temporary memory data.');
+				throw new IOException('Could not set content: failed to open memory stream.');
 			}
 
 			if(@fwrite($stream, $content) === false) {
-				throw new IOException('Failed to write content to memory stream.');
+				throw new IOException('Could not set content: failed to write to memory stream.');
 			}
 
 			if(@fseek($stream, 0) === -1) {
-				throw new IOException('Failed to seek to beginning of memory stream.');
+				throw new IOException('Could not set content: memory stream seek error.');
 			}
 
 			$this->setStream($stream);
