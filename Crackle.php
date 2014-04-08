@@ -54,7 +54,7 @@ namespace Crackle {
 
 		/**
 		 * Ensures this installation of PHP meets Crackle's minimum requirements.
-		 * @throws \DependencyException If any requirement is not met.
+		 * @throws \Crackle\Exceptions\DependencyException If any requirement is not met.
 		 */
 		private static function checkRequirements() {
 			if(version_compare(PHP_VERSION, '5.3.0', '<')) {

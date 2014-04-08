@@ -45,7 +45,7 @@ namespace Crackle\Requests\Files {
 		 * Create a new file object representing a path.
 		 * @param string $path The path to read from.
 		 * @return \Crackle\Requests\Parts\Files\File The created file.
-		 * @throws \IOException If the path does not point to a regular, readable file.
+		 * @throws \Crackle\Exceptions\IOException If the path does not point to a regular, readable file.
 		 */
 		public static function factory($path) {
 			if(!is_file($path)) {

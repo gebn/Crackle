@@ -162,7 +162,7 @@ namespace Crackle {
 		 * Write this resource to a file.
 		 * @param string $directory The directory to write to.
 		 * @param string $name The name of the file to write. If omitted, the original name will be used.
-		 * @throws IOException If the file cannot be written.
+		 * @throws \Crackle\Exceptions\IOException If the file cannot be written.
 		 */
 		public function writeTo($directory, $name = null) {
 			if ($name === null) {

@@ -72,7 +72,7 @@ namespace Crackle\Requests\Files {
 		/**
 		 * Set the content of this file.
 		 * @param string $content The new content to set.
-		 * @throws \IOException If a memory stream error occurred.
+		 * @throws \Crackle\Exceptions\IOException If a memory stream error occurred.
 		 * @see \Crackle\Requests\Parts\Files\File::setContent()
 		 */
 		public function setContent($content) {

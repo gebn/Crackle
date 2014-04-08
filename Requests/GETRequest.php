@@ -331,7 +331,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Checks this request for errors before it is sent.
-		 * @throws \ValidationException If an issue is found.
+		 * @throws \Crackle\Exceptions\ValidationException If an issue is found.
 		 */
 		protected function validate() {
 			// check that a URL has been set
