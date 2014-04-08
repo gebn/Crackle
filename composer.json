@@ -12,7 +12,7 @@
 		}
 	],
 	"support": {
-		"canonical": "https://github.com/gebn/Crackle.git"
+		"canonical": "https://github.com/gebn/Crackle.git",
 		"issues": "https://github.com/gebn/Crackle/issues",
 		"source": "https://github.com/gebn/Crackle/tree/master"
 	},
