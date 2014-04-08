@@ -8,6 +8,7 @@ namespace Crackle\Requests {
 	use \Crackle\Authentication\Applicators\RequestCredentials;
 	use \Crackle\Proxies\Proxy;
 	use \Crackle\Utilities\Curl;
+	use \Crackle\Exceptions\ValidationException;
 
 	use \Exception;
 	use \InvalidArgumentException;
@@ -330,12 +331,12 @@ namespace Crackle\Requests {
 
 		/**
 		 * Checks this request for errors before it is sent.
-		 * @throws \Exception If an issue is found.
+		 * @throws \ValidationException If an issue is found.
 		 */
 		protected function validate() {
 			// check that a URL has been set
 			if($this->getUrl() == null) { // null or empty
-				throw new Exception('A request URL must be specified.');
+				throw new ValidationException('A request URL must be specified.');
 			}
 		}
 
