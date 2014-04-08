@@ -9,8 +9,8 @@ namespace Crackle\Requests {
 	use \Crackle\Proxies\Proxy;
 	use \Crackle\Utilities\Curl;
 	use \Crackle\Exceptions\ValidationException;
+	use \Crackle\Exceptions\ResponseException;
 
-	use \Exception;
 	use \InvalidArgumentException;
 
 	/**
@@ -209,15 +209,15 @@ namespace Crackle\Requests {
 		/**
 		 * Get the response representing data returned from this request.
 		 * @return \Crackle\Response The response representing data returned from this request.
-		 * @throws \Exception If the response is unavailable.
+		 * @throws \Crackle\Exceptions\ResponseException If the response is unavailable.
 		 */
 		public final function getResponse() {
 			if(!$this->isFired()) {
-				throw new Exception('This request must be fired before attempting to access the response.');
+				throw new ResponseException('This request must be fired before attempting to access the response.');
 			}
 
 			if($this->failed()) {
-				throw new Exception('No response is available because the request failed.');
+				throw new ResponseException('No response is available because the request failed.');
 			}
 
 			return $this->response;
