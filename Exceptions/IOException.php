@@ -9,7 +9,7 @@ namespace Crackle\Exceptions {
 	class IOException extends CrackleException {
 
 		/**
-		 * Initialises a new I/O exception with a message.
+		 * Initialise a new I/O exception with a message.
 		 * @param string $message A description of why this exception is being created.
 		 */
 		public function __construct($message) {

@@ -9,7 +9,7 @@ namespace Crackle\Exceptions {
 	class HeaderNotFoundException extends CrackleException {
 
 		/**
-		 * Initialises a new header not found exception with a message.
+		 * Initialise a new header not found exception with a message.
 		 * @param string $message A description of why this exception is being created.
 		 */
 		public function __construct($message) {

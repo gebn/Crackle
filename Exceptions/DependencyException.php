@@ -9,7 +9,7 @@ namespace Crackle\Exceptions {
 	class DependencyException extends CrackleException {
 
 		/**
-		 * Initialises a new dependency exception with a message.
+		 * Initialise a new dependency exception with a message.
 		 * @param string $message A description of why this exception is being created.
 		 */
 		public function __construct($message) {
