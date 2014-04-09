@@ -167,6 +167,9 @@ namespace Crackle {
 				// deal with finished requests
 				while ($done = curl_multi_info_read($multiHandle)) {
 					$this->finished($done);
+
+					// do (at least) one more iteration to make sure any requests added by the finished request's callback are executed
+					$running = true;
 				}
 
 				// block until something happens
