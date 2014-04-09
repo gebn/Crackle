@@ -43,6 +43,16 @@ namespace Crackle\Requests\Fields {
 				}
 			}
 
+			// default to http if no protocol is specified
+			if(!isset($parts['scheme'])) {
+				$parts['scheme'] = 'http';
+			}
+
+			// if we were given an IP address, there will be no host
+			if(!isset($parts['host'])) {
+				$parts['host'] = '';
+			}
+
 			// if the URL contains a host with no trailing slash, this key will not exist
 			if(!isset($parts['path'])) {
 				$parts['path'] = '';
