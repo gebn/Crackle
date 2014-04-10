@@ -10,12 +10,12 @@ namespace Crackle {
 	use \Crackle\Exceptions\DependencyException;
 
 	/*
-	 * This file is self-running - it just needs to be `include`d on the page before Crackle is used.
+	 * This file is self-running - it just needs to be `include`d in the script before Crackle is used.
 	 */
 	Crackle::load();
 
 	/**
-	 * Sets up the environment required by Crackle.
+	 * Checks dependencies and sets up Crackle's environment.
 	 * @author George Brighton
 	 */
 	final class Crackle {
