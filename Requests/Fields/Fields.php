@@ -44,7 +44,7 @@ namespace Crackle\Requests\Fields {
 		/**
 		 * Set the value of a field.
 		 * @param string $name The name of the field.
-		 * @param string|array $value		The value of the field.
+		 * @param string|array $value The value of the field.
 		 */
 		public function set($name, $value) {
 			$this->fields[$name] = $value;

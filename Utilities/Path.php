@@ -11,7 +11,7 @@ namespace Crackle\Utilities {
 		/**
 		 * Combine multiple path strings to form a single path.
 		 * Slashes will be replaced with DIRECTORY_SEPARATOR.
-		 * @param string ...	An unlimited number of paths fragments to join.
+		 * @param string ... An unlimited number of paths fragments to join.
 		 * @return string The combined path.
 		 */
 		public static function join() {

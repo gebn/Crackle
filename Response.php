@@ -146,10 +146,10 @@ namespace Crackle {
 		 */
 		public final function getFilename() {
 			// the name may be passed in a header
-			if($this->getHeaders()->exists('Content-Disposition')) {
+			if ($this->getHeaders()->exists('Content-Disposition')) {
 				$disposition = $this->getHeaders()->get('Content-Disposition');
 				$pos = strpos($disposition, 'filename=');
-				if($pos !== false) {
+				if ($pos !== false) {
 					return substr($disposition, $pos + 9);
 				}
 			}

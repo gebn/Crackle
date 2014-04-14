@@ -26,10 +26,10 @@ namespace Crackle\Authentication {
 		 * @param string $password The password to send.
 		 */
 		public function __construct($username = null, $password = null) {
-			if($username !== null) {
+			if ($username !== null) {
 				$this->setUsername($username);
 			}
-			if($password !== null) {
+			if ($password !== null) {
 				$this->setPassword($password);
 			}
 		}

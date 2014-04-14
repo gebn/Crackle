@@ -118,14 +118,14 @@ namespace Crackle\Requests {
 			$lines = array();
 
 			// add variables
-			foreach($this->getVariables()->getPairs() as $pair) {
+			foreach ($this->getVariables()->getPairs() as $pair) {
 				$lines[] = '--' . $boundary;
 				$variable = new POSTVariable($pair->getValue());
 				$variable->appendPart($lines, $pair->getKey());
 			}
 
 			// add files
-			foreach($this->getFiles()->getPairs() as $pair) {
+			foreach ($this->getFiles()->getPairs() as $pair) {
 				$lines[] = '--' . $boundary;
 				$file = $pair->getValue() instanceof POSTFile ? $pair->getValue() : POSTFile::factory($pair->getValue());
 				$file->appendPart($lines, $pair->getKey());

@@ -96,7 +96,7 @@ namespace Crackle\Requests {
 		 */
 		private final function getUrl() {
 			$queryString = $this->getParameters()->getQueryString();
-			if($queryString == '') {
+			if ($queryString == '') {
 				return $this->url;
 			}
 			return $this->url . '?' . $queryString;
@@ -200,7 +200,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the error status of this request.
-		 * @param boolean|string $error			False if no error occurred, or the error message if one did.
+		 * @param boolean|string $error False if no error occurred, or the error message if one did.
 		 */
 		private final function setError($error) {
 			$this->error = $error;
@@ -212,11 +212,11 @@ namespace Crackle\Requests {
 		 * @throws \Crackle\Exceptions\ResponseException If the response is unavailable.
 		 */
 		public final function getResponse() {
-			if(!$this->isFired()) {
+			if (!$this->isFired()) {
 				throw new ResponseException('This request must be fired before attempting to access the response.');
 			}
 
-			if($this->failed()) {
+			if ($this->failed()) {
 				throw new ResponseException('No response is available because the request failed.');
 			}
 
@@ -245,7 +245,7 @@ namespace Crackle\Requests {
 		 * @throws \InvalidArgumentException If the callback is not a callable function.
 		 */
 		public final function setCallback($callback) {
-			if(!is_callable($callback)) {
+			if (!is_callable($callback)) {
 				throw new InvalidArgumentException('The request callback must be callable.');
 			}
 			$this->callback = $callback;
@@ -261,7 +261,7 @@ namespace Crackle\Requests {
 			$this->setParameters(new Parameters());
 			$this->setDefaultOptions();
 
-			if($url !== null) {
+			if ($url !== null) {
 				$this->setUrl($url);
 			}
 		}
@@ -319,12 +319,12 @@ namespace Crackle\Requests {
 			$this->getHeaders()->addTo($this->getHandle());
 
 			// add authentication if specified
-			if($this->getCredentials() !== null) {
+			if ($this->getCredentials() !== null) {
 				$this->getCredentials()->addRequestCredentialsTo($this->getHandle());
 			}
 
 			// add proxy if configured
-			if($this->getProxy() !== null) {
+			if ($this->getProxy() !== null) {
 				$this->getProxy()->addTo($this->getHandle());
 			}
 		}
@@ -335,7 +335,7 @@ namespace Crackle\Requests {
 		 */
 		protected function validate() {
 			// check that a URL has been set
-			if($this->getUrl() == null) { // null or empty
+			if ($this->getUrl() == null) { // null or empty
 				throw new ValidationException('A request URL must be specified.');
 			}
 		}
@@ -350,13 +350,13 @@ namespace Crackle\Requests {
 			// if an error occurred, set it
 			$this->setError($result === CURLE_OK ? false : Curl::getStringError($result));
 
-			if(!$this->failed()) {
+			if (!$this->failed()) {
 				// build the response
 				$this->setResponse(Response::factory($this->getHandle()));
 			}
 
 			// execute any callback
-			if($this->getCallback() !== null) {
+			if ($this->getCallback() !== null) {
 				call_user_func($this->getCallback(), $this);
 			}
 		}
