@@ -9,6 +9,7 @@ namespace Crackle\Requests {
 	use \Crackle\Proxies\Proxy;
 	use \Crackle\Utilities\Curl;
 	use \Crackle\Exceptions\ValidationException;
+	use \Crackle\Exceptions\RequestException;
 	use \Crackle\Exceptions\ResponseException;
 
 	use \InvalidArgumentException;
@@ -207,13 +208,15 @@ namespace Crackle\Requests {
 		}
 
 		/**
-		 * Get the response representing data returned from this request.
+		 * Get the response of this request. This method will fire the request if it hasn't been already.
 		 * @return \Crackle\Response The response representing data returned from this request.
+		 * @throws \Crackle\Exceptions\RequestException If the request fails.
 		 * @throws \Crackle\Exceptions\ResponseException If the response is unavailable.
 		 */
 		public final function getResponse() {
 			if (!$this->isFired()) {
-				throw new ResponseException('This request must be fired before attempting to access the response.');
+				// fire the request implicitly
+				$this->fire();
 			}
 
 			if ($this->failed()) {
@@ -294,11 +297,16 @@ namespace Crackle\Requests {
 		/**
 		 * Execute this request.
 		 * To fire multiple requests simultaneously, have a look at \Crackle\Requester.
+		 * @throws \Crackle\Exceptions\RequestException If the request fails.
 		 */
-		public function fire() {
+		public final function fire() {
 			$this->finalise();
 			curl_exec($this->getHandle());
 			$this->recover(curl_errno($this->getHandle()));
+
+			if ($this->failed()) {
+				throw new RequestException('The request failed: ' . $this->getError());
+			}
 		}
 
 		/**

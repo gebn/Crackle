@@ -28,16 +28,19 @@ Crackle is a powerful yet easy to use object-oriented HTTP client for PHP.
 
 ### A simple GET request
 
-Below is a minimal example showing how to issue a GET request to GitHub's API.
+Below is a minimal example showing how to issue a GET request to GitHub's API, and print out the response content body.
 
 ``` php
 require_once 'Crackle.php';
 use \Crackle\Requests\GETRequest;
+use \Crackle\Exceptions\RequestException;
 
-$request = new GETRequest('https://api.github.com/users/gebn');
-$request->fire();
-if($request->succeeded()) {
+try {
+	$request = new GETRequest('https://api.github.com/users/gebn');
 	echo $request->getResponse()->getContent();
+}
+catch (RequestException $e) {
+	echo $e->getMessage();
 }
 ```
 
@@ -45,11 +48,9 @@ There are several things to note:
 
  - You only ever need to require `Crackle.php`; Crackle has an autoloader, which will take care of other includes for you.
  - All types of request (`GET`, `POST` etc.) are stored in the `\Crackle\Requests` namespace. They have names of the form `<VERB>Request.php` to make them easy to find.
- - Crackle's `fire()` method does not throw any exceptions on failure; instead you can check `succeeded()` or `failed()` afterwards. This method may seem perverse, however it was chosen for several reasons:
-	- It reduces cases of uncaught exceptions. If it's not thrown, it doesn't need to be caught.
-	- There's nothing to stop you from throwing your own exception that integrates with your application.
-	- It makes working with callbacks (which will be introduced later) a snap.
- - If a request succeeds, its response can be accessed by calling `getResponse()`. This returns an object containing the final URL, response headers, HTTP status code, and of course body.
+ - Requests have a `fire()` method which is called implicitly the first time `getResponse()` is called on a request.
+ - Crackle will throw a `RequestException` on failure, so all requests should be wrapped in a try/catch statement. All exceptions thrown by Crackle (excluding those in the SPL) extend `CrackleException` and are located in the `\Crackle\Exceptions` namespace.
+ - `getResponse()` returns an object containing the final URL, response headers, HTTP status code, and of course content body.
 
 ### A POST request
 
@@ -65,12 +66,18 @@ For example, by calling `getParameters()`, you are retrieving the object contain
 require_once 'Crackle.php';
 use \Crackle\Requests\POSTRequest;
 use \Crackle\Requests\Parts\Files\POSTFile;
+use \Crackle\Exceptions\RequestException;
 
-$request = new POSTRequest('http://pastebin.com/api/api_post.php');
-$request->getParameters()->set('api_request', 'beer');
-$request->getVariables()->set('api_option', 'paste');
-$request->getFiles()->set('api_file', POSTFile::factory('leaked-credentials.txt'));
-$request->fire();
+try {
+	$request = new POSTRequest('http://pastebin.com/api/api_post.php');
+	$request->getParameters()->set('api_request', 'beer');
+	$request->getVariables()->set('api_option', 'paste');
+	$request->getFiles()->set('api_file', POSTFile::factory('leaked-credentials.txt'));
+	$request->fire();
+}
+catch (RequestException $e) {
+	echo $e->getMessage();
+}
 ```
 
 Crackle allows you to arbitrarily nest all three types of field depending on your needs using PHP's array syntax:
@@ -113,8 +120,6 @@ $proxy = new SOCKS5Proxy('10.11.12.13'); // HTTP proxies are also supported
 $proxy->setCredentials( // N.B. proxy (not request) credentials
 		new NTLMCredentials('<username>', '<password>')); // Basic and NTLM supported
 $request->setProxy($proxy);
-
-$request->fire();
 ```
 
 Hopefully you're now getting an idea of how the various different components of Crackle fit together. For additional examples, see the contents of `/Examples`.
@@ -154,6 +159,8 @@ $requester->fireAll();
 Callbacks can be deployed elsewhere, but they come into their own when used with simultaneous requests. They allow you to do processing while Crackle is still sending other requests in the queue. You can even add new requests to the queue from within callbacks while it is still being processed!
 
 Crackle can fire all types of request simultaneously - `PUTRequest` and `DELETERequest` won't fight if they're put in the same queue.
+
+When requests are fired via `Requester`, they do not throw an exception on failure. Instead, you can check `$request->succeeded()` or `$request->failed()` inside the callback. A call to `$request->getResponse()` will throw a `ResponseException` if the request did not succeed - so check it did first!
 
 ### Accessing the cURL handle
 
