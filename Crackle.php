@@ -24,7 +24,7 @@ namespace Crackle {
 		 * The version of Crackle in use.
 		 * @var string
 		 */
-		const VERSION = '2.1';
+		const VERSION = '2.2';
 
 		/**
 		 * This class should not be instantiated.
