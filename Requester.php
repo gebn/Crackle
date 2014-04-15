@@ -16,9 +16,10 @@ namespace Crackle {
 
 		/**
 		 * The maximum number of requests allowed to be executing simultaneously.
+		 * Defaults to 20.
 		 * @var int
 		 */
-		private $parallelLimit = 40;
+		private $parallelLimit = 20;
 
 		/**
 		 * The list of requests still to execute. These will be executed in the order they were added (FIFO).
@@ -28,7 +29,7 @@ namespace Crackle {
 
 		/**
 		 * A lookup array of resource ID => request object. Used to retrieve the request object when a handle is finished.
-		 * @var array
+		 * @var array[\Crackle\Requests\GETRequest]
 		 */
 		private $executing;
 
@@ -157,7 +158,9 @@ namespace Crackle {
 			$running = null;
 
 			do {
-				while (($status = curl_multi_exec($multiHandle, $running)) == CURLM_CALL_MULTI_PERFORM);
+				// run requests in the stack
+				while (($status = curl_multi_exec($multiHandle, $running)) == CURLM_CALL_MULTI_PERFORM)
+					;
 
 				// if the multi handle is in an error state, stop
 				if ($status !== CURLM_OK) {
@@ -172,8 +175,8 @@ namespace Crackle {
 					$running = true;
 				}
 
-				// block until something happens
 				if ($running) {
+					// block until data is received on any of the connections
 					curl_multi_select($multiHandle);
 				}
 			} while ($running);
@@ -181,7 +184,7 @@ namespace Crackle {
 
 		/**
 		 * Moves requests from the queue to the multi handle.
-		 * @param int $number Optional: the number of requests to remove. Default: 1.
+		 * @param int $number Optional: the number of requests to remove. Defaults to 1.
 		 */
 		private function add($number = 1) {
 			for($i = 0; $i < $number; $i++) {
@@ -193,8 +196,8 @@ namespace Crackle {
 		}
 
 		/**
-		 * Removes a finished request from the multi handle.
-		 * @param \Crackle\Requests\GETRequest $request The request to remove.
+		 * Cleans up after a finished request.
+		 * @param \Crackle\Requests\GETRequest $request The request to dispose of.
 		 */
 		private function remove(GETRequest $request) {
 			unset($this->executing[(int)$request->getHandle()]);
@@ -203,14 +206,21 @@ namespace Crackle {
 
 		/**
 		 * Deals with a finished request, and adds a new one if the queue isn't empty.
-		 * @param array[string] $message The message array returned by curl_multi_info_read().
+		 * @param array[string] $message The array returned by curl_multi_info_read().
 		 */
 		private function finished(array $message) {
+			// retrieve the original request object
 			$request = $this->getExecutingRequest($message['handle']);
+
+			// let it update itself
 			$request->recover($message['result']);
+
 			if(!$this->getQueue()->isEmpty()) {
+				// this request has finished; make the multi-handle aware of the next one
 				$this->add();
 			}
+
+			// dispose of the finished request
 			$this->remove($request);
 		}
 	}
