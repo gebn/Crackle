@@ -135,7 +135,7 @@ namespace Crackle\Examples {
 		 */
 		public function parseUrl($url) {
 			$matches = null;
-			if(!preg_match('/\/([a-z]+)\/res\/([0-9]+)/', $url, $matches)) {
+			if(!preg_match('/([a-z]+)\/thread\/([0-9]+)/', $url, $matches)) {
 				throw new Exception('Invalid board URL: ' . $url);
 			}
 			$this->setBoard($matches[1]);
