@@ -51,6 +51,16 @@ namespace Crackle\Requests\Fields {
 		}
 
 		/**
+		 * Set fields in bulk using an existing array.
+		 * @param array[string|array] $pairs The array of fields to read from.
+		 */
+		public final function import(array $pairs) {
+			foreach ($pairs as $name => $value) {
+				$this->set($name, $value);
+			}
+		}
+
+		/**
 		 * Retrieve the field pairs.
 		 * @return array[\Crackle\Structures\KeyValuePair] KVPs of fields in this container.
 		 */
