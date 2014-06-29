@@ -10,11 +10,15 @@ namespace Crackle\Examples {
 	use \Exception;
 
 	require '../Crackle.php';
-	set_time_limit(0);
-	$dl = new ChanThreadDownloader();
-	$dl->parseUrl(''); // enter thread URL, e.g. http://boards.4chan.org/wg/res/1234567
-	$dl->setOutputDirectory('');
-	echo $dl->go() ? 'Success!' : $dl->getErrors() . ' error(s) occurred.';
+
+	set_time_limit(0); // no time limit
+	$downloader = new ChanThreadDownloader();
+	$downloader->parseUrl(''); // enter a thread URL, e.g. http://boards.4chan.org/wg/res/1234567
+	$downloader->setOutputDirectory(''); // the directory in which to store the images (will be created if it doesn't exist)
+
+	header('Content-Type: text/plain');
+	echo $downloader->go() ? 'Success!' : $downloader->getErrors() . ' error(s) occurred.';
+	echo "\n", 'Peak memory usage: ', memory_get_peak_usage(true) / 1048576, ' MiB';
 
 	/**
 	 * Demonstrates Crackle's ability to run parallel GET requests by downloading all images in a 4Chan thread.
