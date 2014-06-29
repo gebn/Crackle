@@ -13,6 +13,12 @@ namespace Crackle\Requests {
 	class POSTRequest extends GETRequest {
 
 		/**
+		 * The raw content body of this request.
+		 * @var string
+		 */
+		private $content;
+
+		/**
 		 * The POST variables to send with this request.
 		 * @var \Crackle\Requests\Fields\Fields
 		 */
@@ -23,6 +29,22 @@ namespace Crackle\Requests {
 		 * @var \Crackle\Requests\Fields\Fields
 		 */
 		private $files;
+
+		/**
+		 * Retrieve the raw content body of this request.
+		 * @return string The raw content body of this request.
+		 */
+		private final function getContent() {
+			return $this->content;
+		}
+
+		/**
+		 * Set the raw content body of the request.
+		 * @param string $content The new raw content body of this request.
+		 */
+		public final function setContent($content) {
+			$this->content = $content;
+		}
 
 		/**
 		 * Retrieve the POST variables to send with this request.
@@ -81,16 +103,19 @@ namespace Crackle\Requests {
 		 * Adapted from Beau Simensen's function on GitHub: https://gist.github.com/simensen/288242
 		 */
 		private function buildRequest() {
-			$boundary = self::generateBoundary();
-			$content = $this->buildContent($boundary);
+			// we only need to do this if using Crackle's files and fields modules
+			if ($this->getContent() === null) {
+				$boundary = self::generateBoundary();
+				$this->setContent($this->buildContent($boundary));
+
+				$headers = $this->getHeaders();
+				$headers->set('Content-Length', strlen($this->getContent()));
+				$headers->set('Content-Type', 'multipart/form-data; boundary=' . $boundary);
+			}
 
 			curl_setopt_array($this->getHandle(), array(
 					CURLOPT_POST => true,
-					CURLOPT_POSTFIELDS => $content));
-
-			$headers = $this->getHeaders();
-			$headers->set('Content-Length', strlen($content));
-			$headers->set('Content-Type', 'multipart/form-data; boundary=' . $boundary);
+					CURLOPT_POSTFIELDS => $this->getContent()));
 		}
 
 		/**
