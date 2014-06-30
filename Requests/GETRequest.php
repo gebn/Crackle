@@ -10,7 +10,6 @@ namespace Crackle\Requests {
 	use \Crackle\Utilities\Curl;
 	use \Crackle\Exceptions\ValidationException;
 	use \Crackle\Exceptions\RequestException;
-	use \Crackle\Exceptions\ResponseException;
 
 	use \InvalidArgumentException;
 
@@ -211,16 +210,11 @@ namespace Crackle\Requests {
 		 * Get the response of this request. This method will fire the request if it hasn't been already.
 		 * @return \Crackle\Response The response representing data returned from this request.
 		 * @throws \Crackle\Exceptions\RequestException If the request fails.
-		 * @throws \Crackle\Exceptions\ResponseException If the response is unavailable.
 		 */
 		public final function getResponse() {
 			if (!$this->isFired()) {
 				// fire the request implicitly
 				$this->fire();
-			}
-
-			if ($this->failed()) {
-				throw new ResponseException('No response is available because the request failed.');
 			}
 
 			return $this->response;
