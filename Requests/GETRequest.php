@@ -114,27 +114,17 @@ namespace Crackle\Requests {
 			}
 
 			if (isset($parts['query'])) {
+
 				// pass them on for parsing
 				$this->getParameters()->parse($parts['query']);
-			}
 
-			// default to http if no protocol is specified
-			if (!isset($parts['scheme'])) {
-				$parts['scheme'] = 'http';
+				// extract the part before the query string
+				$this->url = substr($url, 0, strpos($url, '?'));
 			}
-
-			// if we were given an IP address, there will not be a host
-			if (!isset($parts['host'])) {
-				$parts['host'] = '';
+			else {
+				// there is no query string - set the entire thing
+				$this->url = $url;
 			}
-
-			// if the URL contains a host with no trailing slash, this key will not exist
-			if (!isset($parts['path'])) {
-				$parts['path'] = '';
-			}
-
-			// set the original URL without parameters
-			$this->url = sprintf('%s://%s%s', $parts['scheme'], $parts['host'], $parts['path']);
 		}
 
 		/**
