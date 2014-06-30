@@ -105,9 +105,36 @@ namespace Crackle\Requests {
 		/**
 		 * Set the URL this request will be sent to.
 		 * @param string $url The URL this request will be sent to.
+		 * @throws \InvalidArgumentException If the URL is malformed.
 		 */
 		public final function setUrl($url) {
-			$this->url = $this->getParameters()->parse($url);
+			$parts = parse_url($url);
+			if ($parts === false) {
+				throw new InvalidArgumentException('The supplied URL is invalid.');
+			}
+
+			if (isset($parts['query'])) {
+				// pass them on for parsing
+				$this->getParameters()->parse($parts['query']);
+			}
+
+			// default to http if no protocol is specified
+			if (!isset($parts['scheme'])) {
+				$parts['scheme'] = 'http';
+			}
+
+			// if we were given an IP address, there will not be a host
+			if (!isset($parts['host'])) {
+				$parts['host'] = '';
+			}
+
+			// if the URL contains a host with no trailing slash, this key will not exist
+			if (!isset($parts['path'])) {
+				$parts['path'] = '';
+			}
+
+			// set the original URL without parameters
+			$this->url = sprintf('%s://%s%s', $parts['scheme'], $parts['host'], $parts['path']);
 		}
 
 		/**
