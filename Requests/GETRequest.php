@@ -94,7 +94,7 @@ namespace Crackle\Requests {
 		 * Get the URL this request will be sent to.
 		 * @return string The URL this request will be sent to.
 		 */
-		private final function getUrl() {
+		public final function getUrl() {
 			$queryString = $this->getParameters()->getQueryString();
 			if ($queryString == '') {
 				return $this->url;
