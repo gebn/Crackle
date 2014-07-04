@@ -51,6 +51,7 @@ namespace Crackle {
 		/**
 		 * Retrieve the value of a header.
 		 * @param string $name The name of the header whose value to retrieve.
+		 * @return string The value of the given header.
 		 * @throws \Crackle\Exceptions\HeaderNotFoundException If the header does not exist.
 		 */
 		public final function get($name) {
@@ -86,43 +87,43 @@ namespace Crackle {
 		/**
 		 * Parses a string of headers. The current headers will be replaced.
 		 * Intended to emulate http_parse_headers() in the pecl_http package.
-		 * @param string $head A string containing a set of headers.
-		 * @return array[string] The parsed headers.
+		 * @param string $head A string of headers.
 		 * @link http://www.php.net/manual/en/function.http-parse-headers.php#112986
 		 */
 		public function parse($head) {
 			$headers = array();
 			$key = '';
 
-			foreach (explode("\n", $head) as $i => $h) {
-				$pieces = explode(':', $h, 2);
+			foreach (explode("\n", $head) as $line) {
+				$pieces = explode(':', $line, 2);
 
-				if (isset($pieces[1])) { // test whether a value exists
-
-					$name = strtolower($pieces[0]);
-					$value = trim($pieces[1]);
-
-					if (!isset($headers[$name])) {
-						$headers[$name] = $value;
+				if (!isset($pieces[1])) {
+					if (ctype_space(substr($pieces[0], 0, 1))) {
+						// indented headers indicate a continuation of the previous line's value
+						$headers[$key] .= ' ' . trim($pieces[0]);
 					}
-					else if (is_array($headers[$name])) {
-						$headers[$name] = array_merge(
-								$headers[$name],
-								array($value));
-					}
-					else {
-						$headers[$name] = array_merge(
-								array($headers[$name]),
-								array($value));
-					}
+					continue;
+				}
 
-					$key = $name;
+				$name = strtolower($pieces[0]);
+				$value = trim($pieces[1]);
+
+				if (!isset($headers[$name])) {
+					$headers[$name] = $value;
+				}
+				else if (is_array($headers[$name])) {
+					$headers[$name] = array_merge(
+							$headers[$name],
+							array($value));
 				}
 				else {
-					if (substr($pieces[0], 0, 1) == "\t") {
-						$headers[$key] .= "\r\n\t" . trim($pieces[0]);
-					}
+					$headers[$name] = array_merge(
+							array($headers[$name]),
+							array($value));
 				}
+
+				// store the last inserted header name in case its value wraps across lines
+				$key = $name;
 			}
 
 			$this->setHeaders($headers);
