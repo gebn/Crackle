@@ -98,9 +98,11 @@ namespace Crackle {
 				$pieces = explode(':', $line, 2);
 
 				if (!isset($pieces[1])) {
-					if (ctype_space(substr($pieces[0], 0, 1))) {
+					// it could be a blank line, the HTTP/1.x string, or the continuation of a value
+					$trimmed = trim($pieces[0]);
+					if ($trimmed !== '' && ctype_space(substr($pieces[0], 0, 1))) {
 						// indented headers indicate a continuation of the previous line's value
-						$headers[$key] .= ' ' . trim($pieces[0]);
+						$headers[$key] .= ' ' . $trimmed;
 					}
 					continue;
 				}
