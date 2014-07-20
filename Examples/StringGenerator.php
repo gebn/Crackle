@@ -6,11 +6,14 @@ namespace Crackle\Examples {
 
 	use \Crackle\Requests\GETRequest;
 	use \Crackle\Exceptions\RequestException;
+
 	use \OutOfBoundsException;
 	use \RuntimeException;
 
 	/*
-	 * Example usage: $generator = new StringGenerator(); print_r($generator->generate(10));
+	 * Example usage:
+	 * $generator = new StringGenerator();
+	 * print_r($generator->generate(10));
 	 */
 
 	/**
