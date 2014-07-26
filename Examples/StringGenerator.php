@@ -171,7 +171,8 @@ namespace Crackle\Examples {
 
 				$strings = explode("\n", rtrim($body));
 				return $quantity === 1 ? $strings[0] : $strings;
-			} catch (RequestException $e) {
+			}
+			catch (RequestException $e) {
 				throw new RuntimeException('Failed to reach RANDOM.ORG: ' . $e->getMessage());
 			}
 		}
