@@ -163,7 +163,7 @@ namespace Crackle\Examples {
 			$params->set('rnd', 'new');
 
 			try {
-				$body = $random->getResponse()->getContent();
+				$body = $random->getResponse()->getBody();
 
 				if (substr($body, 0, 5) == 'Error') {
 					throw new RuntimeException($body);

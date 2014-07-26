@@ -37,7 +37,7 @@ use \Crackle\Exceptions\RequestException;
 
 try {
 	$request = new GETRequest('https://api.github.com/users/gebn');
-	echo $request->getResponse()->getContent();
+	echo $request->getResponse()->getBody();
 }
 catch (RequestException $e) {
 	echo $e->getMessage();

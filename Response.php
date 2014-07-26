@@ -34,7 +34,7 @@ namespace Crackle {
 		 * The response body.
 		 * @var string
 		 */
-		private $content;
+		private $body;
 
 		/**
 		 * Get the effective URL of this resource.
@@ -88,24 +88,24 @@ namespace Crackle {
 		 * Get the raw body of this response.
 		 * @return string The body.
 		 */
-		public final function getContent() {
-			return $this->content;
+		public final function getBody() {
+			return $this->body;
 		}
 
 		/**
 		 * Set the raw body of this response.
-		 * @param string $content The body.
+		 * @param string $body The body.
 		 */
-		private final function setContent($content) {
-			$this->content = (string)$content;
+		private final function setBody($body) {
+			$this->body = (string)$body;
 		}
 
 		/**
 		 * Forgets the content body of this response.
 		 * This method can be called in the request callback to free up some memory when downloading lots of large files.
 		 */
-		public final function clearContent() {
-			$this->content = null;
+		public final function clearBody() {
+			$this->body = null;
 		}
 
 		/**
@@ -134,10 +134,10 @@ namespace Crackle {
 			$this->setUrl(curl_getinfo($handle, CURLINFO_EFFECTIVE_URL));
 			$this->setStatusCode(curl_getinfo($handle, CURLINFO_HTTP_CODE));
 
-			$body = curl_multi_getcontent($handle);
+			$content = curl_multi_getcontent($handle);
 			$separation = curl_getinfo($handle, CURLINFO_HEADER_SIZE);
-			$this->getHeaders()->parse(substr($body, 0, $separation));
-			$this->setContent(substr($body, $separation));
+			$this->getHeaders()->parse(substr($content, 0, $separation));
+			$this->setBody(substr($content, $separation));
 		}
 
 		/**
@@ -173,7 +173,7 @@ namespace Crackle {
 				throw new IOException('Insufficient permissions to write to directory.');
 			}
 
-			if (!@file_put_contents(Path::join($directory, $name), $this->getContent())) {
+			if (!@file_put_contents(Path::join($directory, $name), $this->getBody())) {
 				throw new IOException('Failed to write file.');
 			}
 		}
@@ -184,7 +184,7 @@ namespace Crackle {
 		 */
 		public function passthrough() {
 			$this->getHeaders()->sendAll();
-			echo $this->getContent();
+			echo $this->getBody();
 		}
 	}
 }

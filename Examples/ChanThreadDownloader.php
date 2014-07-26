@@ -186,7 +186,7 @@ namespace Crackle\Examples {
 				throw new Exception('Error retrieving JSON: HTTP ' . $response->getStatusCode());
 			}
 
-			return $response->getContent();
+			return $response->getBody();
 		}
 
 		/**
@@ -224,7 +224,7 @@ namespace Crackle\Examples {
 					}
 					else {
 						$request->getResponse()->writeTo($ref->getOutputDirectory());
-						$request->getResponse()->clearContent();
+						$request->getResponse()->clearBody();
 					}
 				});
 				$requests[] = $request;
