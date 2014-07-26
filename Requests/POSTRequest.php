@@ -16,7 +16,7 @@ namespace Crackle\Requests {
 		 * The raw content body of this request.
 		 * @var string
 		 */
-		private $content;
+		private $body;
 
 		/**
 		 * The POST variables to send with this request.
@@ -34,16 +34,16 @@ namespace Crackle\Requests {
 		 * Retrieve the raw content body of this request.
 		 * @return string The raw content body of this request.
 		 */
-		private final function getContent() {
-			return $this->content;
+		private final function getBody() {
+			return $this->body;
 		}
 
 		/**
 		 * Set the raw content body of the request.
-		 * @param string $content The new raw content body of this request.
+		 * @param string $body The new raw content body of this request.
 		 */
-		public final function setContent($content) {
-			$this->content = $content;
+		public final function setBody($body) {
+			$this->body = $body;
 		}
 
 		/**
@@ -104,18 +104,18 @@ namespace Crackle\Requests {
 		 */
 		private function buildRequest() {
 			// we only need to do this if using Crackle's files and fields modules
-			if ($this->getContent() === null) {
+			if ($this->getBody() === null) {
 				$boundary = self::generateBoundary();
-				$this->setContent($this->buildContent($boundary));
+				$this->setBody($this->buildBody($boundary));
 
 				$headers = $this->getHeaders();
-				$headers->set('Content-Length', strlen($this->getContent()));
+				$headers->set('Content-Length', strlen($this->getBody()));
 				$headers->set('Content-Type', 'multipart/form-data; boundary=' . $boundary);
 			}
 
 			curl_setopt_array($this->getHandle(), array(
 					CURLOPT_POST => true,
-					CURLOPT_POSTFIELDS => $this->getContent()));
+					CURLOPT_POSTFIELDS => $this->getBody()));
 		}
 
 		/**
@@ -138,7 +138,7 @@ namespace Crackle\Requests {
 		 * @param string $boundary The boundary to use to divide parts.
 		 * @return string The created body.
 		 */
-		private function buildContent($boundary) {
+		private function buildBody($boundary) {
 			// will contain lines that make up this request
 			$lines = array();
 
