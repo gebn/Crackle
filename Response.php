@@ -161,7 +161,7 @@ namespace Crackle {
 			}
 
 			if (!is_writable($directory)) {
-				throw new IOException('Insufficient permissions to write to directory.');
+				throw new IOException(sprintf('Insufficient permissions to write to directory \'%s\'.', $directory));
 			}
 
 			if (!@file_put_contents(Path::join($directory, $name), $this->getBody())) {
