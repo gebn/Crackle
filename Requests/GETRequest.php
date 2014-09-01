@@ -371,7 +371,7 @@ namespace Crackle\Requests {
 
 			if (!$this->failed()) {
 				// build the response
-				$this->setResponse(Response::factory($this->getHandle()));
+				$this->setResponse(new Response($this->getHandle()));
 			}
 
 			// execute any callback

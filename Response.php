@@ -109,21 +109,12 @@ namespace Crackle {
 		}
 
 		/**
-		 * Initialises a new response object.
+		 * Initialises a new instance representing the response of an executed cURL handle.
+		 * @param resource $handle The executed handle to model.
 		 */
-		public function __construct() {
+		public function __construct($handle) {
 			$this->setHeaders(new Headers());
-		}
-
-		/**
-		 * Get an instance of this class representing the response of an executed cURL handle.
-		 * @param resource $handle The executed handle to import.
-		 * @return \Crackle\Response The created Response instance.
-		 */
-		public static function factory($handle) {
-			$response = new Response();
-			$response->import($handle);
-			return $response;
+			$this->import($handle);
 		}
 
 		/**
