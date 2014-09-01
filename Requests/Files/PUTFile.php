@@ -108,8 +108,8 @@ namespace Crackle\Requests\Files {
 		 * @param string $path The absolute or relative (to this script) path to the file.
 		 * @return \Crackle\Requests\Parts\Files\POSTFile The created file sobject.
 		 */
-		public static function factory($path) {
-			$file = parent::factory($path);
+		public static function fromPath($path) {
+			$file = parent::fromPath($path);
 			$file->setStream(fopen($path, 'r')); // readability check done in parent
 			$file->setSize(filesize($path));
 			return $file;

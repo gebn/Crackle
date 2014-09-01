@@ -152,7 +152,7 @@ namespace Crackle\Requests {
 			// add files
 			foreach ($this->getFiles()->getPairs() as $pair) {
 				$lines[] = '--' . $boundary;
-				$file = $pair->getValue() instanceof POSTFile ? $pair->getValue() : POSTFile::factory($pair->getValue());
+				$file = $pair->getValue() instanceof POSTFile ? $pair->getValue() : POSTFile::fromPath($pair->getValue());
 				$file->appendPart($lines, $pair->getKey());
 			}
 
