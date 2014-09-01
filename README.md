@@ -65,7 +65,7 @@ For example, by calling `getParameters()`, you are retrieving the object contain
 ``` php
 require_once 'Crackle.php';
 use \Crackle\Requests\POSTRequest;
-use \Crackle\Requests\Parts\Files\POSTFile;
+use \Crackle\Requests\Files\POSTFile;
 use \Crackle\Exceptions\RequestException;
 
 try {
@@ -101,7 +101,7 @@ All types of request can be authenticated and proxied:
 ``` php
 require_once 'Crackle.php';
 use \Crackle\Requests\PUTRequest;
-use \Crackle\Requests\Parts\Files\PUTFile;
+use \Crackle\Requests\Files\PUTFile;
 use \Crackle\Proxies\SOCKS5Proxy;
 use \Crackle\Authentication\Methods\BasicCredentials;
 use \Crackle\Authentication\Methods\NTLMCredentials;
