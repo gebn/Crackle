@@ -150,22 +150,41 @@ namespace Crackle {
 		}
 
 		/**
-		 * Write this resource to a file.
-		 * @param string $directory The directory to write to.
-		 * @param string $name The name of the file to write. If omitted, the original name will be used.
-		 * @throws \Crackle\Exceptions\IOException If the file cannot be written.
+		 * Save this resource to a file.
+		 * @param string $path The path to write to.
+		 * @param string $name Optional: the name of the file to write. If omitted and $path is a directory, Crackle will attempt to work out a name.
+		 * @throws \Crackle\Exceptions\IOException If the file could not be written to.
 		 */
-		public function writeTo($directory, $name = null) {
-			if ($name === null) {
-				$name = $this->getFilename();
-			}
+		public function writeTo($path, $name = null) {
+			if (is_dir($path)) {
+				// check the provided directory is writable
+				if (!is_writable($path)) {
+					throw new IOException(sprintf('Insufficient permissions to write to \'%s\'.', $path));
+				}
 
-			if (!is_writable($directory)) {
-				throw new IOException(sprintf('Insufficient permissions to write to directory \'%s\'.', $directory));
-			}
+				// work out the name if none was provided
+				if ($name === null) {
+					$name = $this->getFilename();
 
-			if (!@file_put_contents(Path::join($directory, $name), $this->getBody())) {
-				throw new IOException('Failed to write file.');
+					if ($name === '') {
+						// resource has no name; we could make up one, but that's rather suboptimal, so instead throw an error
+						throw new IOException('Cannot write file because the resource has no name, and none was provided.');
+					}
+				}
+
+				if (!@file_put_contents(Path::join($path, $name), $this->getBody())) {
+					throw new IOException('Failed to write file.');
+				}
+			}
+			else {
+				// check that we can write to the directory that will contain the file
+				if (!is_writable(dirname($path))) {
+					throw new IOException(sprintf('Insufficient permissions to write \'%s\'.', $path));
+				}
+
+				if (!@file_put_contents($path, $this->getBody())) {
+					throw new IOException('Failed to write file.');
+				}
 			}
 		}
 
