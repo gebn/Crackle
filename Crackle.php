@@ -38,7 +38,7 @@ namespace Crackle {
 			static $loaded = false;
 
 			// we only want to initialise once
-			if(!$loaded) {
+			if (!$loaded) {
 				self::initialise();
 				$loaded = true;
 			}
@@ -57,11 +57,11 @@ namespace Crackle {
 		 * @throws \Crackle\Exceptions\DependencyException If any requirement is not met.
 		 */
 		private static function checkRequirements() {
-			if(version_compare(PHP_VERSION, '5.3.0', '<')) {
+			if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 				throw new DependencyException('Crackle requires PHP 5.3.0 or later.');
 			}
 
-			if(!extension_loaded('curl')) {
+			if (!extension_loaded('curl')) {
 				throw new DependencyException('The cURL module must be available for Crackle to operate.');
 			}
 		}
@@ -71,7 +71,7 @@ namespace Crackle {
 		 */
 		private static function registerAutoloader() {
 			spl_autoload_register(function($qualified) {
-				if(substr($qualified, 0, 8) == 'Crackle\\') {
+				if (substr($qualified, 0, 8) == 'Crackle\\') {
 					require str_replace('\\', DIRECTORY_SEPARATOR, substr($qualified, 8)) . '.php';
 				}
 			}, true);

@@ -97,13 +97,13 @@ namespace Crackle\Examples {
 		 * @throws \Exception If the specified output directory doesn't exist and cannot be created or is otherwise invalid.
 		 */
 		public final function setOutputDirectory($outputDirectory) {
-			if(!is_dir($outputDirectory)) {
-				if(!@mkdir($outputDirectory)) {
+			if (!is_dir($outputDirectory)) {
+				if (!@mkdir($outputDirectory)) {
 					throw new Exception('Failed to create output directory - check permissions.');
 				}
 			}
 			$resolved = realpath($outputDirectory);
-			if($resolved === false) {
+			if ($resolved === false) {
 				throw new Exception('Invalid output directory path: ' . $outputDirectory);
 			}
 			$this->outputDirectory = $resolved;
@@ -139,7 +139,7 @@ namespace Crackle\Examples {
 		 */
 		public function parseUrl($url) {
 			$matches = null;
-			if(!preg_match('/([a-z]+)\/thread\/([0-9]+)/', $url, $matches)) {
+			if (!preg_match('/([a-z]+)\/thread\/([0-9]+)/', $url, $matches)) {
 				throw new Exception('Invalid board URL: ' . $url);
 			}
 			$this->setBoard($matches[1]);
@@ -176,13 +176,13 @@ namespace Crackle\Examples {
 			$request = new GETRequest($this->getJsonUrl());
 			$request->fire();
 
-			if($request->failed()) {
+			if ($request->failed()) {
 				throw new Exception('Request failed: ' . $request->getError());
 			}
 
 			$response = $request->getResponse();
 
-			if($response->getStatusCode() != 200) {
+			if ($response->getStatusCode() != 200) {
 				throw new Exception('Error retrieving JSON: HTTP ' . $response->getStatusCode());
 			}
 
@@ -196,11 +196,11 @@ namespace Crackle\Examples {
 		 */
 		private function getImageUrls(stdClass $thread) {
 			$urls = array();
-			foreach($thread->posts as $post) {
-				if(isset($post->filename)) {
+			foreach ($thread->posts as $post) {
+				if (isset($post->filename)) {
 					$filename = $post->tim . $post->ext;
 					$url = 'http://i.4cdn.org/' . $this->getBoard() . '/src/' . $filename;
-					if(!file_exists(Path::join($this->getOutputDirectory(), $filename))) {
+					if (!file_exists(Path::join($this->getOutputDirectory(), $filename))) {
 						$urls[] = $url;
 					}
 				}
@@ -215,11 +215,11 @@ namespace Crackle\Examples {
 		 */
 		private function getRequests(array $urls) {
 			$requests = array();
-			foreach($urls as $url) {
+			foreach ($urls as $url) {
 				$request = new GETRequest($url);
 				$ref = $this; // cannot use $this in closures in 5.3; methods called on $ref must also be public
 				$request->setCallback(function($request) use ($ref) {
-					if($request->failed()) {
+					if ($request->failed()) {
 						$ref->incrementErrors();
 					}
 					else {
@@ -237,7 +237,7 @@ namespace Crackle\Examples {
 		 * @param array[\Crackle\Requests\GETRequest] $requests The requests to run.
 		 */
 		private function download(array $requests) {
-			$requester = new Requester(10);
+			$requester = new Requester(20);
 			$requester->queueAll($requests);
 			$requester->fireAll();
 		}

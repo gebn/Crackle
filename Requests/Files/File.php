@@ -48,16 +48,16 @@ namespace Crackle\Requests\Files {
 		 * @throws \Crackle\Exceptions\IOException If the path does not point to a regular, readable file.
 		 */
 		public static function fromPath($path) {
-			if(!is_file($path)) {
+			if (!is_file($path)) {
 				throw new IOException('The path must be the path of a file.');
 			}
 
-			if(!is_readable($path)) {
+			if (!is_readable($path)) {
 				throw new IOException('The supplied file path cannot be read.');
 			}
 
 			$file = new static();
-			if(extension_loaded('fileinfo')) {
+			if (extension_loaded('fileinfo')) {
 				$file->setMimeType(finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path));
 			}
 			return $file;

@@ -109,7 +109,7 @@ namespace Crackle {
 		 * @param int $parallelLimit The maximum number of requests to allow to run simultaneously. Default: 40.
 		 */
 		public function __construct($parallelLimit = null) {
-			if($parallelLimit !== null) {
+			if ($parallelLimit !== null) {
 				$this->setParallelLimit($parallelLimit);
 			}
 			$this->setQueue(new SplQueue());
@@ -137,7 +137,7 @@ namespace Crackle {
 		 * @param array[\Crackle\Requests\GETRequest] $requests The requests to queue.
 		 */
 		public final function queueAll(array $requests) {
-			foreach($requests as $request) {
+			foreach ($requests as $request) {
 				$this->queue($request);
 			}
 		}
@@ -187,7 +187,7 @@ namespace Crackle {
 		 * @param int $number Optional: the number of requests to remove. Defaults to 1.
 		 */
 		private function add($number = 1) {
-			for($i = 0; $i < $number; $i++) {
+			for ($i = 0; $i < $number; $i++) {
 				$request = $this->getQueue()->dequeue();
 				$request->finalise();
 				$this->executing[(int)$request->getHandle()] = $request;
@@ -215,7 +215,7 @@ namespace Crackle {
 			// let it update itself
 			$request->recover($message['result']);
 
-			if(!$this->getQueue()->isEmpty()) {
+			if (!$this->getQueue()->isEmpty()) {
 				// this request has finished; make the multi-handle aware of the next one
 				$this->add();
 			}

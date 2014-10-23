@@ -97,7 +97,7 @@ namespace Crackle\Utilities {
 					87 => 'CURLE_FTP_BAD_FILE_LIST: Unable to parse FTP file list (during FTP wildcard downloading).',
 					88 => 'CURLE_CHUNK_FAILED: Chunk callback reported error.');
 
-			if(isset($definitions[$code])) {
+			if (isset($definitions[$code])) {
 				return $definitions[$code];
 			}
 

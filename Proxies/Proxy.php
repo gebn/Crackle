@@ -82,10 +82,10 @@ namespace Crackle\Proxies {
 		 * @param int $port The port number used by the proxy.
 		 */
 		public function __construct($address = null, $port = null) {
-			if($address !== null) {
+			if ($address !== null) {
 				$this->setAddress($address);
 			}
-			if($port !== null) {
+			if ($port !== null) {
 				$this->setPort($port);
 			}
 		}
@@ -98,12 +98,12 @@ namespace Crackle\Proxies {
 			curl_setopt($handle, CURLOPT_PROXY, $this->getAddress());
 
 			// if configured, set the port (N.B. can also be attached to the address)
-			if($this->getPort() !== null) {
+			if ($this->getPort() !== null) {
 				curl_setopt($handle, CURLOPT_PROXYPORT, $this->getPort());
 			}
 
 			// if configured, set the credentials
-			if($this->getCredentials() !== null) {
+			if ($this->getCredentials() !== null) {
 				$this->getCredentials()->addProxyCredentialsTo($handle);
 			}
 		}

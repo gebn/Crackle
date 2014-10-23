@@ -25,7 +25,7 @@ namespace Crackle\Proxies {
 			$this->setTunnel(false);
 
 			// set default port
-			if($port === null) {
+			if ($port === null) {
 				$this->setPort(8080);
 			}
 		}

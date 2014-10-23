@@ -17,7 +17,7 @@ namespace Crackle\Proxies {
 			parent::__construct($address, $port);
 
 			// set default port
-			if($port === null) {
+			if ($port === null) {
 				$this->setPort(1080);
 			}
 		}

@@ -52,7 +52,7 @@ namespace Crackle\Requests {
 			curl_setopt($this->getHandle(), CURLOPT_PUT, true);
 
 			// the PUT file is optional
-			if($this->getFile() !== null) {
+			if ($this->getFile() !== null) {
 				$this->getFile()->addTo($this->getHandle());
 			}
 		}

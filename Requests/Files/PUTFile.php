@@ -77,15 +77,15 @@ namespace Crackle\Requests\Files {
 		 */
 		public function setContent($content) {
 			$stream = @fopen('php://temp/maxmemory:1048576', 'w'); // 1 MiB
-			if(!$stream) {
+			if (!$stream) {
 				throw new IOException('Could not set content: failed to open memory stream.');
 			}
 
-			if(@fwrite($stream, $content) === false) {
+			if (@fwrite($stream, $content) === false) {
 				throw new IOException('Could not set content: failed to write to memory stream.');
 			}
 
-			if(@fseek($stream, 0) === -1) {
+			if (@fseek($stream, 0) === -1) {
 				throw new IOException('Could not set content: memory stream seek error.');
 			}
 
@@ -120,7 +120,7 @@ namespace Crackle\Requests\Files {
 		 * Called when replacing the stream or disposing of this object.
 		 */
 		private function clear() {
-			if($this->getStream() !== null) {
+			if ($this->getStream() !== null) {
 				fclose($this->getStream());
 			}
 		}

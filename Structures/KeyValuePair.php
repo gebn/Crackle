@@ -26,10 +26,10 @@ namespace Crackle\Structures {
 		 * @param mixed $value The value.
 		 */
 		public function __construct($key = null, $value = null) {
-			if($key !== null) {
+			if ($key !== null) {
 				$this->setKey($key);
 			}
-			if($value !== null) {
+			if ($value !== null) {
 				$this->setValue($value);
 			}
 		}

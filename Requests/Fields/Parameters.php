@@ -15,7 +15,7 @@ namespace Crackle\Requests\Fields {
 		public function getQueryString() {
 			// Crackle permits duplicate keys, so we cannot use PHP's http_build_query()
 			$parts = array();
-			foreach($this->getPairs() as $pair) {
+			foreach ($this->getPairs() as $pair) {
 				$parts[] = urlencode($pair->getKey()) . '=' . urlencode($pair->getValue());
 			}
 			return implode('&', $parts);

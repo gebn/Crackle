@@ -55,7 +55,7 @@ namespace Crackle {
 		 * @throws \Crackle\Exceptions\HeaderNotFoundException If the header does not exist.
 		 */
 		public final function get($name) {
-			if(!$this->exists($name)) {
+			if (!$this->exists($name)) {
 				throw new HeaderNotFoundException('The header \'' . $name . '\' does not exist.');
 			}
 			return $this->headers[strtolower($name)];
@@ -146,7 +146,7 @@ namespace Crackle {
 		 * Send all of the headers contained in this object.
 		 */
 		public function sendAll() {
-			foreach($this->getHeaders() as $name => $value) {
+			foreach ($this->getHeaders() as $name => $value) {
 				header(self::format($name) . ': ' . $value);
 			}
 		}
@@ -158,7 +158,7 @@ namespace Crackle {
 		public function addTo($handle) {
 			// format the header names
 			$formatted = array();
-			foreach($this->getHeaders() as $name => $value) {
+			foreach ($this->getHeaders() as $name => $value) {
 				$formatted[] = self::format($name) . ': ' . $value;
 			}
 
