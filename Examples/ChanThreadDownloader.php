@@ -218,7 +218,7 @@ namespace Crackle\Examples {
 			foreach ($urls as $url) {
 				$request = new GETRequest($url);
 				$ref = $this; // cannot use $this in closures in 5.3; methods called on $ref must also be public
-				$request->setCallback(function($request) use ($ref) {
+				$request->setCallback(function(GETRequest $request) use ($ref) {
 					if ($request->failed()) {
 						$ref->incrementErrors();
 					}
