@@ -75,7 +75,7 @@ namespace Crackle\Requests\Files {
 		/**
 		 * Get a file object representing a file at a location.
 		 * @param string $path The absolute or relative (to this script) path to the file.
-		 * @return \Crackle\Requests\Parts\Files\POSTFile The created object.
+		 * @return \Crackle\Requests\Files\POSTFile The created object.
 		 */
 		public static function fromPath($path) {
 			$file = parent::fromPath($path);
