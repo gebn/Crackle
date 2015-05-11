@@ -4,8 +4,6 @@ namespace Crackle\Requests\Fields {
 
 	use \Crackle\Structures\KeyValuePair;
 
-	use \InvalidArgumentException;
-
 	/**
 	 * Holds fields of a specific type for a request, e.g. GET parameters or POST files.
 	 * @author George Brighton

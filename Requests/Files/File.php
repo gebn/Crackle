@@ -4,8 +4,6 @@ namespace Crackle\Requests\Files {
 
 	use \Crackle\Exceptions\IOException;
 
-	use \Exception;
-
 	/**
 	 * Represents a file that can be attached to a request.
 	 * @author George Brighton

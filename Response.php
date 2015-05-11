@@ -4,7 +4,6 @@ namespace Crackle {
 
 	use \Crackle\Exceptions\IOException;
 	use \Crackle\Utilities\Path;
-	use \Crackle\Headers;
 
 	/**
 	 * Represents the data returned by a request.

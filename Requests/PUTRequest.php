@@ -4,8 +4,6 @@ namespace Crackle\Requests {
 
 	use \Crackle\Requests\Files\PUTFile;
 
-	use \Exception;
-
 	/**
 	 * Represents an HTTP request sent using the PUT method.
 	 * @author George Brighton
