@@ -192,7 +192,7 @@ namespace Crackle\Examples {
 		/**
 		 * Extract the URLs of images in the thread that have not yet been downloaded.
 		 * @param \stdClass $thread The json_decode()d thread.
-		 * @return array[string] The image URLs.
+		 * @return string[] The image URLs.
 		 */
 		private function getImageUrls(stdClass $thread) {
 			$urls = array();
@@ -210,8 +210,8 @@ namespace Crackle\Examples {
 
 		/**
 		 * Turns an array of URLs into an array of GETRequest objects.
-		 * @param array[string] $urls The image URLs to download.
-		 * @return array[\Crackle\Requests\GETRequest] The corresponding request objects for each URL.
+		 * @param string[] $urls The image URLs to download.
+		 * @return \Crackle\Requests\GETRequest[] The corresponding request objects for each URL.
 		 */
 		private function getRequests(array $urls) {
 			$requests = array();

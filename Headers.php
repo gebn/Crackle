@@ -18,7 +18,7 @@ namespace Crackle {
 
 		/**
 		 * Get the lookup array of headers.
-		 * @return array[string] The lookup array of headers.
+		 * @return string[] The lookup array of headers.
 		 */
 		private final function getHeaders() {
 			return $this->headers;
@@ -26,7 +26,7 @@ namespace Crackle {
 
 		/**
 		 * Set the lookup array of headers.
-		 * @param array[string] $headers The lookup array of headers.
+		 * @param string[] $headers The lookup array of headers.
 		 */
 		private final function setHeaders(array $headers) {
 			$this->headers = $headers;

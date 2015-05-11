@@ -60,7 +60,7 @@ namespace Crackle\Requests\Fields {
 
 		/**
 		 * Retrieve the field pairs.
-		 * @return array[\Crackle\Structures\KeyValuePair] KVPs of fields in this container.
+		 * @return \Crackle\Structures\KeyValuePair[] KVPs of fields in this container.
 		 */
 		public final function getPairs() {
 			$pairs = array();
