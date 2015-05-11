@@ -72,7 +72,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * Set the files to send with this request.
-		 * @param \Crackle\Requests\Fields\Fields The $files files to send with this request.
+		 * @param \Crackle\Requests\Fields\Fields $files The files to send with this request.
 		 */
 		private final function setFiles(Fields $files) {
 			$this->files = $files;
