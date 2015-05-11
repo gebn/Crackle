@@ -1,4 +1,4 @@
-# Crackle
+# Crackle [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) [![Stars](https://img.shields.io/github/stars/gebn/crackle.svg?style=flat)](https://github.com/gebn/Crackle/stargazers) [![Issues](https://img.shields.io/github/issues/gebn/crackle.svg?style=flat)](https://github.com/gebn/Crackle/issues)
 
 Crackle is a powerful yet easy to use object-oriented HTTP client for PHP.
 
