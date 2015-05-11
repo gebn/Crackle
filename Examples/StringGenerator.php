@@ -17,7 +17,7 @@ namespace Crackle\Examples {
 	 */
 
 	/**
-	 * Generates a truely random string using RANDOM.ORG.
+	 * Generates a truly random string using RANDOM.ORG.
 	 * @author George Brighton
 	 */
 	class StringGenerator {
@@ -138,7 +138,7 @@ namespace Crackle\Examples {
 		/**
 		 * Generate one or more strings using the current settings.
 		 * @param integer $quantity The number of strings to generate, between 1 and 10,000 inclusive.
-		 * @throws \RuntimeException If a validation error occurrs, or RANDOM.ORG cannot be reached.
+		 * @throws \RuntimeException If a validation error occurs, or RANDOM.ORG cannot be reached.
 		 * @throws \OutOfBoundsException If the quantity is out of range.
 		 * @return string array[string] generated string(s). If quantity is 1, this will be a string; otherwise it will be an array of strings.
 		 */

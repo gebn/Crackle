@@ -154,7 +154,7 @@ namespace Crackle {
 			// optimisation: avoids many calls to $this->getMultiHandle()
 			$multiHandle = $this->getMultiHandle();
 
-			// keep going whie not false
+			// keep going while not false
 			$running = null;
 
 			do {

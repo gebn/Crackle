@@ -69,7 +69,7 @@ namespace Crackle\Requests {
 
 		/**
 		 * A function to run upon completion of this request.
-		 * This fuction should accept the original request object (either \Crackle\Requests\GETRequest or a derived class) as its only parameter.
+		 * This function should accept the original request object (either \Crackle\Requests\GETRequest or a derived class) as its only parameter.
 		 * @var callable
 		 */
 		private $callback;
