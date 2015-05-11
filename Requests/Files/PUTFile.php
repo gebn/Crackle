@@ -76,7 +76,7 @@ namespace Crackle\Requests\Files {
 		 * @see \Crackle\Requests\Parts\Files\File::setContent()
 		 */
 		public function setContent($content) {
-			$stream = @fopen('php://temp/maxmemory:1048576', 'w'); // 1 MiB
+			$stream = @fopen('php://memory', 'w');
 			if (!$stream) {
 				throw new IOException('Could not set content: failed to open memory stream.');
 			}
