@@ -48,8 +48,8 @@ namespace Crackle {
 		 * Carries out everything needed to get Crackle up and running.
 		 */
 		private static function initialise() {
-			self::checkRequirements();
 			self::registerAutoloader();
+			self::checkRequirements();
 		}
 
 		/**
